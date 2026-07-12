@@ -1,243 +1,225 @@
 *{
-box-sizing:border-box;
+    box-sizing:border-box;
 }
-
 
 body{
-
-font-family:'Segoe UI',Arial,sans-serif;
-margin:0;
-background:#f4f7fb;
-color:#222;
-
+    margin:0;
+    font-family:'Segoe UI',Arial,sans-serif;
+    background:#f5f7fb;
+    color:#222;
 }
 
 
-header{
-
-background:linear-gradient(135deg,#000,#25f4ee,#fe2c55);
-color:white;
-text-align:center;
-padding:50px 20px;
-
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 30px;
+    background:#000;
+    color:white;
 }
 
 
 .logo{
+    font-size:20px;
+    font-weight:700;
+}
 
-font-size:22px;
-font-weight:bold;
-margin-bottom:20px;
 
+nav a{
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+}
+
+
+
+header{
+    background:linear-gradient(135deg,#000000,#25f4ee,#fe2c55);
+    color:white;
+    text-align:center;
+    padding:60px 20px;
 }
 
 
 header h1{
-
-font-size:38px;
-margin:10px 0;
-
+    font-size:42px;
+    margin-bottom:15px;
 }
 
 
 header p{
-
-font-size:18px;
-
+    font-size:18px;
+    max-width:650px;
+    margin:auto;
 }
 
 
 
 .container{
-
-max-width:900px;
-margin:40px auto;
-padding:15px;
-
+    max-width:950px;
+    margin:40px auto;
+    padding:15px;
 }
 
 
 
 .card{
-
-background:white;
-padding:30px;
-border-radius:20px;
-margin-bottom:25px;
-box-shadow:0 10px 30px rgba(0,0,0,0.1);
-
+    background:white;
+    padding:35px;
+    border-radius:25px;
+    margin-bottom:25px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.08);
 }
 
 
 
 h2{
-
-color:#111;
-
+    margin-top:0;
 }
 
 
 
 label{
-
-display:block;
-font-weight:600;
-margin-top:18px;
-
+    display:block;
+    font-weight:600;
+    margin-top:18px;
 }
-
 
 
 input{
-
-width:100%;
-padding:14px;
-margin-top:8px;
-border:2px solid #eee;
-border-radius:12px;
-font-size:16px;
-
+    width:100%;
+    padding:15px;
+    margin-top:8px;
+    border-radius:12px;
+    border:2px solid #eee;
+    font-size:16px;
 }
-
 
 
 input:focus{
-
-outline:none;
-border-color:#25f4ee;
-
+    border-color:#25f4ee;
+    outline:none;
 }
 
+
+
+.buttons{
+    display:flex;
+    gap:15px;
+    margin-top:25px;
+}
 
 
 button{
+    flex:1;
+    padding:16px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(90deg,#fe2c55,#25f4ee);
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
 
-width:100%;
-padding:16px;
-margin-top:25px;
-border:none;
-border-radius:12px;
 
-background:linear-gradient(90deg,#fe2c55,#25f4ee);
-
-color:white;
-font-size:18px;
-font-weight:bold;
-
-cursor:pointer;
-
+.reset{
+    background:#111;
 }
 
 
 
-.result-box{
-
-background:#f8f9ff;
-padding:15px;
-border-radius:15px;
-margin:12px 0;
-text-align:center;
-
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
 }
 
 
-
-.result-box p{
-
-margin:5px;
-color:#555;
-
+.result-grid div{
+    background:#f8f9ff;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
 }
 
 
-.result-box h3{
+.result-grid p{
+    color:#666;
+    margin:5px;
+}
 
-margin:5px;
-color:#fe2c55;
-font-size:24px;
 
+.result-grid strong{
+    font-size:22px;
+    color:#fe2c55;
 }
 
 
 
 .info{
-
-background:white;
-padding:30px;
-border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.08);
-
+    background:white;
+    padding:30px;
+    border-radius:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
 }
-
 
 
 .info li{
-
-margin:10px 0;
-
+    margin:12px 0;
 }
 
 
 
-.whatsapp-btn{
+.whatsapp{
 
-display:block;
-width:max-content;
+    display:block;
+    width:max-content;
+    margin:30px auto;
+    padding:16px 35px;
 
-margin:30px auto;
+    background:#25D366;
+    color:white;
 
-padding:16px 35px;
+    text-decoration:none;
+    border-radius:50px;
 
-background:#25D366;
-
-color:white;
-
-text-decoration:none;
-
-border-radius:50px;
-
-font-size:18px;
-
-font-weight:bold;
-
-box-shadow:0 8px 20px rgba(0,0,0,0.2);
-
-}
-
-
-
-.whatsapp-btn:hover{
-
-transform:scale(1.05);
+    font-weight:bold;
+    font-size:17px;
 
 }
 
 
 
 footer{
-
-background:#000;
-color:white;
-text-align:center;
-padding:20px;
-
+    background:#000;
+    color:white;
+    text-align:center;
+    padding:20px;
 }
 
 
 
-@media(max-width:600px){
+@media(max-width:700px){
 
 header h1{
-
-font-size:27px;
-
+    font-size:28px;
 }
 
 
-.card{
+.result-grid{
+    grid-template-columns:1fr;
+}
 
-padding:20px;
 
+.buttons{
+    flex-direction:column;
+}
+
+
+nav{
+    padding:15px;
 }
 
 }
