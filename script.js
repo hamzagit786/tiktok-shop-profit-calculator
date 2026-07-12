@@ -13,9 +13,10 @@ let adsCost = Number(document.getElementById("adsCost").value) || 0;
 
 
 
-// TikTok Fee Calculation
+// TikTok Fee
 
 let tiktokFee = sellingPrice * (fee / 100);
+
 
 
 // Total Investment
@@ -23,42 +24,53 @@ let tiktokFee = sellingPrice * (fee / 100);
 let totalCost = productCost + shippingCost + adsCost + tiktokFee;
 
 
+
 // Profit
 
 let profit = sellingPrice - totalCost;
 
 
+
 // Margin
 
-let margin = sellingPrice > 0 ? (profit / sellingPrice) * 100 : 0;
+let margin = sellingPrice > 0 
+? (profit / sellingPrice) * 100 
+: 0;
+
 
 
 // ROI
 
 let investment = productCost + shippingCost + adsCost;
 
-let roi = investment > 0 ? (profit / investment) * 100 : 0;
+
+let roi = investment > 0
+? (profit / investment) * 100
+: 0;
 
 
 
 
-// Show Results
+// Break Even
+
+let breakEven = productCost + shippingCost + adsCost + tiktokFee;
 
 
-document.getElementById("totalCost").innerHTML =
-"$" + totalCost.toFixed(2);
+
+// Recommended Selling Price
+
+let recommended = totalCost * 1.4;
 
 
-document.getElementById("tiktokFee").innerHTML =
-"$" + tiktokFee.toFixed(2);
+
+
+
+// Display Results
 
 
 document.getElementById("profit").innerHTML =
 "$" + profit.toFixed(2);
 
-
-document.getElementById("margin").innerHTML =
-margin.toFixed(2) + "%";
 
 
 document.getElementById("roi").innerHTML =
@@ -66,9 +78,35 @@ roi.toFixed(2) + "%";
 
 
 
+document.getElementById("totalCost").innerHTML =
+"$" + totalCost.toFixed(2);
 
 
-// ROI Status Logic
+
+document.getElementById("tiktokFee").innerHTML =
+"$" + tiktokFee.toFixed(2);
+
+
+
+document.getElementById("margin").innerHTML =
+margin.toFixed(2) + "%";
+
+
+
+document.getElementById("breakEven").innerHTML =
+"$" + breakEven.toFixed(2);
+
+
+
+document.getElementById("recommended").innerHTML =
+"$" + recommended.toFixed(2);
+
+
+
+
+
+
+// ROI Business Status
 
 
 let status = document.getElementById("status");
@@ -77,13 +115,13 @@ let status = document.getElementById("status");
 
 if(roi >= 40){
 
-status.innerHTML = "🟢 Excellent Opportunity";
+status.innerHTML = "🟢 Excellent";
 
 }
 
 else if(roi >= 20){
 
-status.innerHTML = "🟡 Good Opportunity";
+status.innerHTML = "🟡 Good";
 
 }
 
@@ -103,50 +141,7 @@ status.innerHTML = "🔴 Not Profitable";
 
 
 
-// Auto Scroll To Results
 
+// Smooth Scroll
 
-document.querySelector(".results").scrollIntoView({
-
-behavior:"smooth"
-
-});
-
-
-}
-
-
-
-
-// Reset Function
-
-
-function resetCalculator(){
-
-
-document.getElementById("sellingPrice").value="";
-
-document.getElementById("productCost").value="";
-
-document.getElementById("shippingCost").value="";
-
-document.getElementById("fee").value="6";
-
-document.getElementById("adsCost").value="";
-
-
-
-document.getElementById("totalCost").innerHTML="$0";
-
-document.getElementById("tiktokFee").innerHTML="$0";
-
-document.getElementById("profit").innerHTML="$0";
-
-document.getElementById("margin").innerHTML="0%";
-
-document.getElementById("roi").innerHTML="0%";
-
-document.getElementById("status").innerHTML="Waiting";
-
-
-  }
+document
