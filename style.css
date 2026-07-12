@@ -2,224 +2,470 @@
     box-sizing:border-box;
 }
 
+
 body{
+
     margin:0;
     font-family:'Segoe UI',Arial,sans-serif;
     background:#f5f7fb;
-    color:#222;
+    color:#1e293b;
+
 }
 
 
+
+/* Navbar */
+
 nav{
+
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:18px 30px;
-    background:#000;
+    padding:18px 35px;
+    background:#020617;
     color:white;
+
 }
 
 
 .logo{
-    font-size:20px;
-    font-weight:700;
+
+    font-size:21px;
+    font-weight:800;
+
 }
 
 
 nav a{
+
     color:white;
     text-decoration:none;
     font-weight:600;
+
 }
 
+
+
+
+
+/* Hero Section */
 
 
 header{
-    background:linear-gradient(135deg,#000000,#25f4ee,#fe2c55);
+
+    background:linear-gradient(135deg,#020617,#1e293b);
+
     color:white;
+
     text-align:center;
-    padding:60px 20px;
+
+    padding:75px 20px;
+
+    border-bottom:4px solid #25f4ee;
+
 }
+
 
 
 header h1{
-    font-size:42px;
+
+    font-size:44px;
+
+    font-weight:800;
+
+    letter-spacing:-1px;
+
     margin-bottom:15px;
+
 }
+
 
 
 header p{
-    font-size:18px;
-    max-width:650px;
+
+    max-width:700px;
+
     margin:auto;
+
+    color:#cbd5e1;
+
+    font-size:19px;
+
+    line-height:1.6;
+
 }
 
+
+
+
+
+/* Main Container */
 
 
 .container{
+
     max-width:950px;
+
     margin:40px auto;
+
     padding:15px;
+
 }
 
+
+
+
+
+/* Cards */
 
 
 .card{
+
     background:white;
+
     padding:35px;
+
     border-radius:25px;
+
     margin-bottom:25px;
+
     box-shadow:0 15px 35px rgba(0,0,0,0.08);
+
 }
+
 
 
 
 h2{
+
+    color:#0f172a;
+
     margin-top:0;
+
 }
 
+
+
+
+/* Inputs */
 
 
 label{
+
     display:block;
-    font-weight:600;
+
+    font-weight:700;
+
     margin-top:18px;
+
 }
+
 
 
 input{
+
     width:100%;
+
     padding:15px;
+
     margin-top:8px;
+
     border-radius:12px;
-    border:2px solid #eee;
+
+    border:2px solid #e2e8f0;
+
     font-size:16px;
+
 }
+
 
 
 input:focus{
-    border-color:#25f4ee;
+
     outline:none;
+
+    border-color:#25f4ee;
+
 }
 
+
+
+
+
+/* Buttons */
 
 
 .buttons{
+
     display:flex;
+
     gap:15px;
+
     margin-top:25px;
+
 }
+
 
 
 button{
+
     flex:1;
+
     padding:16px;
+
     border:none;
+
     border-radius:12px;
-    background:linear-gradient(90deg,#fe2c55,#25f4ee);
-    color:white;
-    font-size:17px;
-    font-weight:bold;
+
     cursor:pointer;
+
+    background:linear-gradient(90deg,#fe2c55,#25f4ee);
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:bold;
+
 }
+
 
 
 .reset{
-    background:#111;
+
+    background:#020617;
+
 }
 
+
+
+
+
+/* Results */
 
 
 .result-grid{
+
     display:grid;
+
     grid-template-columns:repeat(3,1fr);
+
     gap:15px;
+
 }
+
 
 
 .result-grid div{
-    background:#f8f9ff;
+
+    background:#f8fafc;
+
     padding:20px;
-    border-radius:15px;
+
+    border-radius:18px;
+
     text-align:center;
+
+    border:1px solid #e2e8f0;
+
 }
+
 
 
 .result-grid p{
-    color:#666;
+
+    color:#64748b;
+
     margin:5px;
+
 }
+
 
 
 .result-grid strong{
-    font-size:22px;
+
+    font-size:23px;
+
     color:#fe2c55;
+
 }
 
+
+
+
+
+/* Information */
 
 
 .info{
+
     background:white;
-    padding:30px;
+
+    padding:35px;
+
     border-radius:25px;
+
     box-shadow:0 10px 25px rgba(0,0,0,0.08);
+
 }
+
 
 
 .info li{
+
     margin:12px 0;
+
 }
 
+
+
+
+
+/* Service Section */
+
+
+.service-banner{
+
+    background:linear-gradient(135deg,#111827,#334155);
+
+    color:white;
+
+    padding:40px 30px;
+
+    border-radius:25px;
+
+    text-align:center;
+
+    margin-top:30px;
+
+}
+
+
+
+.service-banner h2{
+
+    color:white;
+
+    font-size:30px;
+
+}
+
+
+
+.service-banner p{
+
+    color:#cbd5e1;
+
+    line-height:1.7;
+
+    font-size:17px;
+
+}
+
+
+
+.service-banner a{
+
+    display:inline-block;
+
+    margin-top:20px;
+
+    padding:15px 35px;
+
+    background:#25D366;
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:50px;
+
+    font-weight:bold;
+
+}
+
+
+
+
+
+/* WhatsApp */
 
 
 .whatsapp{
 
     display:block;
+
     width:max-content;
+
     margin:30px auto;
+
     padding:16px 35px;
 
     background:#25D366;
+
     color:white;
 
     text-decoration:none;
+
     border-radius:50px;
 
     font-weight:bold;
-    font-size:17px;
 
 }
+
+
 
 
 
 footer{
-    background:#000;
+
+    background:#020617;
+
     color:white;
+
     text-align:center;
-    padding:20px;
+
+    padding:22px;
+
 }
 
+
+
+
+
+/* Mobile */
 
 
 @media(max-width:700px){
 
+
 header h1{
-    font-size:28px;
+
+    font-size:30px;
+
 }
 
 
 .result-grid{
+
     grid-template-columns:1fr;
+
 }
 
 
+
 .buttons{
+
     flex-direction:column;
+
 }
 
 
 nav{
-    padding:15px;
-}
+
+    padding:15px 20px;
 
 }
+
+
+        }
