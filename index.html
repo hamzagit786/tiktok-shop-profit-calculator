@@ -6,9 +6,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>TikTok Shop Profit Pro | Seller Calculator</title>
+<title>TikTok Shop Profit Pro | Advanced Seller Calculator</title>
 
-<meta name="description" content="Calculate TikTok Shop profit, ROI, fees and product potential with our free seller calculator.">
+<meta name="description" content="Advanced TikTok Shop Profit Calculator to analyze profit, ROI, fees and product performance.">
 
 <link rel="stylesheet" href="style.css">
 
@@ -21,86 +21,100 @@
 <nav>
 
 <div class="logo">
-TikTok Shop Profit Pro
+🚀 ProfitPilot
 </div>
 
-<a href="#calculator">
-Calculator
-</a>
+<div class="nav-text">
+TikTok Shop Seller Tools
+</div>
 
 </nav>
 
 
 
-<header>
+
+<section class="hero">
+
+<div class="hero-content">
 
 <h1>
-Make Smarter TikTok Shop Decisions
+Know Your Profit Before You Sell
 </h1>
 
 <p>
-Calculate your profit, ROI and product potential before investing your time and money.
+Advanced TikTok Shop calculator to analyze profit margins,
+ROI and product opportunities before investing.
 </p>
 
-</header>
+</div>
+
+</section>
 
 
 
 
-<main class="container" id="calculator">
+
+
+<main class="container">
 
 
 
-<section class="card">
+<section class="calculator-card">
 
 
 <h2>
-Profit Calculator
+📊 Profit Calculator
 </h2>
 
 
-
-<label>
-Selling Price ($)
-</label>
-
-<input id="sellingPrice" type="number" placeholder="Example: 49.99">
+<div class="form-grid">
 
 
+<div>
 
-<label>
-Product Cost ($)
-</label>
+<label>Selling Price ($)</label>
+<input id="sellingPrice" type="number" placeholder="49.99">
 
-<input id="productCost" type="number" placeholder="Example: 15">
-
-
-
-<label>
-Shipping Cost ($)
-</label>
-
-<input id="shippingCost" type="number" placeholder="Example: 5">
+</div>
 
 
+<div>
 
-<label>
-TikTok Shop Fee (%)
-</label>
+<label>Product Cost ($)</label>
+<input id="productCost" type="number" placeholder="15">
 
+</div>
+
+
+<div>
+
+<label>Shipping Cost ($)</label>
+<input id="shippingCost" type="number" placeholder="5">
+
+</div>
+
+
+<div>
+
+<label>TikTok Fee (%)</label>
 <input id="fee" type="number" value="6">
 
+</div>
 
 
-<label>
-Advertising Cost ($)
-</label>
+<div>
 
-<input id="adsCost" type="number" placeholder="Example: 10">
+<label>Advertising Cost ($)</label>
+<input id="adsCost" type="number" placeholder="10">
+
+</div>
+
+
+</div>
 
 
 
-<div class="buttons">
+<div class="button-area">
 
 <button onclick="calculateProfit()">
 Calculate Profit
@@ -121,15 +135,69 @@ Reset
 
 
 
-<section class="card results">
+
+
+
+<section class="dashboard">
+
+
+
+<div class="stat-card">
+
+<h4>Net Profit</h4>
+
+<h2 id="profit">
+$0
+</h2>
+
+</div>
+
+
+
+
+<div class="stat-card">
+
+<h4>ROI</h4>
+
+<h2 id="roi">
+0%
+</h2>
+
+</div>
+
+
+
+
+<div class="stat-card">
+
+<h4>Status</h4>
+
+<h2 id="status">
+Waiting
+</h2>
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<section class="breakdown">
 
 
 <h2>
-Your Business Insights
+Cost Breakdown
 </h2>
 
 
-<div class="result-grid">
+<div class="break-grid">
 
 
 <div>
@@ -138,19 +206,10 @@ Your Business Insights
 </div>
 
 
-
 <div>
 <p>TikTok Fee</p>
 <strong id="tiktokFee">$0</strong>
 </div>
-
-
-
-<div>
-<p>Net Profit</p>
-<strong id="profit">$0</strong>
-</div>
-
 
 
 <div>
@@ -159,21 +218,16 @@ Your Business Insights
 </div>
 
 
-
 <div>
-<p>ROI</p>
-<strong id="roi">0%</strong>
+<p>Break Even Price</p>
+<strong id="breakEven">$0</strong>
 </div>
 
 
-
 <div>
-<p>Product Status</p>
-<strong id="status">
-Waiting
-</strong>
+<p>Recommended Price</p>
+<strong id="recommended">$0</strong>
 </div>
-
 
 
 </div>
@@ -186,55 +240,9 @@ Waiting
 
 
 
-<section class="info">
 
 
-<h2>
-How It Works
-</h2>
-
-
-<p>
-Enter your product price, costs, TikTok fees and advertising budget.
-Our calculator estimates your expected profit and ROI instantly.
-</p>
-
-
-
-<h2>
-Why Use This Tool?
-</h2>
-
-
-<ul>
-
-<li>
-Analyze products before selling
-</li>
-
-<li>
-Understand your real profit margins
-</li>
-
-<li>
-Make data-driven TikTok Shop decisions
-</li>
-
-<li>
-Reduce risk before investing
-</li>
-
-</ul>
-
-
-</section>
-
-
-
-
-
-
-<section class="service-banner">
+<section class="service">
 
 
 <h2>
@@ -243,16 +251,14 @@ Need Help Growing Your TikTok Shop?
 
 
 <p>
-Get professional support with TikTok Shop virtual assistance,
-product research, viral product lists, store management and
-eCommerce growth strategies.
+Get professional support for TikTok Shop management,
+virtual assistance, product research, viral product lists,
+store optimization and eCommerce growth.
 </p>
 
 
 <a href="https://wa.me/923257833708" target="_blank">
-
-Start Your Business Support
-
+Chat on WhatsApp
 </a>
 
 
@@ -263,11 +269,31 @@ Start Your Business Support
 
 
 
-<a class="whatsapp" href="https://wa.me/923257833708" target="_blank">
 
-💬 Contact Us On WhatsApp
+<section class="faq">
 
-</a>
+
+<h2>
+Why Use ProfitPilot?
+</h2>
+
+
+<ul>
+
+<li>Analyze products before investing</li>
+
+<li>Understand real profit margins</li>
+
+<li>Make smarter selling decisions</li>
+
+<li>Save time with accurate calculations</li>
+
+
+</ul>
+
+
+</section>
+
 
 
 
@@ -280,9 +306,12 @@ Start Your Business Support
 
 <footer>
 
-© 2026 TikTok Shop Profit Pro
+<p>
+© 2026 ProfitPilot. Built for TikTok Shop Sellers.
+</p>
 
 </footer>
+
 
 
 
