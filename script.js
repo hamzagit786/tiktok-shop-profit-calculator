@@ -1,9 +1,16 @@
 function calculateProfit(){
 
 
+    // Get Values
+
+    let currency = document.getElementById("currency").value;
+
+
     let cost = Number(document.getElementById("cost").value) || 0;
 
     let price = Number(document.getElementById("price").value) || 0;
+
+    let shipping = Number(document.getElementById("shipping").value) || 0;
 
     let fees = Number(document.getElementById("fees").value) || 0;
 
@@ -11,21 +18,36 @@ function calculateProfit(){
 
 
 
-    // Profit Formula
+    // Profit Calculation
 
-    let profit = price - cost - fees - ads;
+    let totalCost = cost + shipping + fees + ads;
 
 
-    // ROI Formula
+    let profit = price - totalCost;
 
-    let investment = cost + ads + fees;
+
+
+    // Profit Margin
+
+    let margin = 0;
+
+
+    if(price > 0){
+
+        margin = ((profit / price) * 100).toFixed(1);
+
+    }
+
+
+
+    // ROI Calculation
 
     let roi = 0;
 
 
-    if(investment > 0){
+    if(totalCost > 0){
 
-        roi = ((profit / investment) * 100).toFixed(1);
+        roi = ((profit / totalCost) * 100).toFixed(1);
 
     }
 
@@ -36,6 +58,7 @@ function calculateProfit(){
     let score = 50;
 
 
+
     if(profit > 0){
 
         score += 25;
@@ -43,16 +66,18 @@ function calculateProfit(){
     }
 
 
-    if(roi > 50){
 
-        score += 20;
+    if(roi >= 50){
+
+        score += 15;
 
     }
 
 
-    if(price > cost * 2){
 
-        score += 5;
+    if(margin >= 30){
+
+        score += 10;
 
     }
 
@@ -66,21 +91,26 @@ function calculateProfit(){
 
 
 
-    // Update Dashboard
+    // Update Results
 
 
     document.getElementById("profit").innerHTML =
-    "$" + profit.toFixed(2);
+    currency + Number(profit).toFixed(2);
 
 
 
-    document.querySelectorAll(".metric strong")[1].innerHTML =
+    document.getElementById("margin").innerHTML =
+    margin + "%";
+
+
+
+    document.getElementById("roi").innerHTML =
     roi + "%";
 
 
 
-    document.querySelectorAll(".metric strong")[2].innerHTML =
-    score + "%";
+    document.getElementById("score").innerHTML =
+    score + "/100";
 
 
 
@@ -89,27 +119,37 @@ function calculateProfit(){
 
 
 
-// Button hover animation
 
 
-const buttons = document.querySelectorAll("button");
+
+// Smooth Scroll Buttons
 
 
-buttons.forEach(button=>{
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
 
 
-    button.addEventListener("mouseenter",()=>{
-
-        button.style.transform="translateY(-3px)";
-
-    });
+anchor.addEventListener("click",function(e){
 
 
-    button.addEventListener("mouseleave",()=>{
+let target=document.querySelector(this.getAttribute("href"));
 
-        button.style.transform="translateY(0)";
 
-    });
+if(target){
+
+e.preventDefault();
+
+
+target.scrollIntoView({
+
+behavior:"smooth"
+
+});
+
+
+}
+
+
+});
 
 
 });
@@ -118,10 +158,10 @@ buttons.forEach(button=>{
 
 
 
-// Scroll reveal animation
 
 
-const cards = document.querySelectorAll(".card");
+
+// Simple Card Animation
 
 
 const observer = new IntersectionObserver((entries)=>{
@@ -131,6 +171,7 @@ entries.forEach(entry=>{
 
 
 if(entry.isIntersecting){
+
 
 entry.target.style.opacity="1";
 
@@ -143,22 +184,24 @@ entry.target.style.transform="translateY(0)";
 });
 
 
-},{threshold:.2});
+},{threshold:0.15});
 
 
 
 
-cards.forEach(card=>{
+
+document.querySelectorAll(".service-card,.dashboard,.calculator-box")
+.forEach(item=>{
 
 
-card.style.opacity="0";
+item.style.opacity="0";
 
-card.style.transform="translateY(40px)";
+item.style.transform="translateY(40px)";
 
-card.style.transition="0.6s";
+item.style.transition="0.7s";
 
 
-observer.observe(card);
+observer.observe(item);
 
 
 });
