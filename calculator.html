@@ -8,71 +8,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-<title>TikTok Shop Profit Calculator | Calculate Fees, ROI & Profit</title>
+<title>eProfitFlow Ecommerce Profit Calculator | Calculate Real Product Profit</title>
 
 
-<meta name="description" content="Use our TikTok Shop Profit Calculator to calculate product profit, TikTok fees, affiliate commissions, ROI and profit margins before scaling.">
+<meta name="description" content="Use eProfitFlow ecommerce profit calculator to calculate product profit, fees, ROI, margins and monthly earnings for your online store.">
 
 
-<meta name="keywords" content="TikTok Shop Profit Calculator, TikTok Shop Fee Calculator, TikTok Seller Calculator, Ecommerce Profit Calculator">
+<meta name="keywords" content="ecommerce profit calculator, TikTok Shop profit calculator, product profit analysis, seller calculator">
 
 
 <link rel="stylesheet" href="style.css">
 
-
-<link rel="canonical" href="calculator.html">
+<link rel="icon" href="favicon.png">
 
 
 </head>
 
 
-
 <body>
-
 
 
 <header class="navbar">
 
 
 <div class="logo">
-Profit<span>Flow</span>
+
+<span>e</span>ProfitFlow
+
 </div>
-
-
 
 
 <nav>
 
-<a href="index.html">Home</a>
+<a href="index.html">
+Home
+</a>
 
-<a href="calculator.html">Calculator</a>
+<a href="calculator.html">
+Calculator
+</a>
 
-<a href="services.html">Services</a>
+<a href="services.html">
+Services
+</a>
 
-<a href="blog.html">Blog</a>
+<a href="blog.html">
+Blog
+</a>
 
-<a href="about.html">About</a>
-
-<a href="contact.html">Contact</a>
+<a href="contact.html">
+Contact
+</a>
 
 
 </nav>
 
 
-
-<a href="https://wa.me/923257833708"
-class="nav-btn">
-
-Get Expert Help
-
-</a>
-
-
 </header>
-
-
-
-
 
 
 
@@ -82,13 +74,15 @@ Get Expert Help
 
 
 <h1>
-TikTok Shop Profit Calculator
+
+Ecommerce Profit Calculator
+
 </h1>
 
 
 <p>
 
-Calculate your estimated ecommerce profit after TikTok Shop fees, affiliate commissions, shipping costs and advertising expenses.
+Calculate your product profit, fees, ROI and monthly earning potential before scaling your store.
 
 </p>
 
@@ -102,16 +96,18 @@ Calculate your estimated ecommerce profit after TikTok Shop fees, affiliate comm
 
 
 
-
-<section class="calculator">
+<section class="calculator-container">
 
 
 
 <div class="calculator-box">
 
 
+<h2>
 
-<div class="inputs">
+Product Information
+
+</h2>
 
 
 
@@ -134,20 +130,16 @@ EUR (€)
 GBP (£)
 </option>
 
-<option value="د.إ">
+<option value="AED">
 AED
 </option>
 
-<option value="﷼">
-SAR
-</option>
-
-<option value="₨">
+<option value="PKR">
 PKR
 </option>
 
-
 </select>
+
 
 
 
@@ -157,7 +149,7 @@ Product Cost
 </label>
 
 
-<input id="cost" type="number" placeholder="Enter product cost">
+<input id="cost" type="number" placeholder="Example: 10">
 
 
 
@@ -168,7 +160,8 @@ Selling Price
 </label>
 
 
-<input id="price" type="number" placeholder="Enter selling price">
+<input id="price" type="number" placeholder="Example: 30">
+
 
 
 
@@ -179,14 +172,14 @@ Shipping Cost
 </label>
 
 
-<input id="shipping" type="number" placeholder="Enter shipping cost">
+<input id="shipping" type="number" placeholder="Example: 5">
 
 
 
 
 
 <label>
-TikTok Shop Fee (%)
+Platform Fee %
 </label>
 
 
@@ -196,12 +189,14 @@ TikTok Shop Fee (%)
 
 
 
+
 <label>
-Affiliate Commission (%)
+Affiliate Commission %
 </label>
 
 
 <input id="affiliate" type="number" placeholder="Example: 10">
+
 
 
 
@@ -212,14 +207,25 @@ Advertising Cost
 </label>
 
 
-<input id="ads" type="number" placeholder="Enter ad cost">
+<input id="ads" type="number" placeholder="Example: 5">
 
 
 
 
 
-<button onclick="calculateProfit()"
-class="primary-btn">
+
+<label>
+Monthly Orders
+</label>
+
+
+<input id="orders" type="number" placeholder="Example: 100">
+
+
+
+
+
+<button onclick="calculateProfit()" class="btn">
 
 Calculate Profit
 
@@ -235,11 +241,14 @@ Calculate Profit
 
 
 
-<div class="results">
+
+<div class="results-box">
 
 
 <h2>
-Your Profit Analysis
+
+Profit Analytics
+
 </h2>
 
 
@@ -247,14 +256,13 @@ Your Profit Analysis
 
 <div class="result-card">
 
-Net Profit
+<h3>
+Profit Per Sale
+</h3>
 
 <strong id="profit">
-
 $0
-
 </strong>
-
 
 </div>
 
@@ -264,14 +272,13 @@ $0
 
 <div class="result-card">
 
+<h3>
 Profit Margin
+</h3>
 
 <strong id="margin">
-
 0%
-
 </strong>
-
 
 </div>
 
@@ -281,14 +288,13 @@ Profit Margin
 
 <div class="result-card">
 
+<h3>
 ROI Score
+</h3>
 
 <strong id="roi">
-
 0%
-
 </strong>
-
 
 </div>
 
@@ -298,14 +304,29 @@ ROI Score
 
 <div class="result-card">
 
+<h3>
 Opportunity Score
+</h3>
 
 <strong id="score">
-
 0/100
-
 </strong>
 
+</div>
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Monthly Estimated Profit
+</h3>
+
+<strong id="monthlyProfit">
+$0
+</strong>
 
 </div>
 
@@ -315,13 +336,6 @@ Opportunity Score
 </div>
 
 
-
-
-
-</div>
-
-
-
 </section>
 
 
@@ -329,87 +343,24 @@ Opportunity Score
 
 
 
-
-
-
-<section class="content-section">
+<section class="info-section">
 
 
 <h2>
-How TikTok Shop Profit Calculation Works
+
+How eProfitFlow Works
+
 </h2>
 
 
 <p>
 
-Profit calculation helps sellers understand whether a product has enough margin after all business expenses.
+Enter your product costs, selling price, fees and marketing expenses. Our calculator estimates your profit potential and helps you make smarter ecommerce decisions.
 
 </p>
 
 
-
-<p>
-
-The calculator considers product cost, shipping, platform fees, affiliate commissions and advertising expenses to provide a clearer estimated profit view.
-
-</p>
-
-
-
 </section>
-
-
-
-
-
-
-
-
-
-<section class="content-section">
-
-
-<h2>
-Why Calculate Profit Before Selling?
-</h2>
-
-
-<p>
-
-Many ecommerce sellers focus only on sales revenue. Understanding actual profit helps with better pricing decisions and smarter product scaling.
-
-</p>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-<section class="contact-cta">
-
-
-<h2>
-Need Help Optimizing Your TikTok Shop?
-</h2>
-
-
-<a href="https://wa.me/923257833708"
-class="primary-btn">
-
-Contact Ecommerce Expert
-
-</a>
-
-
-</section>
-
-
 
 
 
@@ -418,17 +369,18 @@ Contact Ecommerce Expert
 <footer>
 
 
-<div class="logo">
-Profit<span>Flow</span>
-</div>
+<h3>
+eProfitFlow
+</h3>
 
 
 <p>
-Professional ecommerce tools for global sellers.
+Smart Ecommerce Profit Analytics
 </p>
 
 
 </footer>
+
 
 
 
@@ -437,4 +389,4 @@ Professional ecommerce tools for global sellers.
 
 </body>
 
-  </html>
+</html>
