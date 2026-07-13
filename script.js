@@ -1,6 +1,9 @@
 function calculateProfit(){
 
 
+let currency = document.getElementById("currency").value;
+
+
 let sellingPrice = Number(document.getElementById("sellingPrice").value) || 0;
 
 let productCost = Number(document.getElementById("productCost").value) || 0;
@@ -19,7 +22,7 @@ let tiktokFee = sellingPrice * (fee / 100);
 
 
 
-// Total Investment
+// Total Cost
 
 let totalCost = productCost + shippingCost + adsCost + tiktokFee;
 
@@ -50,14 +53,13 @@ let roi = investment > 0
 
 
 
-
 // Break Even
 
-let breakEven = productCost + shippingCost + adsCost + tiktokFee;
+let breakEven = totalCost;
 
 
 
-// Recommended Selling Price
+// Recommended Price
 
 let recommended = totalCost * 1.4;
 
@@ -65,48 +67,48 @@ let recommended = totalCost * 1.4;
 
 
 
-// Display Results
+// Show Results
 
 
 document.getElementById("profit").innerHTML =
-"$" + profit.toFixed(2);
+currency + profit.toFixed(2);
 
 
 
 document.getElementById("roi").innerHTML =
-roi.toFixed(2) + "%";
+roi.toFixed(1) + "%";
 
 
 
 document.getElementById("totalCost").innerHTML =
-"$" + totalCost.toFixed(2);
+currency + totalCost.toFixed(2);
 
 
 
 document.getElementById("tiktokFee").innerHTML =
-"$" + tiktokFee.toFixed(2);
+currency + tiktokFee.toFixed(2);
 
 
 
 document.getElementById("margin").innerHTML =
-margin.toFixed(2) + "%";
+margin.toFixed(1) + "%";
 
 
 
 document.getElementById("breakEven").innerHTML =
-"$" + breakEven.toFixed(2);
+currency + breakEven.toFixed(2);
 
 
 
 document.getElementById("recommended").innerHTML =
-"$" + recommended.toFixed(2);
+currency + recommended.toFixed(2);
 
 
 
 
 
 
-// ROI Business Status
+// Business Status
 
 
 let status = document.getElementById("status");
@@ -127,13 +129,28 @@ status.innerHTML = "🟡 Good";
 
 else if(roi >= 1){
 
-status.innerHTML = "🔵 Need Improvement";
+status.innerHTML = "🔵 Improve";
 
 }
 
 else{
 
-status.innerHTML = "🔴 Not Profitable";
+status.innerHTML = "🔴 Loss";
+
+}
+
+
+
+
+// Scroll to Results
+
+
+document.querySelector(".results").scrollIntoView({
+
+behavior:"smooth"
+
+});
+
 
 }
 
@@ -141,7 +158,39 @@ status.innerHTML = "🔴 Not Profitable";
 
 
 
+// Reset
 
-// Smooth Scroll
 
-document
+function resetCalculator(){
+
+
+document.getElementById("sellingPrice").value="";
+
+document.getElementById("productCost").value="";
+
+document.getElementById("shippingCost").value="";
+
+document.getElementById("fee").value="6";
+
+document.getElementById("adsCost").value="";
+
+
+
+document.getElementById("profit").innerHTML="$0";
+
+document.getElementById("roi").innerHTML="0%";
+
+document.getElementById("status").innerHTML="Waiting";
+
+document.getElementById("totalCost").innerHTML="$0";
+
+document.getElementById("tiktokFee").innerHTML="$0";
+
+document.getElementById("margin").innerHTML="0%";
+
+document.getElementById("breakEven").innerHTML="$0";
+
+document.getElementById("recommended").innerHTML="$0";
+
+
+}
