@@ -10,41 +10,34 @@ function calculateProfit(){
 
     let shipping = Number(document.getElementById("shipping").value) || 0;
 
-    let tiktokFee = Number(document.getElementById("tiktokFee").value) || 0;
+    let fee = Number(document.getElementById("tiktokFee").value) || 0;
 
     let affiliate = Number(document.getElementById("affiliate").value) || 0;
 
     let ads = Number(document.getElementById("ads").value) || 0;
 
-
-
-    if(price <= 0){
-
-        alert("Please enter selling price");
-
-        return;
-
-    }
+    let orders = Number(document.getElementById("orders").value) || 0;
 
 
 
-    // Fee calculations
+    // Platform fee calculation
+
+    let platformFee = price * (fee / 100);
 
 
-    let tiktokCost = price * (tiktokFee / 100);
 
+    // Affiliate commission calculation
 
     let affiliateCost = price * (affiliate / 100);
 
 
 
-    // Total expense
+    // Total cost
 
-
-    let totalCost =
+    let totalCost = 
     cost +
     shipping +
-    tiktokCost +
+    platformFee +
     affiliateCost +
     ads;
 
@@ -52,70 +45,65 @@ function calculateProfit(){
 
     // Profit
 
-
-    let profit =
-    price - totalCost;
-
+    let profit = price - totalCost;
 
 
 
     // Margin
 
+    let margin = 0;
 
-    let margin =
-    ((profit / price) * 100).toFixed(1);
+    if(price > 0){
 
-
-
-
-    // ROI
-
-
-    let roi =
-    ((profit / totalCost) * 100).toFixed(1);
-
-
-
-
-    if(totalCost <= 0){
-
-        roi = 0;
+        margin = (profit / price) * 100;
 
     }
 
 
 
+    // ROI
+
+    let roi = 0;
+
+    if(totalCost > 0){
+
+        roi = (profit / totalCost) * 100;
+
+    }
 
 
-    // Opportunity score
 
+    // Monthly Profit
+
+    let monthlyProfit = profit * orders;
+
+
+
+
+    // Opportunity Score
 
     let score = 50;
 
 
-
-    if(profit > 0){
+    if(margin >= 30){
 
         score += 20;
 
     }
 
 
-
-    if(margin >= 30){
-
-        score += 15;
-
-    }
-
-
-
     if(roi >= 50){
 
-        score += 15;
+        score += 20;
 
     }
 
+
+    if(profit > 0){
+
+        score += 10;
+
+    }
 
 
     if(score > 100){
@@ -126,17 +114,8 @@ function calculateProfit(){
 
 
 
-    if(score < 0){
 
-        score = 0;
-
-    }
-
-
-
-
-
-    // Display results
+    // Display Results
 
 
     document.getElementById("profit").innerHTML =
@@ -145,17 +124,22 @@ function calculateProfit(){
 
 
     document.getElementById("margin").innerHTML =
-    margin + "%";
+    margin.toFixed(1) + "%";
 
 
 
     document.getElementById("roi").innerHTML =
-    roi + "%";
+    roi.toFixed(1) + "%";
 
 
 
     document.getElementById("score").innerHTML =
     score + "/100";
+
+
+
+    document.getElementById("monthlyProfit").innerHTML =
+    currency + monthlyProfit.toFixed(2);
 
 
 
