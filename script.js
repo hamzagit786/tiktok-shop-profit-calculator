@@ -1,6 +1,12 @@
 function calculateProfit(){
 
 
+    // Inputs
+
+    let platform = document.getElementById("platform").value;
+
+    let analysisType = document.getElementById("analysisType").value;
+
     let currency = document.getElementById("currency").value;
 
 
@@ -10,7 +16,7 @@ function calculateProfit(){
 
     let shipping = Number(document.getElementById("shipping").value) || 0;
 
-    let fee = Number(document.getElementById("tiktokFee").value) || 0;
+    let platformFee = Number(document.getElementById("platformFee").value) || 0;
 
     let affiliate = Number(document.getElementById("affiliate").value) || 0;
 
@@ -20,38 +26,42 @@ function calculateProfit(){
 
 
 
-    // Platform fee calculation
+    // Platform Fee
 
-    let platformFee = price * (fee / 100);
+    let platformCost = price * (platformFee / 100);
 
 
 
-    // Affiliate commission calculation
+    // Affiliate Cost
 
     let affiliateCost = price * (affiliate / 100);
 
 
 
-    // Total cost
+
+    // Total Cost Per Sale
 
     let totalCost = 
     cost +
     shipping +
-    platformFee +
+    platformCost +
     affiliateCost +
     ads;
 
 
 
-    // Profit
+
+    // Profit Per Sale
 
     let profit = price - totalCost;
+
 
 
 
     // Margin
 
     let margin = 0;
+
 
     if(price > 0){
 
@@ -61,15 +71,31 @@ function calculateProfit(){
 
 
 
+
+
     // ROI
 
     let roi = 0;
+
 
     if(totalCost > 0){
 
         roi = (profit / totalCost) * 100;
 
     }
+
+
+
+
+
+    // Revenue
+
+    let monthlyRevenue = price * orders;
+
+    let yearlyRevenue = monthlyRevenue * 12;
+
+
+
 
 
 
@@ -80,9 +106,20 @@ function calculateProfit(){
 
 
 
+
+    // Yearly Profit
+
+    let yearlyProfit = monthlyProfit * 12;
+
+
+
+
+
+
     // Opportunity Score
 
     let score = 50;
+
 
 
     if(margin >= 30){
@@ -92,6 +129,7 @@ function calculateProfit(){
     }
 
 
+
     if(roi >= 50){
 
         score += 20;
@@ -99,11 +137,13 @@ function calculateProfit(){
     }
 
 
+
     if(profit > 0){
 
         score += 10;
 
     }
+
 
 
     if(score > 100){
@@ -115,11 +155,70 @@ function calculateProfit(){
 
 
 
-    // Display Results
+
+
+    // Analysis Type Display Logic
+
+
+    if(analysisType === "single"){
+
+        monthlyProfit = profit * orders;
+
+        yearlyProfit = monthlyProfit * 12;
+
+    }
+
+
+
+    if(analysisType === "monthly"){
+
+
+        yearlyProfit = monthlyProfit * 12;
+
+
+    }
+
+
+
+
+
+    if(analysisType === "yearly"){
+
+
+        yearlyProfit = monthlyProfit * 12;
+
+
+    }
+
+
+
+
+
+
+
+    // Update Dashboard
+
+
+
+
+    document.getElementById("resultPlatform").innerHTML =
+    platform;
+
+
+
 
 
     document.getElementById("profit").innerHTML =
     currency + profit.toFixed(2);
+
+
+
+
+
+    document.getElementById("revenue").innerHTML =
+    currency + monthlyRevenue.toFixed(2);
+
+
 
 
 
@@ -128,18 +227,34 @@ function calculateProfit(){
 
 
 
+
+
     document.getElementById("roi").innerHTML =
     roi.toFixed(1) + "%";
 
 
 
-    document.getElementById("score").innerHTML =
-    score + "/100";
 
 
 
     document.getElementById("monthlyProfit").innerHTML =
     currency + monthlyProfit.toFixed(2);
+
+
+
+
+
+
+    document.getElementById("yearlyProfit").innerHTML =
+    currency + yearlyProfit.toFixed(2);
+
+
+
+
+
+
+    document.getElementById("score").innerHTML =
+    score + "/100";
 
 
 
