@@ -4,26 +4,13 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-<title>eProfitFlow Ecommerce Profit Calculator | Seller Analytics Tool</title>
-
-
-<meta name="description" content="Calculate ecommerce profits, platform fees, ROI, margins and monthly or yearly earnings with eProfitFlow calculator.">
-
-
-<meta name="keywords" content="ecommerce profit calculator, TikTok Shop calculator, Amazon profit calculator, Shopify profit calculator">
-
+<title>eProfitFlow Ecommerce Profit Calculator</title>
 
 <link rel="stylesheet" href="style.css">
 
-<link rel="icon" href="favicon.png">
-
-
 </head>
-
 
 
 <body>
@@ -32,24 +19,15 @@
 <header class="navbar">
 
 <div class="logo">
-
 <span>e</span>ProfitFlow
-
 </div>
 
 
 <nav>
-
 <a href="index.html">Home</a>
-
 <a href="calculator.html">Calculator</a>
-
 <a href="services.html">Services</a>
-
 <a href="blog.html">Blog</a>
-
-<a href="contact.html">Contact</a>
-
 </nav>
 
 </header>
@@ -57,26 +35,17 @@
 
 
 
-
 <section class="page-hero">
 
-
 <h1>
-
 Ecommerce Profit Calculator
-
 </h1>
 
-
 <p>
-
-Analyze your product profitability, platform costs and business growth potential.
-
+Analyze your product profit, monthly revenue and yearly growth.
 </p>
 
-
 </section>
-
 
 
 
@@ -86,48 +55,24 @@ Analyze your product profitability, platform costs and business growth potential
 <section class="calculator-container">
 
 
-
 <div class="calculator-box">
 
 
-<h2>
-Calculator Settings
-</h2>
+<h2>Enter Product Data</h2>
 
 
 
-<label>
-Select Platform
-</label>
-
+<label>Platform</label>
 
 <select id="platform">
 
+<option value="TikTok Shop">TikTok Shop</option>
 
-<option value="TikTok Shop">
-TikTok Shop
-</option>
+<option value="Amazon">Amazon</option>
 
+<option value="Shopify">Shopify</option>
 
-<option value="Amazon">
-Amazon
-</option>
-
-
-<option value="Shopify">
-Shopify
-</option>
-
-
-<option value="Etsy">
-Etsy
-</option>
-
-
-<option value="Other">
-Other
-</option>
-
+<option value="Etsy">Etsy</option>
 
 </select>
 
@@ -135,28 +80,22 @@ Other
 
 
 
+<label>Analysis Type</label>
 
-
-<label>
-Analysis Type
-</label>
-
-
-<select id="analysisType">
-
+<select id="mode">
 
 <option value="single">
-Single Product Analysis
+Single Product
 </option>
 
 
 <option value="monthly">
-Monthly Business Analysis
+Monthly
 </option>
 
 
 <option value="yearly">
-Yearly Business Analysis
+Yearly
 </option>
 
 
@@ -166,41 +105,17 @@ Yearly Business Analysis
 
 
 
-
-
-
-<label>
-Currency
-</label>
-
+<label>Currency</label>
 
 <select id="currency">
 
+<option value="$">$ USD</option>
 
-<option value="$">
-USD ($)
-</option>
+<option value="€">€ EUR</option>
 
+<option value="£">£ GBP</option>
 
-<option value="€">
-EUR (€)
-</option>
-
-
-<option value="£">
-GBP (£)
-</option>
-
-
-<option value="AED">
-AED
-</option>
-
-
-<option value="PKR">
-PKR
-</option>
-
+<option value="PKR">PKR</option>
 
 </select>
 
@@ -208,87 +123,49 @@ PKR
 
 
 
+<label>Product Cost</label>
 
-
-
-<label>
-Product Cost
-</label>
-
-
-<input id="cost" type="number" placeholder="Example: 10">
+<input id="productCost" type="number" placeholder="10">
 
 
 
 
 
+<label>Selling Price</label>
 
-<label>
-Selling Price
-</label>
-
-
-<input id="price" type="number" placeholder="Example: 30">
+<input id="sellingPrice" type="number" placeholder="30">
 
 
 
 
 
+<label>Shipping Cost</label>
 
-<label>
-Shipping Cost
-</label>
-
-
-<input id="shipping" type="number" placeholder="Example: 5">
+<input id="shippingCost" type="number" placeholder="5">
 
 
 
 
 
+<label>Platform Fee %</label>
 
-<label>
-Platform Fee %
-</label>
-
-
-<input id="platformFee" type="number" placeholder="Example: 6">
+<input id="fee" type="number" placeholder="6">
 
 
 
 
 
+<label>Advertising Cost</label>
 
-<label>
-Affiliate Commission %
-</label>
-
-
-<input id="affiliate" type="number" placeholder="Example: 10">
+<input id="adCost" type="number" placeholder="5">
 
 
 
 
 
+<label>Orders Per Month</label>
 
-<label>
-Advertising Cost Per Order
-</label>
-
-
-<input id="ads" type="number" placeholder="Example: 5">
-
-
-
-
-
-
-<label>
-Monthly Orders
-</label>
-
-
-<input id="orders" type="number" placeholder="Example: 100">
+<input id="monthlyOrders" type="number" placeholder="100">
 
 
 
@@ -296,15 +173,13 @@ Monthly Orders
 
 <button onclick="calculateProfit()" class="btn">
 
-Generate Analytics
+Calculate Profit
 
 </button>
 
 
 
 </div>
-
-
 
 
 
@@ -323,14 +198,11 @@ Profit Dashboard
 
 
 
-
 <div class="result-card">
 
-<h3>
-Platform
-</h3>
+<h3>Platform</h3>
 
-<strong id="resultPlatform">
+<strong id="showPlatform">
 -
 </strong>
 
@@ -340,13 +212,9 @@ Platform
 
 
 
-
-
 <div class="result-card">
 
-<h3>
-Profit Per Sale
-</h3>
+<h3>Profit Per Sale</h3>
 
 <strong id="profit">
 $0
@@ -358,32 +226,9 @@ $0
 
 
 
-
-
 <div class="result-card">
 
-<h3>
-Revenue
-</h3>
-
-<strong id="revenue">
-$0
-</strong>
-
-</div>
-
-
-
-
-
-
-
-
-<div class="result-card">
-
-<h3>
-Profit Margin
-</h3>
+<h3>Profit Margin</h3>
 
 <strong id="margin">
 0%
@@ -395,14 +240,9 @@ Profit Margin
 
 
 
-
-
-
 <div class="result-card">
 
-<h3>
-ROI
-</h3>
+<h3>ROI</h3>
 
 <strong id="roi">
 0%
@@ -414,14 +254,23 @@ ROI
 
 
 
+<div class="result-card">
+
+<h3>Monthly Revenue</h3>
+
+<strong id="monthlyRevenue">
+$0
+</strong>
+
+</div>
+
+
 
 
 
 <div class="result-card">
 
-<h3>
-Monthly Profit
-</h3>
+<h3>Monthly Profit</h3>
 
 <strong id="monthlyProfit">
 $0
@@ -433,14 +282,9 @@ $0
 
 
 
-
-
-
 <div class="result-card">
 
-<h3>
-Yearly Profit
-</h3>
+<h3>Yearly Profit</h3>
 
 <strong id="yearlyProfit">
 $0
@@ -452,17 +296,12 @@ $0
 
 
 
-
-
-
 <div class="result-card">
 
-<h3>
-Opportunity Score
-</h3>
+<h3>Break Even Sales</h3>
 
-<strong id="score">
-0/100
+<strong id="breakEven">
+0
 </strong>
 
 </div>
@@ -473,53 +312,6 @@ Opportunity Score
 
 
 </section>
-
-
-
-
-
-
-
-
-
-<section class="info-section">
-
-
-<h2>
-How eProfitFlow Works
-</h2>
-
-
-<p>
-
-Select your ecommerce platform, choose your analysis type and enter your product information. eProfitFlow calculates estimated profitability, revenue and performance metrics to help sellers make smarter decisions.
-
-</p>
-
-
-</section>
-
-
-
-
-
-
-
-<footer>
-
-
-<h3>
-eProfitFlow
-</h3>
-
-
-<p>
-Smart Ecommerce Profit Analytics for Modern Sellers.
-</p>
-
-
-</footer>
-
 
 
 
