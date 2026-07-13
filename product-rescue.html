@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>eProfitFlow Product Rescue Tool</title>
+
+<meta name="description" content="Find alternative product sources when your dropshipping product becomes unavailable or expensive.">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+<div class="logo">
+
+<span>e</span>ProfitFlow
+
+</div>
+
+
+<nav>
+
+<a href="index.html">Home</a>
+
+<a href="calculator.html">Calculator</a>
+
+<a href="product-rescue.html">Product Rescue</a>
+
+<a href="services.html">Services</a>
+
+<a href="blog.html">Blog</a>
+
+</nav>
+
+</header>
+
+
+
+
+
+<section class="page-hero">
+
+
+<h1>
+
+Product Rescue Tool
+
+</h1>
+
+
+<p>
+
+Find alternative product options when your supplier runs out of stock or changes price.
+
+</p>
+
+
+</section>
+
+
+
+
+
+<section class="calculator-container">
+
+
+<div class="calculator-box">
+
+
+<h2>
+Product Information
+</h2>
+
+
+
+<label>
+Product Name
+</label>
+
+<input id="productName" type="text" placeholder="Example: Portable Blender">
+
+
+
+
+
+<label>
+Current Product Link
+</label>
+
+<input id="productLink" type="text" placeholder="Paste product link">
+
+
+
+
+
+<label>
+Current Product Price
+</label>
+
+<input id="productPrice" type="number" placeholder="Example: 20">
+
+
+
+
+
+<label>
+Supplier Country
+</label>
+
+<select id="country">
+
+<option value="USA">
+USA
+</option>
+
+<option value="UK">
+UK
+</option>
+
+<option value="Canada">
+Canada
+</option>
+
+<option value="Australia">
+Australia
+</option>
+
+</select>
+
+
+
+
+
+<button class="btn" onclick="findProduct()">
+
+Find Alternatives
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="results-box">
+
+
+<h2>
+Replacement Options
+</h2>
+
+
+<div id="results">
+
+<p>
+Enter product details to generate options.
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+<script src="rescue.js"></script>
+
+
+</body>
+
+  </html>
