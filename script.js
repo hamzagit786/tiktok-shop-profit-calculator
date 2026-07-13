@@ -1,3 +1,4 @@
+alert("eProfitFlow JS Loaded");
 function calculateProfit(){
 
 
