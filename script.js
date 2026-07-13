@@ -1,59 +1,51 @@
 function calculateProfit(){
 
 
-    // Inputs
+    // Get Values
 
     let platform = document.getElementById("platform").value;
 
-    let analysisType = document.getElementById("analysisType").value;
+    let mode = document.getElementById("mode").value;
 
     let currency = document.getElementById("currency").value;
 
 
-    let cost = Number(document.getElementById("cost").value) || 0;
+    let productCost = Number(document.getElementById("productCost").value) || 0;
 
-    let price = Number(document.getElementById("price").value) || 0;
+    let sellingPrice = Number(document.getElementById("sellingPrice").value) || 0;
 
-    let shipping = Number(document.getElementById("shipping").value) || 0;
+    let shippingCost = Number(document.getElementById("shippingCost").value) || 0;
 
-    let platformFee = Number(document.getElementById("platformFee").value) || 0;
+    let fee = Number(document.getElementById("fee").value) || 0;
 
-    let affiliate = Number(document.getElementById("affiliate").value) || 0;
+    let adCost = Number(document.getElementById("adCost").value) || 0;
 
-    let ads = Number(document.getElementById("ads").value) || 0;
+    let monthlyOrders = Number(document.getElementById("monthlyOrders").value) || 0;
 
-    let orders = Number(document.getElementById("orders").value) || 0;
 
 
 
     // Platform Fee
 
-    let platformCost = price * (platformFee / 100);
-
-
-
-    // Affiliate Cost
-
-    let affiliateCost = price * (affiliate / 100);
+    let platformFee = sellingPrice * (fee / 100);
 
 
 
 
-    // Total Cost Per Sale
+    // Total Cost Per Product
 
-    let totalCost = 
-    cost +
-    shipping +
-    platformCost +
-    affiliateCost +
-    ads;
+    let totalCost =
+    productCost +
+    shippingCost +
+    platformFee +
+    adCost;
 
 
 
 
     // Profit Per Sale
 
-    let profit = price - totalCost;
+    let profit = sellingPrice - totalCost;
 
 
 
@@ -62,13 +54,11 @@ function calculateProfit(){
 
     let margin = 0;
 
+    if(sellingPrice > 0){
 
-    if(price > 0){
-
-        margin = (profit / price) * 100;
+        margin = (profit / sellingPrice) * 100;
 
     }
-
 
 
 
@@ -76,7 +66,6 @@ function calculateProfit(){
     // ROI
 
     let roi = 0;
-
 
     if(totalCost > 0){
 
@@ -88,26 +77,13 @@ function calculateProfit(){
 
 
 
-    // Revenue
+    // Monthly Calculations
 
-    let monthlyRevenue = price * orders;
-
-    let yearlyRevenue = monthlyRevenue * 12;
+    let monthlyRevenue = sellingPrice * monthlyOrders;
 
 
+    let monthlyProfit = profit * monthlyOrders;
 
-
-
-
-    // Monthly Profit
-
-    let monthlyProfit = profit * orders;
-
-
-
-
-
-    // Yearly Profit
 
     let yearlyProfit = monthlyProfit * 12;
 
@@ -115,40 +91,14 @@ function calculateProfit(){
 
 
 
+    // Break Even
 
-    // Opportunity Score
-
-    let score = 50;
-
-
-
-    if(margin >= 30){
-
-        score += 20;
-
-    }
-
-
-
-    if(roi >= 50){
-
-        score += 20;
-
-    }
-
+    let breakEven = 0;
 
 
     if(profit > 0){
 
-        score += 10;
-
-    }
-
-
-
-    if(score > 100){
-
-        score = 100;
+        breakEven = Math.ceil(totalCost / profit);
 
     }
 
@@ -156,54 +106,11 @@ function calculateProfit(){
 
 
 
-
-    // Analysis Type Display Logic
-
-
-    if(analysisType === "single"){
-
-        monthlyProfit = profit * orders;
-
-        yearlyProfit = monthlyProfit * 12;
-
-    }
+    // Show Results
 
 
-
-    if(analysisType === "monthly"){
-
-
-        yearlyProfit = monthlyProfit * 12;
-
-
-    }
-
-
-
-
-
-    if(analysisType === "yearly"){
-
-
-        yearlyProfit = monthlyProfit * 12;
-
-
-    }
-
-
-
-
-
-
-
-    // Update Dashboard
-
-
-
-
-    document.getElementById("resultPlatform").innerHTML =
+    document.getElementById("showPlatform").innerHTML =
     platform;
-
 
 
 
@@ -214,17 +121,8 @@ function calculateProfit(){
 
 
 
-
-    document.getElementById("revenue").innerHTML =
-    currency + monthlyRevenue.toFixed(2);
-
-
-
-
-
     document.getElementById("margin").innerHTML =
     margin.toFixed(1) + "%";
-
 
 
 
@@ -235,12 +133,14 @@ function calculateProfit(){
 
 
 
+    document.getElementById("monthlyRevenue").innerHTML =
+    currency + monthlyRevenue.toFixed(2);
+
+
 
 
     document.getElementById("monthlyProfit").innerHTML =
     currency + monthlyProfit.toFixed(2);
-
-
 
 
 
@@ -251,10 +151,32 @@ function calculateProfit(){
 
 
 
+    document.getElementById("breakEven").innerHTML =
+    breakEven + " sales";
 
 
-    document.getElementById("score").innerHTML =
-    score + "/100";
+
+    // Mode Based Message
+
+    if(mode === "single"){
+
+        console.log("Single Product Analysis");
+
+    }
+
+
+    if(mode === "monthly"){
+
+        console.log("Monthly Business Analysis");
+
+    }
+
+
+    if(mode === "yearly"){
+
+        console.log("Yearly Business Analysis");
+
+    }
 
 
 
