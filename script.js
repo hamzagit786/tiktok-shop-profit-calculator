@@ -16,7 +16,7 @@ let adsCost = Number(document.getElementById("adsCost").value) || 0;
 
 
 
-// TikTok Fee
+// TikTok Platform Fee
 
 let tiktokFee = sellingPrice * (fee / 100);
 
@@ -24,7 +24,11 @@ let tiktokFee = sellingPrice * (fee / 100);
 
 // Total Cost
 
-let totalCost = productCost + shippingCost + adsCost + tiktokFee;
+let totalCost =
+productCost +
+shippingCost +
+adsCost +
+tiktokFee;
 
 
 
@@ -36,20 +40,24 @@ let profit = sellingPrice - totalCost;
 
 // Margin
 
-let margin = sellingPrice > 0 
-? (profit / sellingPrice) * 100 
+let margin = sellingPrice > 0
+? (profit / sellingPrice) * 100
 : 0;
 
 
 
 // ROI
 
-let investment = productCost + shippingCost + adsCost;
+let investment =
+productCost +
+shippingCost +
+adsCost;
 
 
 let roi = investment > 0
 ? (profit / investment) * 100
 : 0;
+
 
 
 
@@ -66,8 +74,7 @@ let recommended = totalCost * 1.4;
 
 
 
-
-// Show Results
+// Update Dashboard
 
 
 document.getElementById("profit").innerHTML =
@@ -142,14 +149,17 @@ status.innerHTML = "🔴 Loss";
 
 
 
-// Scroll to Results
 
 
-document.querySelector(".results").scrollIntoView({
+// Scroll Result
+
+
+document.querySelector(".dashboard").scrollIntoView({
 
 behavior:"smooth"
 
 });
+
 
 
 }
@@ -157,8 +167,6 @@ behavior:"smooth"
 
 
 
-
-// Reset
 
 
 function resetCalculator(){
@@ -193,4 +201,4 @@ document.getElementById("breakEven").innerHTML="$0";
 document.getElementById("recommended").innerHTML="$0";
 
 
-}
+  }
