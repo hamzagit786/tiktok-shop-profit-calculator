@@ -1,204 +1,164 @@
 function calculateProfit(){
 
 
-let currency = document.getElementById("currency").value;
+    let cost = Number(document.getElementById("cost").value) || 0;
 
+    let price = Number(document.getElementById("price").value) || 0;
 
-let sellingPrice = Number(document.getElementById("sellingPrice").value) || 0;
+    let fees = Number(document.getElementById("fees").value) || 0;
 
-let productCost = Number(document.getElementById("productCost").value) || 0;
+    let ads = Number(document.getElementById("ads").value) || 0;
 
-let shippingCost = Number(document.getElementById("shippingCost").value) || 0;
 
-let fee = Number(document.getElementById("fee").value) || 0;
 
-let adsCost = Number(document.getElementById("adsCost").value) || 0;
+    // Profit Formula
 
+    let profit = price - cost - fees - ads;
 
 
-// TikTok Platform Fee
+    // ROI Formula
 
-let tiktokFee = sellingPrice * (fee / 100);
+    let investment = cost + ads + fees;
 
+    let roi = 0;
 
 
-// Total Cost
+    if(investment > 0){
 
-let totalCost =
-productCost +
-shippingCost +
-adsCost +
-tiktokFee;
+        roi = ((profit / investment) * 100).toFixed(1);
 
+    }
 
 
-// Profit
 
-let profit = sellingPrice - totalCost;
+    // Opportunity Score
 
+    let score = 50;
 
 
-// Margin
+    if(profit > 0){
 
-let margin = sellingPrice > 0
-? (profit / sellingPrice) * 100
-: 0;
+        score += 25;
 
+    }
 
 
-// ROI
+    if(roi > 50){
 
-let investment =
-productCost +
-shippingCost +
-adsCost;
+        score += 20;
 
+    }
 
-let roi = investment > 0
-? (profit / investment) * 100
-: 0;
 
+    if(price > cost * 2){
 
+        score += 5;
 
+    }
 
-// Break Even
 
-let breakEven = totalCost;
 
+    if(score > 100){
 
+        score = 100;
 
-// Recommended Price
+    }
 
-let recommended = totalCost * 1.4;
 
 
+    // Update Dashboard
 
 
-// Update Dashboard
+    document.getElementById("profit").innerHTML =
+    "$" + profit.toFixed(2);
 
 
-document.getElementById("profit").innerHTML =
-currency + profit.toFixed(2);
 
+    document.querySelectorAll(".metric strong")[1].innerHTML =
+    roi + "%";
 
 
-document.getElementById("roi").innerHTML =
-roi.toFixed(1) + "%";
 
+    document.querySelectorAll(".metric strong")[2].innerHTML =
+    score + "%";
 
 
-document.getElementById("totalCost").innerHTML =
-currency + totalCost.toFixed(2);
-
-
-
-document.getElementById("tiktokFee").innerHTML =
-currency + tiktokFee.toFixed(2);
-
-
-
-document.getElementById("margin").innerHTML =
-margin.toFixed(1) + "%";
-
-
-
-document.getElementById("breakEven").innerHTML =
-currency + breakEven.toFixed(2);
-
-
-
-document.getElementById("recommended").innerHTML =
-currency + recommended.toFixed(2);
-
-
-
-
-
-
-// Business Status
-
-
-let status = document.getElementById("status");
-
-
-
-if(roi >= 40){
-
-status.innerHTML = "🟢 Excellent";
-
-}
-
-else if(roi >= 20){
-
-status.innerHTML = "🟡 Good";
-
-}
-
-else if(roi >= 1){
-
-status.innerHTML = "🔵 Improve";
-
-}
-
-else{
-
-status.innerHTML = "🔴 Loss";
 
 }
 
 
 
 
+// Button hover animation
 
 
-// Scroll Result
+const buttons = document.querySelectorAll("button");
 
 
-document.querySelector(".dashboard").scrollIntoView({
+buttons.forEach(button=>{
 
-behavior:"smooth"
+
+    button.addEventListener("mouseenter",()=>{
+
+        button.style.transform="translateY(-3px)";
+
+    });
+
+
+    button.addEventListener("mouseleave",()=>{
+
+        button.style.transform="translateY(0)";
+
+    });
+
 
 });
 
 
 
+
+
+// Scroll reveal animation
+
+
+const cards = document.querySelectorAll(".card");
+
+
+const observer = new IntersectionObserver((entries)=>{
+
+
+entries.forEach(entry=>{
+
+
+if(entry.isIntersecting){
+
+entry.target.style.opacity="1";
+
+entry.target.style.transform="translateY(0)";
+
+
 }
 
 
+});
+
+
+},{threshold:.2});
 
 
 
 
-function resetCalculator(){
+cards.forEach(card=>{
 
 
-document.getElementById("sellingPrice").value="";
+card.style.opacity="0";
 
-document.getElementById("productCost").value="";
+card.style.transform="translateY(40px)";
 
-document.getElementById("shippingCost").value="";
-
-document.getElementById("fee").value="6";
-
-document.getElementById("adsCost").value="";
+card.style.transition="0.6s";
 
 
-
-document.getElementById("profit").innerHTML="$0";
-
-document.getElementById("roi").innerHTML="0%";
-
-document.getElementById("status").innerHTML="Waiting";
-
-document.getElementById("totalCost").innerHTML="$0";
-
-document.getElementById("tiktokFee").innerHTML="$0";
-
-document.getElementById("margin").innerHTML="0%";
-
-document.getElementById("breakEven").innerHTML="$0";
-
-document.getElementById("recommended").innerHTML="$0";
+observer.observe(card);
 
 
-  }
+});
