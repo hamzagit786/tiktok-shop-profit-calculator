@@ -1,74 +1,97 @@
 function calculateProfit(){
 
-    const currency = document.getElementById("currency").value;
+
+    let currency = document.getElementById("currency").value;
 
 
-    const cost = Number(document.getElementById("cost").value) || 0;
+    let cost = Number(document.getElementById("cost").value) || 0;
 
-    const price = Number(document.getElementById("price").value) || 0;
+    let price = Number(document.getElementById("price").value) || 0;
 
-    const shipping = Number(document.getElementById("shipping").value) || 0;
+    let shipping = Number(document.getElementById("shipping").value) || 0;
 
-    const tiktokFee = Number(document.getElementById("tiktokFee").value) || 0;
+    let tiktokFee = Number(document.getElementById("tiktokFee").value) || 0;
 
-    const affiliate = Number(document.getElementById("affiliate").value) || 0;
+    let affiliate = Number(document.getElementById("affiliate").value) || 0;
 
-    const ads = Number(document.getElementById("ads").value) || 0;
-
-
-
-    // Percentage calculations
-
-    const tiktokAmount = (price * tiktokFee) / 100;
-
-    const affiliateAmount = (price * affiliate) / 100;
+    let ads = Number(document.getElementById("ads").value) || 0;
 
 
 
-    // Total Cost
+    if(price <= 0){
 
-    const totalCost = 
+        alert("Please enter selling price");
+
+        return;
+
+    }
+
+
+
+    // Fee calculations
+
+
+    let tiktokCost = price * (tiktokFee / 100);
+
+
+    let affiliateCost = price * (affiliate / 100);
+
+
+
+    // Total expense
+
+
+    let totalCost =
     cost +
     shipping +
-    tiktokAmount +
-    affiliateAmount +
+    tiktokCost +
+    affiliateCost +
     ads;
 
 
 
     // Profit
 
-    const profit = price - totalCost;
+
+    let profit =
+    price - totalCost;
+
 
 
 
     // Margin
 
-    let margin = 0;
 
-    if(price > 0){
+    let margin =
+    ((profit / price) * 100).toFixed(1);
 
-        margin = ((profit / price) * 100).toFixed(1);
-
-    }
 
 
 
     // ROI
 
-    let roi = 0;
 
-    if(totalCost > 0){
+    let roi =
+    ((profit / totalCost) * 100).toFixed(1);
 
-        roi = ((profit / totalCost) * 100).toFixed(1);
+
+
+
+    if(totalCost <= 0){
+
+        roi = 0;
 
     }
 
 
 
-    // Opportunity Score
+
+
+    // Opportunity score
+
 
     let score = 50;
+
 
 
     if(profit > 0){
@@ -78,18 +101,21 @@ function calculateProfit(){
     }
 
 
-    if(roi >= 50){
-
-        score += 20;
-
-    }
-
 
     if(margin >= 30){
 
-        score += 10;
+        score += 15;
 
     }
+
+
+
+    if(roi >= 50){
+
+        score += 15;
+
+    }
+
 
 
     if(score > 100){
@@ -100,7 +126,17 @@ function calculateProfit(){
 
 
 
-    // Update Results
+    if(score < 0){
+
+        score = 0;
+
+    }
+
+
+
+
+
+    // Display results
 
 
     document.getElementById("profit").innerHTML =
