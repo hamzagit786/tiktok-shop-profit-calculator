@@ -1,36 +1,50 @@
 function calculateProfit(){
 
-
-    // Get Values
-
-    let currency = document.getElementById("currency").value;
+    const currency = document.getElementById("currency").value;
 
 
-    let cost = Number(document.getElementById("cost").value) || 0;
+    const cost = Number(document.getElementById("cost").value) || 0;
 
-    let price = Number(document.getElementById("price").value) || 0;
+    const price = Number(document.getElementById("price").value) || 0;
 
-    let shipping = Number(document.getElementById("shipping").value) || 0;
+    const shipping = Number(document.getElementById("shipping").value) || 0;
 
-    let fees = Number(document.getElementById("fees").value) || 0;
+    const tiktokFee = Number(document.getElementById("tiktokFee").value) || 0;
 
-    let ads = Number(document.getElementById("ads").value) || 0;
+    const affiliate = Number(document.getElementById("affiliate").value) || 0;
 
-
-
-    // Profit Calculation
-
-    let totalCost = cost + shipping + fees + ads;
-
-
-    let profit = price - totalCost;
+    const ads = Number(document.getElementById("ads").value) || 0;
 
 
 
-    // Profit Margin
+    // Percentage calculations
+
+    const tiktokAmount = (price * tiktokFee) / 100;
+
+    const affiliateAmount = (price * affiliate) / 100;
+
+
+
+    // Total Cost
+
+    const totalCost = 
+    cost +
+    shipping +
+    tiktokAmount +
+    affiliateAmount +
+    ads;
+
+
+
+    // Profit
+
+    const profit = price - totalCost;
+
+
+
+    // Margin
 
     let margin = 0;
-
 
     if(price > 0){
 
@@ -40,10 +54,9 @@ function calculateProfit(){
 
 
 
-    // ROI Calculation
+    // ROI
 
     let roi = 0;
-
 
     if(totalCost > 0){
 
@@ -58,21 +71,18 @@ function calculateProfit(){
     let score = 50;
 
 
-
     if(profit > 0){
 
-        score += 25;
+        score += 20;
 
     }
-
 
 
     if(roi >= 50){
 
-        score += 15;
+        score += 20;
 
     }
-
 
 
     if(margin >= 30){
@@ -80,7 +90,6 @@ function calculateProfit(){
         score += 10;
 
     }
-
 
 
     if(score > 100){
@@ -95,7 +104,7 @@ function calculateProfit(){
 
 
     document.getElementById("profit").innerHTML =
-    currency + Number(profit).toFixed(2);
+    currency + profit.toFixed(2);
 
 
 
@@ -115,93 +124,3 @@ function calculateProfit(){
 
 
 }
-
-
-
-
-
-
-
-// Smooth Scroll Buttons
-
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
-
-
-anchor.addEventListener("click",function(e){
-
-
-let target=document.querySelector(this.getAttribute("href"));
-
-
-if(target){
-
-e.preventDefault();
-
-
-target.scrollIntoView({
-
-behavior:"smooth"
-
-});
-
-
-}
-
-
-});
-
-
-});
-
-
-
-
-
-
-
-
-// Simple Card Animation
-
-
-const observer = new IntersectionObserver((entries)=>{
-
-
-entries.forEach(entry=>{
-
-
-if(entry.isIntersecting){
-
-
-entry.target.style.opacity="1";
-
-entry.target.style.transform="translateY(0)";
-
-
-}
-
-
-});
-
-
-},{threshold:0.15});
-
-
-
-
-
-document.querySelectorAll(".service-card,.dashboard,.calculator-box")
-.forEach(item=>{
-
-
-item.style.opacity="0";
-
-item.style.transform="translateY(40px)";
-
-item.style.transition="0.7s";
-
-
-observer.observe(item);
-
-
-});
