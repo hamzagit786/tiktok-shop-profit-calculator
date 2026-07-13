@@ -11,7 +11,7 @@ let country = document.getElementById("country").value;
 
 
 
-if(productName === ""){
+if(productName.trim() === ""){
 
 alert("Please enter product name");
 
@@ -21,29 +21,38 @@ return;
 
 
 
-
-
-let searchProduct = encodeURIComponent(productName);
-
+let search = encodeURIComponent(productName);
 
 
 
-
-let aliexpress = 
-"https://www.aliexpress.com/wholesale?SearchText=" 
-+ searchProduct;
+let aliexpress =
+"https://www.aliexpress.com/wholesale?SearchText=" + search;
 
 
 
-let cjDropshipping = 
-"https://cjdropshipping.com/search.html?keyword="
-+ searchProduct;
+let cj =
+"https://cjdropshipping.com/search.html?keyword=" + search;
 
 
 
 let amazon =
-"https://www.amazon.com/s?k="
-+ searchProduct;
+"https://www.amazon.com/s?k=" + search;
+
+
+
+window.productInfo = {
+
+name: productName,
+
+link: productLink,
+
+price: price,
+
+country: country
+
+};
+
+
 
 
 
@@ -54,30 +63,40 @@ document.getElementById("results").innerHTML = `
 
 
 <h3>
-Replacement Search Options
+Product Information
 </h3>
 
 
 <p>
-Product:
-${productName}
+<strong>Product:</strong> ${productName}
 </p>
 
 
 <p>
-Current Price:
-${price}
+<strong>Current Price:</strong> ${price}
 </p>
 
 
 <p>
-Target Country:
-${country}
+<strong>Target Country:</strong> ${country}
 </p>
 
 
 
-<br>
+<hr>
+
+
+
+<h3>
+Find Replacement Options
+</h3>
+
+
+
+<p>
+Compare price, stock availability and shipping before replacing your supplier.
+</p>
+
 
 
 <a class="btn" target="_blank" href="${aliexpress}">
@@ -85,16 +104,20 @@ Search AliExpress
 </a>
 
 
+
 <br><br>
 
 
-<a class="btn" target="_blank" href="${cjDropshipping}">
+
+<a class="btn" target="_blank" href="${cj}">
 Search CJ Dropshipping
 </a>
 
 
 
+
 <br><br>
+
 
 
 <a class="btn" target="_blank" href="${amazon}">
@@ -107,9 +130,9 @@ Search Amazon
 <br><br>
 
 
-<button class="btn" onclick="copyFormat()">
+<button class="btn" onclick="copyProductFormat()">
 
-Copy Product Format
+Copy Product Details
 
 </button>
 
@@ -117,23 +140,7 @@ Copy Product Format
 
 </div>
 
-
-
 `;
-
-
-
-window.productData = {
-
-name: productName,
-
-price: price,
-
-country: country,
-
-link: productLink
-
-};
 
 
 
@@ -143,40 +150,45 @@ link: productLink
 
 
 
+function copyProductFormat(){
 
 
-function copyFormat(){
+let data = `
 
-
-let text = `
+Product Replacement Request
 
 Product Name:
-${window.productData.name}
+${window.productInfo.name}
+
+
+Current Product Link:
+${window.productInfo.link}
 
 
 Current Price:
-${window.productData.price}
+${window.productInfo.price}
 
 
-Country:
-${window.productData.country}
+Target Country:
+${window.productInfo.country}
 
 
-Original Link:
-${window.productData.link}
+Requirements:
 
+- Same or similar product
+- Same target country shipping
+- Equal or lower price preferred
 
-Replacement Search:
-Please compare same product price, stock and shipping before switching supplier.
 
 `;
 
 
 
-navigator.clipboard.writeText(text);
+navigator.clipboard.writeText(data);
 
 
-alert("Product format copied");
+alert("Product details copied");
+
 
 
 }
