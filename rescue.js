@@ -5,7 +5,7 @@ let productName = document.getElementById("productName").value;
 
 let productLink = document.getElementById("productLink").value;
 
-let price = document.getElementById("productPrice").value;
+let productPrice = document.getElementById("productPrice").value;
 
 let country = document.getElementById("country").value;
 
@@ -25,28 +25,34 @@ let search = encodeURIComponent(productName);
 
 
 
+// Search Sources
+
 let aliexpress =
 "https://www.aliexpress.com/wholesale?SearchText=" + search;
 
 
-
-let cj =
+let cjDropshipping =
 "https://cjdropshipping.com/search.html?keyword=" + search;
-
 
 
 let amazon =
 "https://www.amazon.com/s?k=" + search;
 
 
+let google =
+"https://www.google.com/search?tbm=shop&q=" + search;
 
-window.productInfo = {
+
+
+
+
+window.savedProduct = {
 
 name: productName,
 
 link: productLink,
 
-price: price,
+price: productPrice,
 
 country: country
 
@@ -56,14 +62,16 @@ country: country
 
 
 
+
 document.getElementById("results").innerHTML = `
+
 
 
 <div class="glass-card">
 
 
 <h3>
-Product Information
+Product Summary
 </h3>
 
 
@@ -73,13 +81,14 @@ Product Information
 
 
 <p>
-<strong>Current Price:</strong> ${price}
+<strong>Current Price:</strong> ${productPrice}
 </p>
 
 
 <p>
-<strong>Target Country:</strong> ${country}
+<strong>Shipping Country:</strong> ${country}
 </p>
+
 
 
 
@@ -87,20 +96,24 @@ Product Information
 
 
 
+
 <h3>
-Find Replacement Options
+Compare Alternative Sources
 </h3>
 
 
-
 <p>
-Compare price, stock availability and shipping before replacing your supplier.
+Check the same or similar product and compare price, stock availability and shipping time before changing suppliers.
 </p>
 
 
 
-<a class="btn" target="_blank" href="${aliexpress}">
-Search AliExpress
+
+
+<a href="${aliexpress}" target="_blank" class="btn">
+
+AliExpress Search
+
 </a>
 
 
@@ -109,8 +122,34 @@ Search AliExpress
 
 
 
-<a class="btn" target="_blank" href="${cj}">
-Search CJ Dropshipping
+<a href="${cjDropshipping}" target="_blank" class="btn">
+
+CJ Dropshipping Search
+
+</a>
+
+
+
+<br><br>
+
+
+
+<a href="${amazon}" target="_blank" class="btn">
+
+Amazon Search
+
+</a>
+
+
+
+<br><br>
+
+
+
+<a href="${google}" target="_blank" class="btn">
+
+Google Shopping Search
+
 </a>
 
 
@@ -120,25 +159,17 @@ Search CJ Dropshipping
 
 
 
-<a class="btn" target="_blank" href="${amazon}">
-Search Amazon
-</a>
+<button onclick="copyProduct()" class="btn">
 
-
-
-
-<br><br>
-
-
-<button class="btn" onclick="copyProductFormat()">
-
-Copy Product Details
+Copy Product Format
 
 </button>
 
 
 
 </div>
+
+
 
 `;
 
@@ -150,44 +181,51 @@ Copy Product Details
 
 
 
-function copyProductFormat(){
 
 
-let data = `
+
+function copyProduct(){
+
+
+let text = `
 
 Product Replacement Request
 
+
 Product Name:
-${window.productInfo.name}
+${savedProduct.name}
 
 
-Current Product Link:
-${window.productInfo.link}
+Original Product Link:
+${savedProduct.link}
 
 
 Current Price:
-${window.productInfo.price}
+${savedProduct.price}
 
 
 Target Country:
-${window.productInfo.country}
+${savedProduct.country}
+
 
 
 Requirements:
 
 - Same or similar product
 - Same target country shipping
-- Equal or lower price preferred
+- Equal or lower supplier price preferred
+- Check stock availability before switching
+
 
 
 `;
 
 
 
-navigator.clipboard.writeText(data);
+navigator.clipboard.writeText(text);
 
 
-alert("Product details copied");
+alert("Product details copied successfully");
 
 
 
