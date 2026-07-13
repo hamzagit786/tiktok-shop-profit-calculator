@@ -8,13 +8,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-<title>eProfitFlow Ecommerce Profit Calculator | Calculate Real Product Profit</title>
+<title>eProfitFlow Ecommerce Profit Calculator | Seller Analytics Tool</title>
 
 
-<meta name="description" content="Use eProfitFlow ecommerce profit calculator to calculate product profit, fees, ROI, margins and monthly earnings for your online store.">
+<meta name="description" content="Calculate ecommerce profits, platform fees, ROI, margins and monthly or yearly earnings with eProfitFlow calculator.">
 
 
-<meta name="keywords" content="ecommerce profit calculator, TikTok Shop profit calculator, product profit analysis, seller calculator">
+<meta name="keywords" content="ecommerce profit calculator, TikTok Shop calculator, Amazon profit calculator, Shopify profit calculator">
 
 
 <link rel="stylesheet" href="style.css">
@@ -25,11 +25,11 @@
 </head>
 
 
+
 <body>
 
 
 <header class="navbar">
-
 
 <div class="logo">
 
@@ -40,29 +40,17 @@
 
 <nav>
 
-<a href="index.html">
-Home
-</a>
+<a href="index.html">Home</a>
 
-<a href="calculator.html">
-Calculator
-</a>
+<a href="calculator.html">Calculator</a>
 
-<a href="services.html">
-Services
-</a>
+<a href="services.html">Services</a>
 
-<a href="blog.html">
-Blog
-</a>
+<a href="blog.html">Blog</a>
 
-<a href="contact.html">
-Contact
-</a>
-
+<a href="contact.html">Contact</a>
 
 </nav>
-
 
 </header>
 
@@ -82,13 +70,12 @@ Ecommerce Profit Calculator
 
 <p>
 
-Calculate your product profit, fees, ROI and monthly earning potential before scaling your store.
+Analyze your product profitability, platform costs and business growth potential.
 
 </p>
 
 
 </section>
-
 
 
 
@@ -104,10 +91,81 @@ Calculate your product profit, fees, ROI and monthly earning potential before sc
 
 
 <h2>
-
-Product Information
-
+Calculator Settings
 </h2>
+
+
+
+<label>
+Select Platform
+</label>
+
+
+<select id="platform">
+
+
+<option value="TikTok Shop">
+TikTok Shop
+</option>
+
+
+<option value="Amazon">
+Amazon
+</option>
+
+
+<option value="Shopify">
+Shopify
+</option>
+
+
+<option value="Etsy">
+Etsy
+</option>
+
+
+<option value="Other">
+Other
+</option>
+
+
+</select>
+
+
+
+
+
+
+
+<label>
+Analysis Type
+</label>
+
+
+<select id="analysisType">
+
+
+<option value="single">
+Single Product Analysis
+</option>
+
+
+<option value="monthly">
+Monthly Business Analysis
+</option>
+
+
+<option value="yearly">
+Yearly Business Analysis
+</option>
+
+
+</select>
+
+
+
+
+
 
 
 
@@ -118,27 +176,36 @@ Currency
 
 <select id="currency">
 
+
 <option value="$">
 USD ($)
 </option>
+
 
 <option value="€">
 EUR (€)
 </option>
 
+
 <option value="£">
 GBP (£)
 </option>
+
 
 <option value="AED">
 AED
 </option>
 
+
 <option value="PKR">
 PKR
 </option>
 
+
 </select>
+
+
+
 
 
 
@@ -150,6 +217,7 @@ Product Cost
 
 
 <input id="cost" type="number" placeholder="Example: 10">
+
 
 
 
@@ -178,12 +246,13 @@ Shipping Cost
 
 
 
+
 <label>
 Platform Fee %
 </label>
 
 
-<input id="tiktokFee" type="number" placeholder="Example: 6">
+<input id="platformFee" type="number" placeholder="Example: 6">
 
 
 
@@ -203,7 +272,7 @@ Affiliate Commission %
 
 
 <label>
-Advertising Cost
+Advertising Cost Per Order
 </label>
 
 
@@ -227,7 +296,7 @@ Monthly Orders
 
 <button onclick="calculateProfit()" class="btn">
 
-Calculate Profit
+Generate Analytics
 
 </button>
 
@@ -242,14 +311,33 @@ Calculate Profit
 
 
 
+
+
 <div class="results-box">
 
 
 <h2>
-
-Profit Analytics
-
+Profit Dashboard
 </h2>
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Platform
+</h3>
+
+<strong id="resultPlatform">
+-
+</strong>
+
+</div>
+
+
+
 
 
 
@@ -265,6 +353,27 @@ $0
 </strong>
 
 </div>
+
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Revenue
+</h3>
+
+<strong id="revenue">
+$0
+</strong>
+
+</div>
+
+
+
 
 
 
@@ -286,10 +395,13 @@ Profit Margin
 
 
 
+
+
+
 <div class="result-card">
 
 <h3>
-ROI Score
+ROI
 </h3>
 
 <strong id="roi">
@@ -297,6 +409,47 @@ ROI Score
 </strong>
 
 </div>
+
+
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Monthly Profit
+</h3>
+
+<strong id="monthlyProfit">
+$0
+</strong>
+
+</div>
+
+
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Yearly Profit
+</h3>
+
+<strong id="yearlyProfit">
+$0
+</strong>
+
+</div>
+
+
+
 
 
 
@@ -316,27 +469,13 @@ Opportunity Score
 
 
 
-
-
-<div class="result-card">
-
-<h3>
-Monthly Estimated Profit
-</h3>
-
-<strong id="monthlyProfit">
-$0
-</strong>
-
-</div>
-
-
-
-
 </div>
 
 
 </section>
+
+
+
 
 
 
@@ -347,20 +486,20 @@ $0
 
 
 <h2>
-
 How eProfitFlow Works
-
 </h2>
 
 
 <p>
 
-Enter your product costs, selling price, fees and marketing expenses. Our calculator estimates your profit potential and helps you make smarter ecommerce decisions.
+Select your ecommerce platform, choose your analysis type and enter your product information. eProfitFlow calculates estimated profitability, revenue and performance metrics to help sellers make smarter decisions.
 
 </p>
 
 
 </section>
+
+
 
 
 
@@ -375,11 +514,13 @@ eProfitFlow
 
 
 <p>
-Smart Ecommerce Profit Analytics
+Smart Ecommerce Profit Analytics for Modern Sellers.
 </p>
 
 
 </footer>
+
+
 
 
 
