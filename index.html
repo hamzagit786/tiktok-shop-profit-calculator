@@ -1,70 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Profit Calculator | Scale Your Store</title>
 
-<title>ProfitPilot | TikTok Shop Profit Calculator</title>
+    <link rel="stylesheet" href="style.css">
 
-<meta name="description" content="Calculate TikTok Shop profit, ROI and product profitability with ProfitPilot.">
-
-<link rel="stylesheet" href="style.css">
-
+    <!-- Icons -->
+    <link 
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-
 
 <body>
 
+<!-- NAVBAR -->
+<header class="navbar">
 
-<nav>
+    <div class="logo">
+        <span>Profit</span>Flow
+    </div>
 
-<div class="brand">
+    <nav>
+        <a href="#features">Features</a>
+        <a href="#calculator">Calculator</a>
+        <a href="#pricing">Pricing</a>
+    </nav>
 
-<div class="icon">
-🚀
-</div>
+    <button class="nav-btn">
+        Get Started
+    </button>
 
-<div>
-<h3>ProfitPilot</h3>
-<span>TikTok Shop Seller Tool</span>
-</div>
-
-</div>
-
-
-</nav>
-
-
+</header>
 
 
 
+<!-- HERO SECTION -->
 <section class="hero">
 
+    <div class="hero-content">
 
-<h1>
-Turn Product Ideas Into Profitable TikTok Shop Decisions
-</h1>
-
-
-<p>
-Analyze costs, ROI and pricing strategy before investing in your next winning product.
-</p>
+        <p class="badge">
+            🚀 Built for TikTok Shop Sellers
+        </p>
 
 
-
-<div class="badges">
-
-<div>✓ Free Tool</div>
-
-<div>✓ No Signup Required</div>
-
-<div>✓ Built For Sellers</div>
+        <h1>
+            Know Your Profit Before 
+            You Scale Your Products
+        </h1>
 
 
-</div>
+        <p class="hero-text">
+            Calculate real profit, analyze product opportunities,
+            and make smarter decisions with an advanced TikTok Shop
+            profit calculator.
+        </p>
 
+
+        <div class="hero-buttons">
+
+            <button class="primary-btn">
+                Calculate Profit
+            </button>
+
+            <button class="secondary-btn">
+                View Demo
+            </button>
+
+        </div>
+
+
+        <div class="trust">
+
+            <div>
+                <strong>10K+</strong>
+                Sellers
+            </div>
+
+            <div>
+                <strong>99%</strong>
+                Accuracy
+            </div>
+
+            <div>
+                <strong>24/7</strong>
+                Support
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- DASHBOARD MOCKUP -->
+
+    <div class="dashboard-card">
+
+        <div class="dashboard-header">
+            Live Profit Dashboard
+            <span>●</span>
+        </div>
+
+
+        <div class="profit-box">
+
+            <small>Total Profit</small>
+
+            <h2>
+                $4,850.00
+            </h2>
+
+            <p>
+                +24.5% this month
+            </p>
+
+        </div>
+
+
+
+        <div class="stats">
+
+            <div>
+                ROI
+                <strong>68%</strong>
+            </div>
+
+
+            <div>
+                Margin
+                <strong>42%</strong>
+            </div>
+
+
+        </div>
+
+
+
+        <div class="chart">
+            Profit Growth Chart
+        </div>
+
+
+    </div>
 
 
 </section>
@@ -73,16 +155,88 @@ Analyze costs, ROI and pricing strategy before investing in your next winning pr
 
 
 
+<!-- PROBLEM SECTION -->
 
-<main class="container">
+<section class="problem" id="features">
+
+    <h2>
+        Stop Guessing Your Profits
+    </h2>
+
+
+    <p>
+        Most sellers lose money because they don't know their
+        real numbers before scaling.
+    </p>
+
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            <h3>
+                Real Profit Tracking
+            </h3>
+
+            <p>
+                Understand your actual earnings after fees,
+                ads and expenses.
+            </p>
+
+        </div>
 
 
 
-<section class="app">
+        <div class="card">
+
+            <i class="fa-solid fa-bullseye"></i>
+
+            <h3>
+                Better Decisions
+            </h3>
+
+            <p>
+                Find products with higher winning potential.
+            </p>
+
+        </div>
 
 
 
-<div class="calculator">
+        <div class="card">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            <h3>
+                Scale Faster
+            </h3>
+
+            <p>
+                Use data instead of guessing.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+
+
+
+
+<!-- CALCULATOR SECTION -->
+
+<section class="calculator" id="calculator">
+
+
+<div class="calculator-input">
 
 
 <h2>
@@ -90,69 +244,37 @@ Profit Calculator
 </h2>
 
 
+<label>
+Product Cost
+</label>
 
-<label>Currency</label>
-
-<select id="currency">
-
-<option value="$">🇺🇸 USD ($)</option>
-
-<option value="£">🇬🇧 GBP (£)</option>
-
-<option value="€">🇪🇺 EUR (€)</option>
-
-<option value="₨">🇵🇰 PKR (₨)</option>
-
-</select>
+<input type="number" id="cost" placeholder="$0">
 
 
+<label>
+Selling Price
+</label>
+
+<input type="number" id="price" placeholder="$0">
 
 
-<label>Selling Price</label>
+<label>
+TikTok Shop Fees
+</label>
 
-<input id="sellingPrice" type="number" placeholder="100">
-
-
-
-<label>Product Cost</label>
-
-<input id="productCost" type="number" placeholder="30">
+<input type="number" id="fees" placeholder="$0">
 
 
+<label>
+Ad Cost
+</label>
 
-<label>Shipping Cost</label>
-
-<input id="shippingCost" type="number" placeholder="5">
-
-
-
-<label>TikTok Fee (%)</label>
-
-<input id="fee" type="number" value="6">
+<input type="number" id="ads" placeholder="$0">
 
 
-
-<label>Advertising Cost</label>
-
-<input id="adsCost" type="number" placeholder="20">
-
-
-
-
-
-<button onclick="calculateProfit()">
-
-Calculate Profit
-
+<button class="primary-btn" onclick="calculateProfit()">
+Calculate
 </button>
-
-
-<button class="reset" onclick="resetCalculator()">
-
-Reset
-
-</button>
-
 
 
 </div>
@@ -161,103 +283,126 @@ Reset
 
 
 
-
-
-
-
-<div class="dashboard">
+<div class="analytics-panel">
 
 
 <h2>
-Business Insights
+Analytics
+</h2>
+
+
+<div class="metric">
+
+Profit
+
+<strong id="profit">
+$0
+</strong>
+
+</div>
+
+
+
+<div class="metric">
+
+ROI Score
+
+<strong>
+85%
+</strong>
+
+</div>
+
+
+
+<div class="metric">
+
+Opportunity Score
+
+<strong>
+92%
+</strong>
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- SERVICES -->
+
+<section class="services">
+
+
+<h2>
+Everything You Need To Grow
 </h2>
 
 
 
-<div class="stats">
+<div class="cards">
 
 
-<div class="profit">
+<div class="card">
 
-<span>Profit</span>
+<i class="fa-brands fa-tiktok"></i>
 
-<h3 id="profit">$0</h3>
-
-</div>
-
-
-
-<div class="roi">
-
-<span>ROI</span>
-
-<h3 id="roi">0%</h3>
-
-</div>
-
-
-
-
-<div class="status">
-
-<span>Status</span>
-
-<h3 id="status">
-Waiting
+<h3>
+TikTok Shop Management
 </h3>
 
+<p>
+Complete store support and optimization.
+</p>
 
 </div>
 
 
 
+
+<div class="card">
+
+<i class="fa-solid fa-search"></i>
+
+<h3>
+Product Research
+</h3>
+
+<p>
+Find profitable winning products.
+</p>
+
 </div>
 
 
 
 
+<div class="card">
 
+<i class="fa-solid fa-user"></i>
 
-
-<div class="details">
-
-
-<p>
-Total Cost
-<b id="totalCost">$0</b>
-</p>
-
+<h3>
+Virtual Assistant
+</h3>
 
 <p>
-TikTok Fee
-<b id="tiktokFee">$0</b>
+Daily ecommerce operations support.
 </p>
-
-
-<p>
-Margin
-<b id="margin">0%</b>
-</p>
-
-
-<p>
-Break Even
-<b id="breakEven">$0</b>
-</p>
-
-
-<p>
-Recommended Price
-<b id="recommended">$0</b>
-</p>
-
 
 </div>
 
 
-
 </div>
-
 
 
 </section>
@@ -268,38 +413,25 @@ Recommended Price
 
 
 
-
-<section class="service">
-
-
-<h2>
-Need Help Scaling Your TikTok Shop?
-</h2>
-
-
-<p>
-TikTok Shop Management • Virtual Assistant • Product Research • Viral Product Lists • Store Optimization
-</p>
-
-
-<a href="https://wa.me/923257833708">
-Get Expert Support
-</a>
-
-
-</section>
-
-
-
-
-</main>
-
-
-
+<!-- FOOTER -->
 
 <footer>
 
-ProfitPilot © 2026 | TikTok Shop Profit Calculator
+<div class="logo">
+ProfitFlow
+</div>
+
+
+<p>
+Smart tools for modern ecommerce sellers.
+</p>
+
+
+<div>
+<a href="#">Privacy</a>
+<a href="#">Contact</a>
+</div>
+
 
 </footer>
 
@@ -307,7 +439,5 @@ ProfitPilot © 2026 | TikTok Shop Profit Calculator
 
 <script src="script.js"></script>
 
-
 </body>
-
   </html>
