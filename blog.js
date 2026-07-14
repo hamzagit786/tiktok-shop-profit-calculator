@@ -8,33 +8,33 @@ let selectedCategory = "all";
 
 function filterArticles(){
 
-    let searchText = searchInput ? searchInput.value.toLowerCase().trim() : "";
+    let searchText = "";
+
+    if(searchInput){
+        searchText = searchInput.value.toLowerCase().trim();
+    }
 
 
-    blogCards.forEach(card => {
+    blogCards.forEach(function(card){
 
-        let category = card.getAttribute("data-category").trim();
+        let category = card.dataset.category || "";
+        let keywords = card.dataset.keywords || "";
 
-        let keywords = card.getAttribute("data-keywords").toLowerCase();
-
-        let title = card.querySelector("h2").innerText.toLowerCase();
-
-        let description = card.querySelector("p").innerText.toLowerCase();
+        let text = card.innerText.toLowerCase() + " " + keywords.toLowerCase();
 
 
-        let content = title + " " + description + " " + keywords;
+        let searchOK = text.includes(searchText);
 
 
-        let searchMatch = content.includes(searchText);
+        let categoryOK = (
+            selectedCategory === "all" ||
+            category === selectedCategory
+        );
 
 
-        let categoryMatch = 
-        selectedCategory === "all" || category === selectedCategory;
+        if(searchOK && categoryOK){
 
-
-        if(searchMatch && categoryMatch){
-
-            card.style.display = "block";
+            card.style.display = "";
 
         }else{
 
@@ -49,11 +49,16 @@ function filterArticles(){
 
 
 
+
 // Search typing
 
 if(searchInput){
 
-    searchInput.addEventListener("input", filterArticles);
+searchInput.addEventListener("input", function(){
+
+filterArticles();
+
+});
 
 }
 
@@ -63,37 +68,42 @@ if(searchInput){
 
 if(searchBtn){
 
-    searchBtn.addEventListener("click", filterArticles);
+searchBtn.addEventListener("click", function(){
+
+filterArticles();
+
+});
 
 }
 
 
 
-// Category buttons
 
-categoryButtons.forEach(button => {
+// Categories
 
-
-    button.addEventListener("click", function(){
+categoryButtons.forEach(function(button){
 
 
-        selectedCategory = this.getAttribute("data-category").trim();
+button.addEventListener("click", function(){
 
 
-        categoryButtons.forEach(btn=>{
-
-            btn.classList.remove("active");
-
-        });
+selectedCategory = this.dataset.category;
 
 
-        this.classList.add("active");
+categoryButtons.forEach(function(btn){
+
+btn.classList.remove("active");
+
+});
 
 
-        filterArticles();
+this.classList.add("active");
 
 
-    });
+filterArticles();
+
+
+});
 
 
 });
