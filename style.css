@@ -1199,3 +1199,70 @@ margin-top:30px;
 
 
 }
+/* Blog Search Box */
+
+.blog-search-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+
+#blogSearch {
+
+    width: 100%;
+    max-width: 700px;
+
+    height: 60px;
+
+    padding: 0 25px;
+
+    font-size: 18px;
+
+    border-radius: 16px;
+
+    border: 1px solid rgba(255,255,255,0.2);
+
+    background: rgba(255,255,255,0.08);
+
+    color: white;
+
+    outline: none;
+
+    transition: 0.3s;
+
+}
+
+
+#blogSearch::placeholder {
+
+    color: rgba(255,255,255,0.7);
+
+}
+
+
+
+#blogSearch:focus {
+
+    transform: scale(1.02);
+
+}
+
+
+/* Mobile Responsive */
+
+@media(max-width:768px){
+
+    #blogSearch {
+
+        height: 55px;
+
+        font-size:16px;
+
+        padding:0 18px;
+
+    }
+
+}
