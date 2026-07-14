@@ -1,12 +1,11 @@
 const searchInput = document.getElementById("blogSearch");
+const searchButton = document.querySelector(".search-btn");
 const blogCards = document.querySelectorAll(".blog-card");
 
 
-if(searchInput){
+function searchArticles(){
 
-searchInput.addEventListener("input", function(){
-
-let searchText = this.value.toLowerCase().trim();
+let searchText = searchInput.value.toLowerCase().trim();
 
 
 blogCards.forEach(card => {
@@ -38,8 +37,20 @@ card.style.display = "none";
 
 });
 
+}
 
-});
 
+
+if(searchInput){
+
+searchInput.addEventListener("input", searchArticles);
+
+}
+
+
+
+if(searchButton){
+
+searchButton.addEventListener("click", searchArticles);
 
 }
