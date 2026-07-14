@@ -1,293 +1,99 @@
+const searchInput = document.getElementById("blogSearch");
+const searchBtn = document.getElementById("searchBtn");
+const categoryButtons = document.querySelectorAll(".category-btn");
+const blogCards = document.querySelectorAll(".blog-card");
 
-<article class="glass-card blog-card"
+let selectedCategory = "all";
 
-data-category="TikTok Shop"
 
-data-keywords="tiktok shop fees commission profit margin seller">
+function filterArticles(){
 
+    let searchText = searchInput ? searchInput.value.toLowerCase().trim() : "";
 
-<h2>
 
-TikTok Shop Profit Margin Guide For Sellers
+    blogCards.forEach(card => {
 
-</h2>
+        let category = card.getAttribute("data-category").trim();
 
+        let keywords = card.getAttribute("data-keywords").toLowerCase();
 
-<p>
+        let title = card.querySelector("h2").innerText.toLowerCase();
 
-Understand TikTok Shop fees, commissions, ads cost and how sellers calculate real earnings.
+        let description = card.querySelector("p").innerText.toLowerCase();
 
-</p>
 
+        let content = title + " " + description + " " + keywords;
 
-<a href="tiktok-shop-profit-guide.html">
 
-Read Full Guide →
+        let searchMatch = content.includes(searchText);
 
-</a>
 
+        let categoryMatch = 
+        selectedCategory === "all" || category === selectedCategory;
 
-</article>
 
+        if(searchMatch && categoryMatch){
 
+            card.style.display = "block";
 
+        }else{
 
+            card.style.display = "none";
 
+        }
 
 
-<article class="glass-card blog-card"
+    });
 
-data-category="Product Research"
+}
 
-data-keywords="winning products product research ecommerce analysis">
 
 
-<h2>
+// Search typing
 
-How To Find Profitable Products For Ecommerce
+if(searchInput){
 
-</h2>
+    searchInput.addEventListener("input", filterArticles);
 
+}
 
-<p>
 
-Learn the important factors successful sellers check before choosing a product.
 
-</p>
+// Search button
 
+if(searchBtn){
 
-<a href="product-research-guide.html">
+    searchBtn.addEventListener("click", filterArticles);
 
-Read Full Guide →
+}
 
-</a>
 
 
-</article>
+// Category buttons
 
+categoryButtons.forEach(button => {
 
 
+    button.addEventListener("click", function(){
 
 
+        selectedCategory = this.getAttribute("data-category").trim();
 
 
-<article class="glass-card blog-card"
+        categoryButtons.forEach(btn=>{
 
-data-category="Supplier Guides"
+            btn.classList.remove("active");
 
-data-keywords="supplier quality reviews shipping tracking warehouse">
+        });
 
 
-<h2>
+        this.classList.add("active");
 
-How To Check Supplier Quality Before Buying Products
 
-</h2>
+        filterArticles();
 
 
-<p>
+    });
 
-A complete checklist to verify supplier ratings, product quality, shipping and reliability.
 
-</p>
-
-
-<a href="supplier-quality-guide.html">
-
-Read Full Guide →
-
-</a>
-
-
-</article>
-
-
-
-
-
-
-
-<article class="glass-card blog-card"
-
-data-category="Dropshipping"
-
-data-keywords="dropshipping beginner ecommerce online store">
-
-
-<h2>
-
-Dropshipping Beginner Guide: From Product To Customer
-
-</h2>
-
-
-<p>
-
-Understand product selection, suppliers, order handling and common dropshipping mistakes.
-
-</p>
-
-
-<a href="dropshipping-beginner-guide.html">
-
-Read Full Guide →
-
-</a>
-
-
-</article>
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-<section class="cta-section">
-
-
-<h2>
-
-Need Better Ecommerce Decisions?
-
-</h2>
-
-
-<p>
-
-Use eProfitFlow free tools to analyze products and protect your ecommerce business.
-
-</p>
-
-
-<a href="calculator.html" class="btn">
-
-Calculate Profit
-
-</a>
-
-
-
-<a href="product-rescue.html" class="btn secondary">
-
-Rescue Product
-
-</a>
-
-
-</section>
-
-
-
-
-
-
-
-
-<footer>
-
-
-<div class="footer-brand">
-
-
-<h3>
-
-eProfitFlow
-
-</h3>
-
-
-<p>
-
-Smart ecommerce tools and guides for modern sellers.
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-<div class="footer-links">
-
-
-<a href="index.html">
-
-Home
-
-</a>
-
-
-<a href="calculator.html">
-
-Calculator
-
-</a>
-
-
-<a href="product-rescue.html">
-
-Product Rescue
-
-</a>
-
-
-<a href="services.html">
-
-Services
-
-</a>
-
-
-<a href="blog.html">
-
-Blog
-
-</a>
-
-
-<a href="contact.html">
-
-Contact
-
-</a>
-
-
-</div>
-
-
-
-
-
-<p>
-
-© 2026 eProfitFlow. All rights reserved.
-
-</p>
-
-
-
-</footer>
-
-
-
-
-
-
-
-
-<script src="blog.js"></script>
-
-
-</body>
-
-</html>
+});
