@@ -1,0 +1,5 @@
+User-agent: *
+
+Allow: /
+
+Sitemap: https://hamzagit786.github.io/tiktok-shop-profit-calculator/sitemap.xml
