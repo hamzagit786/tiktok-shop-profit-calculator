@@ -4,28 +4,15 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>eProfitFlow Product Rescue Tool | Find Backup Suppliers</title>
 
-<title>eProfitFlow Product Rescue Tool | Dropshipping Backup Finder</title>
-
-
-<meta name="description" content="Find alternative product sources when dropshipping suppliers run out of stock or increase prices. Compare options before switching suppliers.">
-
-
-<meta name="keywords" content="dropshipping backup supplier tool, product replacement finder, ecommerce supplier alternative">
-
-
-<meta property="og:title" content="eProfitFlow Product Rescue Tool">
-
-<meta property="og:description" content="Find product alternatives before supplier issues affect your sales.">
-
+<meta name="description" content="Find alternative product sources for TikTok Shop, Amazon and ecommerce sellers.">
 
 <link rel="stylesheet" href="style.css">
 
 <link rel="icon" href="favicon.png">
-
 
 </head>
 
@@ -35,140 +22,36 @@
 
 <header class="navbar">
 
-
 <div class="logo">
-
 <span>e</span>ProfitFlow
-
 </div>
 
 
-
 <nav>
-
 <a href="index.html">Home</a>
-
 <a href="calculator.html">Calculator</a>
-
 <a href="product-rescue.html">Product Rescue</a>
-
 <a href="services.html">Services</a>
-
 <a href="blog.html">Blog</a>
-
 <a href="contact.html">Contact</a>
-
 </nav>
-
 
 </header>
 
 
 
 
-
-
-
 <section class="page-hero">
 
-
 <h1>
-
-Protect Your Sales When Suppliers Fail
-
+Protect Your Sales With Smart Product Rescue
 </h1>
 
-
 <p>
-
-Find alternative product sources when your supplier runs out of stock or changes prices.
-
+Find backup suppliers and alternative marketplaces before stock problems affect your business.
 </p>
-
 
 </section>
-
-
-
-
-
-
-
-
-
-<section class="problem-section">
-
-
-<h2>
-
-Why Dropshippers Need Product Rescue
-
-</h2>
-
-
-<p>
-
-A winning product can become a problem when suppliers change prices, delay shipping, or run out of inventory. This tool helps you quickly compare alternative sources.
-
-</p>
-
-
-
-
-<div class="card-grid">
-
-
-<div class="glass-card">
-
-<h3>
-Avoid Stock Problems
-</h3>
-
-<p>
-Find alternative sources before your orders are affected.
-</p>
-
-</div>
-
-
-
-<div class="glass-card">
-
-<h3>
-Compare Costs
-</h3>
-
-<p>
-Check different supplier options and look for better pricing.
-</p>
-
-</div>
-
-
-
-<div class="glass-card">
-
-<h3>
-Protect Customers
-</h3>
-
-<p>
-Reduce delays by preparing backup supplier options.
-</p>
-
-</div>
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
 
 
 
@@ -180,8 +63,84 @@ Reduce delays by preparing backup supplier options.
 
 
 <h2>
-Enter Product Details
+Product Rescue Finder
 </h2>
+
+
+
+<label>
+Where do you sell?
+</label>
+
+<select id="sellingPlatform">
+
+<option value="TikTok Shop">
+🛒 TikTok Shop
+</option>
+
+<option value="Amazon">
+📦 Amazon
+</option>
+
+<option value="Shopify">
+🌐 Shopify
+</option>
+
+<option value="eBay">
+🛍 eBay
+</option>
+
+<option value="Walmart">
+🏪 Walmart Marketplace
+</option>
+
+<option value="Etsy">
+🎨 Etsy
+</option>
+
+</select>
+
+
+
+
+
+<label>
+Target Country
+</label>
+
+<select id="targetCountry">
+
+<option value="USA">
+🇺🇸 USA
+</option>
+
+<option value="UK">
+🇬🇧 United Kingdom
+</option>
+
+<option value="Canada">
+🇨🇦 Canada
+</option>
+
+<option value="Australia">
+🇦🇺 Australia
+</option>
+
+<option value="Germany">
+🇩🇪 Germany
+</option>
+
+<option value="France">
+🇫🇷 France
+</option>
+
+<option value="UAE">
+🇦🇪 UAE
+</option>
+
+</select>
+
+
 
 
 
@@ -189,8 +148,10 @@ Enter Product Details
 Product Name
 </label>
 
-
-<input id="productName" type="text" placeholder="Example: Portable Blender">
+<input 
+id="productName"
+type="text"
+placeholder="Example: Portable Blender">
 
 
 
@@ -200,58 +161,10 @@ Product Name
 Current Product Link
 </label>
 
-
-<input id="productLink" type="text" placeholder="Paste supplier link">
-
-
-
-
-
-<label>
-Current Product Price
-</label>
-
-
-<input id="productPrice" type="number" placeholder="Example: 20">
-
-
-
-
-
-<label>
-Target Shipping Country
-</label>
-
-
-<select id="country">
-
-
-<option value="USA">
-USA
-</option>
-
-
-<option value="UK">
-UK
-</option>
-
-
-<option value="Canada">
-Canada
-</option>
-
-
-<option value="Australia">
-Australia
-</option>
-
-
-<option value="Germany">
-Germany
-</option>
-
-
-</select>
+<input 
+id="productLink"
+type="text"
+placeholder="Paste supplier link">
 
 
 
@@ -259,48 +172,80 @@ Germany
 
 <button onclick="findProduct()" class="btn">
 
-Find Alternatives
+Find Backup Sources
 
 </button>
 
 
+
 </div>
-
-
-
-
-
-
-
-
-<div class="results-box">
-
+  <section class="results-box">
 
 <h2>
-
-Replacement Options
-
+Recommended Source Platforms
 </h2>
 
 
-<div id="results">
+<div id="sourceResults" class="card-grid">
 
+
+<div class="glass-card">
+
+<h3>
+🛒 Amazon
+</h3>
 
 <p>
-Enter your product information to start comparing options.
+Find products from your target marketplace.
 </p>
 
+<a href="#" target="_blank">
+Open Platform →
+</a>
+
+</div>
+
+
+
+<div class="glass-card">
+
+<h3>
+📦 AliExpress
+</h3>
+
+<p>
+Popular dropshipping source for product alternatives.
+</p>
+
+<a href="#" target="_blank">
+Open Platform →
+</a>
+
+</div>
+
+
+
+<div class="glass-card">
+
+<h3>
+🚚 CJdropshipping
+</h3>
+
+<p>
+Alternative supplier option for ecommerce sellers.
+</p>
+
+<a href="#" target="_blank">
+Open Platform →
+</a>
 
 </div>
 
 
 </div>
-
 
 
 </section>
-
-
 
 
 
@@ -312,23 +257,21 @@ Enter your product information to start comparing options.
 
 
 <h2>
-
 How Product Rescue Works
-
 </h2>
 
 
 <p>
 
-1. Add your existing product details.
+1. Select your selling platform.
 
 <br><br>
 
-2. Compare alternative supplier sources.
+2. Choose your target customer market.
 
 <br><br>
 
-3. Check price, stock availability and shipping before making changes.
+3. Find alternative product sources before supplier issues affect your sales.
 
 </p>
 
@@ -341,15 +284,11 @@ How Product Rescue Works
 
 
 
-
-
 <section class="problem-section">
 
 
 <h2>
-
 Before Switching Suppliers
-
 </h2>
 
 
@@ -364,7 +303,7 @@ Check Product Quality
 </h3>
 
 <p>
-Make sure the replacement product matches customer expectations.
+Make sure replacement products meet customer expectations.
 </p>
 
 </div>
@@ -379,7 +318,7 @@ Check Shipping Time
 </h3>
 
 <p>
-Confirm delivery speed for your target market.
+Verify delivery speed for your target country.
 </p>
 
 </div>
@@ -390,11 +329,11 @@ Confirm delivery speed for your target market.
 <div class="glass-card">
 
 <h3>
-Check Availability
+Compare Pricing
 </h3>
 
 <p>
-Always verify supplier stock before accepting new orders.
+Compare supplier costs before changing sources.
 </p>
 
 </div>
@@ -404,9 +343,7 @@ Always verify supplier stock before accepting new orders.
 </div>
 
 
-
 </section>
-
 
 
 
@@ -416,23 +353,19 @@ Always verify supplier stock before accepting new orders.
 
 <section class="info-section">
 
-
 <h2>
-
 Important Note
-
 </h2>
 
 
 <p>
 
-eProfitFlow does not sell products or guarantee supplier availability. Always verify supplier information, pricing and shipping details before making business decisions.
+eProfitFlow provides sourcing guidance only. Always verify supplier details, pricing, shipping and availability before making business decisions.
 
 </p>
 
 
 </section>
-
 
 
 
@@ -449,7 +382,6 @@ eProfitFlow does not sell products or guarantee supplier availability. Always ve
 eProfitFlow
 </h3>
 
-
 <p>
 Smart ecommerce tools for modern sellers.
 </p>
@@ -459,47 +391,28 @@ Smart ecommerce tools for modern sellers.
 
 
 
-
 <div class="footer-links">
 
-<a href="index.html">
-Home
-</a>
+<a href="index.html">Home</a>
 
+<a href="calculator.html">Calculator</a>
 
-<a href="calculator.html">
-Calculator
-</a>
+<a href="product-rescue.html">Product Rescue</a>
 
+<a href="services.html">Services</a>
 
-<a href="product-rescue.html">
-Product Rescue
-</a>
-
-
-<a href="services.html">
-Services
-</a>
-
-
-<a href="blog.html">
-Blog
-</a>
-
+<a href="blog.html">Blog</a>
 
 </div>
 
 
 
 <p>
-
 © 2026 eProfitFlow. All rights reserved.
-
 </p>
 
 
 </footer>
-
 
 
 
