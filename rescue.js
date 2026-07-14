@@ -1,17 +1,169 @@
+const sourceDatabase = {
+
+TikTokShop: {
+USA: [
+["Amazon.com","https://www.amazon.com"],
+["Walmart.com","https://www.walmart.com"],
+["eBay.com","https://www.ebay.com"],
+["AliExpress","https://www.aliexpress.com"],
+["CJdropshipping","https://cjdropshipping.com"]
+],
+
+UK:[
+["Amazon UK","https://www.amazon.co.uk"],
+["eBay UK","https://www.ebay.co.uk"],
+["Argos","https://www.argos.co.uk"],
+["AliExpress","https://www.aliexpress.com"],
+["CJdropshipping","https://cjdropshipping.com"]
+],
+
+Germany:[
+["Amazon Germany","https://www.amazon.de"],
+["eBay Germany","https://www.ebay.de"],
+["Otto","https://www.otto.de"],
+["Kaufland","https://www.kaufland.de"],
+["AliExpress","https://www.aliexpress.com"]
+],
+
+Canada:[
+["Amazon Canada","https://www.amazon.ca"],
+["Walmart Canada","https://www.walmart.ca"],
+["eBay Canada","https://www.ebay.ca"],
+["AliExpress","https://www.aliexpress.com"],
+["CJdropshipping","https://cjdropshipping.com"]
+],
+
+UAE:[
+["Amazon UAE","https://www.amazon.ae"],
+["Noon","https://www.noon.com"],
+["Carrefour UAE","https://www.carrefouruae.com"],
+["AliExpress","https://www.aliexpress.com"],
+["CJdropshipping","https://cjdropshipping.com"]
+]
+
+},
+
+
+Amazon:{
+USA:[
+["Amazon.com","https://www.amazon.com"],
+["Walmart.com","https://www.walmart.com"],
+["eBay.com","https://www.ebay.com"]
+],
+
+UK:[
+["Amazon UK","https://www.amazon.co.uk"],
+["eBay UK","https://www.ebay.co.uk"],
+["Argos","https://www.argos.co.uk"]
+],
+
+Germany:[
+["Amazon Germany","https://www.amazon.de"],
+["Otto","https://www.otto.de"],
+["Kaufland","https://www.kaufland.de"]
+]
+
+},
+
+
+Shopify:{
+USA:[
+["AliExpress","https://www.aliexpress.com"],
+["Alibaba","https://www.alibaba.com"],
+["CJdropshipping","https://cjdropshipping.com"]
+],
+
+UK:[
+["AliExpress","https://www.aliexpress.com"],
+["Spocket","https://www.spocket.co"],
+["CJdropshipping","https://cjdropshipping.com"]
+]
+
+}
+
+};
+
+
+
+
+
+function loadSources(){
+
+let platform = document.getElementById("sellingPlatform").value;
+let country = document.getElementById("targetCountry").value;
+
+let results = document.getElementById("sourceResults");
+
+results.innerHTML="";
+
+
+let data = sourceDatabase[platform.replace(" ","")];
+
+
+if(data && data[country]){
+
+
+data[country].forEach(item=>{
+
+
+results.innerHTML += `
+
+<div class="glass-card">
+
+<h3>
+🛒 ${item[0]}
+</h3>
+
+<p>
+Recommended source for ${country} market.
+</p>
+
+<a class="btn" href="${item[1]}" target="_blank">
+Open Platform →
+</a>
+
+</div>
+
+`;
+
+});
+
+
+}
+
+else{
+
+
+results.innerHTML = `
+
+<div class="glass-card">
+
+<h3>
+No recommendations available
+</h3>
+
+<p>
+More marketplaces will be added soon.
+</p>
+
+</div>
+
+`;
+
+}
+
+
+}
+
+
+
+
+
 function findProduct(){
 
+let name=document.getElementById("productName").value;
 
-let productName = document.getElementById("productName").value;
-
-let productLink = document.getElementById("productLink").value;
-
-let productPrice = document.getElementById("productPrice").value;
-
-let country = document.getElementById("country").value;
-
-
-
-if(productName.trim() === ""){
+if(name===""){
 
 alert("Please enter product name");
 
@@ -20,160 +172,7 @@ return;
 }
 
 
-
-let search = encodeURIComponent(productName);
-
-
-
-// Search Sources
-
-let aliexpress =
-"https://www.aliexpress.com/wholesale?SearchText=" + search;
-
-
-let cjDropshipping =
-"https://cjdropshipping.com/search.html?keyword=" + search;
-
-
-let amazon =
-"https://www.amazon.com/s?k=" + search;
-
-
-let google =
-"https://www.google.com/search?tbm=shop&q=" + search;
-
-
-
-
-
-window.savedProduct = {
-
-name: productName,
-
-link: productLink,
-
-price: productPrice,
-
-country: country
-
-};
-
-
-
-
-
-
-document.getElementById("results").innerHTML = `
-
-
-
-<div class="glass-card">
-
-
-<h3>
-Product Summary
-</h3>
-
-
-<p>
-<strong>Product:</strong> ${productName}
-</p>
-
-
-<p>
-<strong>Current Price:</strong> ${productPrice}
-</p>
-
-
-<p>
-<strong>Shipping Country:</strong> ${country}
-</p>
-
-
-
-
-<hr>
-
-
-
-
-<h3>
-Compare Alternative Sources
-</h3>
-
-
-<p>
-Check the same or similar product and compare price, stock availability and shipping time before changing suppliers.
-</p>
-
-
-
-
-
-<a href="${aliexpress}" target="_blank" class="btn">
-
-AliExpress Search
-
-</a>
-
-
-
-<br><br>
-
-
-
-<a href="${cjDropshipping}" target="_blank" class="btn">
-
-CJ Dropshipping Search
-
-</a>
-
-
-
-<br><br>
-
-
-
-<a href="${amazon}" target="_blank" class="btn">
-
-Amazon Search
-
-</a>
-
-
-
-<br><br>
-
-
-
-<a href="${google}" target="_blank" class="btn">
-
-Google Shopping Search
-
-</a>
-
-
-
-
-<br><br>
-
-
-
-<button onclick="copyProduct()" class="btn">
-
-Copy Product Format
-
-</button>
-
-
-
-</div>
-
-
-
-`;
-
-
+loadSources();
 
 }
 
@@ -181,52 +180,22 @@ Copy Product Format
 
 
 
+document
+.getElementById("sellingPlatform")
+.addEventListener("change",loadSources);
 
 
 
-function copyProduct(){
-
-
-let text = `
-
-Product Replacement Request
-
-
-Product Name:
-${savedProduct.name}
-
-
-Original Product Link:
-${savedProduct.link}
-
-
-Current Price:
-${savedProduct.price}
-
-
-Target Country:
-${savedProduct.country}
+document
+.getElementById("targetCountry")
+.addEventListener("change",loadSources);
 
 
 
-Requirements:
 
-- Same or similar product
-- Same target country shipping
-- Equal or lower supplier price preferred
-- Check stock availability before switching
+// Load default results
+window.onload=function(){
 
-
-
-`;
-
-
-
-navigator.clipboard.writeText(text);
-
-
-alert("Product details copied successfully");
-
-
+loadSources();
 
 }
