@@ -1,4 +1,4 @@
-const sourceDatabase = {
+const sourceDatabase = {you
 
 TikTokShop:{
 USA:[
@@ -366,6 +366,21 @@ return;
 
 
 loadSources();
+
+
+// Auto scroll to recommendations section
+
+setTimeout(()=>{
+
+document
+.getElementById("sourceResults")
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+},300);
+
 
 }
 
