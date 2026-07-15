@@ -1,16 +1,16 @@
 /* ==========================================================
-   eProfitFlow Calculator FINAL
+   eProfitFlow Calculator Engine FINAL v5.0
+
    Daily / Monthly / Yearly Profit Calculator
+   Compatible with Current calculator.html
 ========================================================== */
 
 "use strict";
 
 
-document.addEventListener("DOMContentLoaded", function(){
-
+document.addEventListener("DOMContentLoaded", () => {
 
     const button = document.querySelector(".btn");
-
 
     if(button){
 
@@ -22,9 +22,7 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
 
-
     const platform = document.getElementById("platform");
-
 
     if(platform){
 
@@ -36,43 +34,20 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
 
-
-    const mode = document.getElementById("mode");
-
-
-    if(mode){
-
-        mode.addEventListener(
-            "change",
-            updateModeLabel
-        );
-
-    }
-
-
-
 });
 
 
 
-
-
-/* =========================
-   GET VALUES
-========================= */
+/* ==========================
+   HELPERS
+========================== */
 
 
 function getValue(id){
 
-    const element =
-    document.getElementById(id);
+    const el = document.getElementById(id);
 
-
-    return element
-    ?
-    element.value.trim()
-    :
-    "";
+    return el ? el.value.trim() : "";
 
 }
 
@@ -80,53 +55,47 @@ function getValue(id){
 
 function getNumber(id){
 
-    const value =
-    parseFloat(getValue(id));
+    const value = parseFloat(getValue(id));
 
-
-    return isNaN(value)
-    ?
-    0
-    :
-    value;
+    return isNaN(value) ? 0 : value;
 
 }
 
 
 
 
-
-
-
-/* =========================
+/* ==========================
    MONEY FORMAT
-========================= */
+========================== */
 
 
-function formatMoney(amount,currency){
+function formatMoney(value,currency){
 
 
-    const map={
+    let code = "USD";
 
-        "$":"USD",
 
-        "€":"EUR",
+    if(currency === "€")
+        code="EUR";
 
-        "£":"GBP",
 
-        "PKR":"PKR"
+    if(currency === "£")
+        code="GBP";
 
-    };
+
+    if(currency === "PKR")
+        code="PKR";
+
 
 
     return new Intl.NumberFormat(
         "en-US",
         {
             style:"currency",
-            currency:map[currency] || "USD",
+            currency:code,
             maximumFractionDigits:2
         }
-    ).format(amount);
+    ).format(value);
 
 
 }
@@ -135,58 +104,63 @@ function formatMoney(amount,currency){
 
 
 
-
-
-
-/* =========================
+/* ==========================
    MAIN CALCULATOR
-========================= */
+========================== */
 
 
 function calculateProfit(){
 
 
 
-const data={
+const platform =
+getValue("platform");
 
 
-platform:getValue("platform"),
-
-mode:getValue("mode"),
-
-currency:getValue("currency") || "$",
+const mode =
+getValue("mode");
 
 
-productCost:getNumber("productCost"),
-
-sellingPrice:getNumber("sellingPrice"),
-
-shipping:getNumber("shippingCost"),
-
-fee:getNumber("fee"),
-
-ads:getNumber("adCost"),
-
-orders:getNumber("orders")
-
-
-};
+const currency =
+getValue("currency");
 
 
 
+const productCost =
+getNumber("productCost");
 
 
-if(
-data.productCost<=0 ||
-data.sellingPrice<=0 ||
-data.orders<=0
-){
+const sellingPrice =
+getNumber("sellingPrice");
 
-showMessage(
-"Please enter all required values"
-);
 
-return;
+const shipping =
+getNumber("shippingCost");
+
+
+const fee =
+getNumber("fee");
+
+
+const ads =
+getNumber("adCost");
+
+
+const orders =
+getNumber("orders");
+
+
+
+
+
+if(productCost<=0 || sellingPrice<=0){
+
+
+    showMessage(
+        "Enter product cost and selling price"
+    );
+
+    return;
 
 }
 
@@ -194,51 +168,49 @@ return;
 
 
 
-
-/* COST */
+/* COST CALCULATION */
 
 
 const platformFee =
-
-data.sellingPrice *
-(data.fee / 100);
+sellingPrice * (fee/100);
 
 
 
 const totalCost =
 
-data.productCost +
-data.shipping +
+productCost +
+shipping +
 platformFee +
-data.ads;
+ads;
 
 
 
 
-
-
-/* PROFIT PER SALE */
+/* PROFIT */
 
 
 const profit =
 
-data.sellingPrice -
+sellingPrice -
 totalCost;
 
 
 
 const margin =
 
-(profit / data.sellingPrice) * 100;
+(profit / sellingPrice) * 100;
 
 
 
 const roi =
 
-(totalCost > 0)
+(totalCost>0)
+
 ?
-(profit / totalCost) * 100
+(profit / totalCost)*100
+
 :
+
 0;
 
 
@@ -246,67 +218,59 @@ const roi =
 
 
 
-
-/* PERIOD CALCULATION */
+/* ==========================
+   PERIOD CALCULATION
+========================== */
 
 
 let revenue = 0;
 
-let periodProfit = 0;
+let finalProfit = 0;
 
 
 
-if(data.mode==="daily"){
+if(mode==="daily"){
 
 
     revenue =
-    data.sellingPrice *
-    data.orders;
+    sellingPrice * orders;
 
 
-    periodProfit =
-    profit *
-    data.orders;
+    finalProfit =
+    profit * orders;
 
 
 }
 
 
 
-
-else if(data.mode==="monthly"){
+else if(mode==="monthly"){
 
 
     revenue =
-    data.sellingPrice *
-    data.orders;
+    sellingPrice * orders;
 
 
-    periodProfit =
-    profit *
-    data.orders;
+    finalProfit =
+    profit * orders;
 
 
 }
 
 
 
-
-else if(data.mode==="yearly"){
+else if(mode==="yearly"){
 
 
     revenue =
-    data.sellingPrice *
-    data.orders;
+    sellingPrice * orders;
 
 
-    periodProfit =
-    profit *
-    data.orders;
+    finalProfit =
+    profit * orders;
 
 
 }
-
 
 
 
@@ -316,11 +280,11 @@ else if(data.mode==="yearly"){
 const result={
 
 
-platform:data.platform,
+platform,
 
-mode:data.mode,
+mode,
 
-currency:data.currency,
+currency,
 
 profit,
 
@@ -330,7 +294,7 @@ roi,
 
 revenue,
 
-periodProfit
+finalProfit
 
 
 };
@@ -342,31 +306,29 @@ displayResults(result);
 
 
 
+
+
 }
 
 
 
 
 
-
-
-
-
-/* =========================
+/* ==========================
    DISPLAY
-========================= */
+========================== */
 
 
-function updateResult(id,value){
+function update(id,value){
 
 
-    const element =
+    const el =
     document.getElementById(id);
 
 
-    if(element){
+    if(el){
 
-        element.textContent=value;
+        el.textContent=value;
 
     }
 
@@ -376,27 +338,25 @@ function updateResult(id,value){
 
 
 
-
-
 function displayResults(result){
 
 
 
-updateResult(
+update(
 "showPlatform",
 result.platform
 );
 
 
 
-updateResult(
+update(
 "showMode",
 result.mode.toUpperCase()
 );
 
 
 
-updateResult(
+update(
 "profit",
 formatMoney(
 result.profit,
@@ -406,14 +366,14 @@ result.currency
 
 
 
-updateResult(
+update(
 "margin",
 result.margin.toFixed(1)+"%"
 );
 
 
 
-updateResult(
+update(
 "roi",
 result.roi.toFixed(1)+"%"
 );
@@ -422,30 +382,47 @@ result.roi.toFixed(1)+"%"
 
 
 
-/* Revenue */
+/* Titles */
+
+
+const revenueTitle =
+document.getElementById(
+"revenueTitle"
+);
+
+
+
+const profitTitle =
+document.getElementById(
+"profitTitle"
+);
+
+
 
 
 if(result.mode==="daily"){
 
-document.getElementById("revenueTitle").textContent =
+
+revenueTitle.textContent =
 "Daily Revenue";
 
 
-document.getElementById("profitTitle").textContent =
+profitTitle.textContent =
 "Daily Profit";
+
 
 }
 
 
 
-else if(result.mode==="monthly"){
+if(result.mode==="monthly"){
 
 
-document.getElementById("revenueTitle").textContent =
+revenueTitle.textContent =
 "Monthly Revenue";
 
 
-document.getElementById("profitTitle").textContent =
+profitTitle.textContent =
 "Monthly Profit";
 
 
@@ -453,15 +430,14 @@ document.getElementById("profitTitle").textContent =
 
 
 
+if(result.mode==="yearly"){
 
-else if(result.mode==="yearly"){
 
-
-document.getElementById("revenueTitle").textContent =
+revenueTitle.textContent =
 "Yearly Revenue";
 
 
-document.getElementById("profitTitle").textContent =
+profitTitle.textContent =
 "Yearly Profit";
 
 
@@ -470,60 +446,70 @@ document.getElementById("profitTitle").textContent =
 
 
 
-updateResult(
+
+/* IMPORTANT IDs MATCH HTML */
+
+
+update(
+
 "monthlyRevenue",
+
 formatMoney(
 result.revenue,
 result.currency
 )
+
 );
 
 
 
-updateResult(
+
+update(
+
 "monthlyProfit",
+
 formatMoney(
-result.periodProfit,
+result.finalProfit,
 result.currency
 )
+
 );
 
 
 
 
-let status="❌ Low Profit";
-
-
-if(result.margin>=40){
-
-status="🔥 Excellent Profit";
-
-}
-
-else if(result.margin>=20){
-
-status="✅ Good Profit";
-
-}
-
-else if(result.margin>=10){
-
-status="⚠️ Average Profit";
-
-}
 
 
 
-updateResult(
-"profitStatus",
-status
+let breakEven = 0;
+
+
+if(result.profit > 0){
+
+
+breakEven =
+
+Math.ceil(
+1
 );
 
 
+}
 
-updateResult(
+
+
+
+update(
 "breakEven",
-"Calculated"
+breakEven+" sales"
+);
+
+
+
+
+update(
+"profitStatus",
+getStatus(result.margin)
 );
 
 
@@ -533,17 +519,46 @@ updateResult(
 
 
 
+/* ==========================
+   STATUS
+========================== */
+
+
+function getStatus(margin){
+
+
+if(margin>=40)
+
+return "🔥 Excellent Profit";
+
+
+if(margin>=20)
+
+return "✅ Good Profit";
+
+
+if(margin>=10)
+
+return "⚠️ Average Profit";
+
+
+return "❌ Low Profit";
+
+
+}
 
 
 
 
 
-/* =========================
+
+/* ==========================
    AUTO FEE
-========================= */
+========================== */
 
 
 function autoFee(){
+
 
 
 const platform =
@@ -587,51 +602,67 @@ fees[platform] || 0;
 
 
 
+/* ==========================
+   COUNTRY CURRENCY
+========================== */
+
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+const country =
+document.getElementById("country");
+
+
+const currency =
+document.getElementById("currency");
 
 
 
-/* =========================
-   MODE LABEL
-========================= */
-
-
-function updateModeLabel(){
-
-
-const mode =
-getValue("mode");
-
-
-const label =
-document.getElementById("ordersLabel");
-
-
-if(!label) return;
+if(country && currency){
 
 
 
-if(mode==="daily"){
+country.addEventListener(
+"change",
+()=>{
 
-label.textContent="Orders Per Day";
+
+const map={
+
+
+US:"$",
+
+UK:"£",
+
+CA:"$",
+
+AU:"$",
+
+PK:"PKR",
+
+OTHER:"$"
+
+
+};
+
+
+
+currency.value =
+map[country.value];
+
+
+
+});
+
 
 }
 
 
-else if(mode==="monthly"){
 
-label.textContent="Orders Per Month";
-
-}
-
-
-else if(mode==="yearly"){
-
-label.textContent="Orders Per Year";
-
-}
-
-
-}
+});
 
 
 
@@ -639,21 +670,19 @@ label.textContent="Orders Per Year";
 
 
 
-
-
-/* =========================
+/* ==========================
    MESSAGE
-========================= */
+========================== */
 
 
-function showMessage(message){
+function showMessage(text){
 
 
-alert(message);
+
+alert(text);
 
 
 }
-
 
 
 
