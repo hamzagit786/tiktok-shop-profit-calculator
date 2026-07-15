@@ -1,803 +1,1042 @@
-/* ==========================================================
-   eProfitFlow Calculator Engine v3.1
-   HamzaDeals
+<!DOCTYPE html>
+<html lang="en">
 
-   Professional Ecommerce Profit Calculator
-   Daily / Monthly / Yearly Projection
-========================================================== */
+<head>
 
-"use strict";
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>eProfitFlow Ecommerce Profit Calculator</title>
 
-/* ===============================
-   INITIALIZE
-================================ */
+<link rel="stylesheet" href="style.css">
 
+</head>
 
-document.addEventListener(
-"DOMContentLoaded",
-function(){
 
-    initializeCalculator();
+<body>
 
-});
 
+<header class="navbar">
 
+<div class="logo">
+<span>e</span>ProfitFlow
+</div>
 
 
-function initializeCalculator(){
+<nav>
+<a href="index.html">Home</a>
+<a href="calculator.html">Calculator</a>
+<a href="services.html">Services</a>
+<a href="blog.html">Blog</a>
+</nav>
 
+</header>
 
-    const button =
-    document.querySelector(".btn");
 
 
-    if(button){
 
-        button.addEventListener(
-        "click",
-        calculateProfit
-        );
+<section class="page-hero">
 
-    }
+<h1>
+Ecommerce Profit Calculator
+</h1>
 
+<p>
+Analyze your product profit with daily, monthly and yearly projections.
+</p>
 
+</section>
 
 
-    const mode =
-    getElement("mode");
 
 
-    if(mode){
 
-        mode.addEventListener(
-        "change",
-        updateModeLabel
-        );
+<section class="calculator-container">
 
-    }
 
+<div class="calculator-box">
 
 
+<h2>Enter Product Data</h2>
 
-    const platform =
-    getElement("platform");
 
 
-    if(platform){
+<label>Platform</label>
 
-        platform.addEventListener(
-        "change",
-        autoFillFee
-        );
+<select id="platform">
 
-    }
+<option value="TikTok Shop">
+TikTok Shop
+</option>
 
+<option value="Amazon">
+Amazon
+</option>
 
+<option value="Shopify">
+Shopify
+</option>
 
-}
+<option value="Etsy">
+Etsy
+</option>
 
+</select>
 
 
 
 
 
-/* ===============================
-   DOM HELPERS
-================================ */
+<label>Analysis Type</label>
 
+<select id="mode">
 
-function getElement(id){
+<option value="daily">
+Daily
+</option>
 
-    return document.getElementById(id);
+<option value="monthly">
+Monthly
+</option>
 
-}
+<option value="yearly">
+Yearly
+</option>
 
+</select>
 
 
 
-function getValue(id){
 
-    const element =
-    getElement(id);
 
+<label>Currency</label>
 
-    if(!element){
+<select id="currency">
 
-        return "";
+<option value="$">
+$ USD
+</option>
 
-    }
+<option value="€">
+€ EUR
+</option>
 
+<option value="£">
+£ GBP
+</option>
 
-    return element.value.trim();
+<option value="PKR">
+PKR
+</option>
 
-}
+</select>
 
 
 
 
 
-function getNumber(id){
+<label>Country</label>
 
-    const value =
-    Number(getValue(id));
+<select id="country">
 
+<option value="US">
+🇺🇸 United States
+</option>
 
-    return isNaN(value)
-    ?
-    0
-    :
-    value;
+<option value="UK">
+🇬🇧 United Kingdom
+</option>
 
-}
+<option value="CA">
+🇨🇦 Canada
+</option>
 
+<option value="AU">
+🇦🇺 Australia
+</option>
 
+<option value="PK">
+🇵🇰 Pakistan
+</option>
 
+<option value="OTHER">
+🌍 Other
+</option>
 
+</select>
 
 
 
-/* ===============================
-   MONEY FORMAT
-================================ */
 
 
-function formatMoney(amount,currency){
 
+<label>Product Category</label>
 
-    const currencyMap={
+<select id="category">
 
 
-        "$":"USD",
+<option value="general">
+General
+</option>
 
-        "€":"EUR",
 
-        "£":"GBP",
+<option value="beauty">
+Beauty
+</option>
 
-        "PKR":"PKR"
 
+<option value="fashion">
+Fashion
+</option>
 
-    };
 
+<option value="electronics">
+Electronics
+</option>
 
 
-    try{
+<option value="home">
+Home & Kitchen
+</option>
 
 
-        return new Intl.NumberFormat(
-        "en-US",
-        {
+<option value="health">
+Health
+</option>
 
-            style:"currency",
 
-            currency:
-            currencyMap[currency] || "USD",
+<option value="toys">
+Toys
+</option>
 
-            maximumFractionDigits:2
 
-        }).format(amount);
+<option value="sports">
+Sports
+</option>
 
 
+</select>
 
-    }
 
-    catch(error){
 
 
-        return amount.toFixed(2);
 
 
-    }
 
+<label>
+Product Cost
+</label>
 
-}
-/* ==========================================================
-   eProfitFlow Calculator Engine v4.0
-   Daily / Monthly / Yearly Accurate System
-========================================================== */
+<input 
+id="productCost"
+type="number"
+placeholder="10">
 
-"use strict";
 
 
-document.addEventListener("DOMContentLoaded",()=>{
 
-    const button=document.querySelector(".btn");
 
-    if(button){
 
-        button.addEventListener(
-            "click",
-            calculateProfit
-        );
+<label>
+Selling Price
+</label>
 
-    }
+<input 
+id="sellingPrice"
+type="number"
+placeholder="30">
 
 
-    const mode=document.getElementById("mode");
 
-    if(mode){
 
-        mode.addEventListener(
-            "change",
-            updateMode
-        );
 
-    }
 
+<label>
+Shipping Cost
+</label>
 
-    const platform=document.getElementById("platform");
+<input 
+id="shippingCost"
+type="number"
+placeholder="5">
 
-    if(platform){
 
-        platform.addEventListener(
-            "change",
-            autoFee
-        );
 
-    }
 
 
-});
 
 
+<label>
+Platform Fee (%)
+</label>
 
+<input
+id="fee"
+type="number"
+placeholder="Auto or Manual"
+step="0.1">
+
+
+
+<small class="field-note">
+
+Fee can be calculated automatically or entered manually.
+
+</small>
+
+
+
+
+
+
+
+<label>
+Advertising Cost
+</label>
+
+<input
+id="adCost"
+type="number"
+placeholder="5">
+
+
+
+
+
+
+
+<label id="ordersLabel">
+Orders Per Day
+</label>
+
+
+<input
+id="orders"
+type="number"
+placeholder="10">
+
+
+
+
+
+
+
+<button 
+onclick="calculateProfit()" 
+class="btn">
+
+Calculate Profit
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="results-box">
+
+
+<h2>
+Profit Dashboard
+</h2>
+
+
+
+
+<div class="result-card">
+
+<h3>
+Platform
+</h3>
+
+<strong id="showPlatform">
+-
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Analysis Type
+</h3>
+
+<strong id="showMode">
+-
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Profit Per Sale
+</h3>
+
+<strong id="profit">
+$0
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Profit Margin
+</h3>
+
+<strong id="margin">
+0%
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+ROI
+</h3>
+
+<strong id="roi">
+0%
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3 id="revenueTitle">
+Daily Revenue
+</h3>
+
+<strong id="monthlyRevenue">
+$0
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3 id="profitTitle">
+Daily Profit
+</h3>
+
+<strong id="monthlyProfit">
+$0
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Break Even Sales
+</h3>
+
+<strong id="breakEven">
+0
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Profit Status
+</h3>
+
+<strong id="profitStatus">
+-
+</strong>
+
+</div>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>eProfitFlow Ecommerce Profit Calculator</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+<div class="logo">
+<span>e</span>ProfitFlow
+</div>
+
+
+<nav>
+<a href="index.html">Home</a>
+<a href="calculator.html">Calculator</a>
+<a href="services.html">Services</a>
+<a href="blog.html">Blog</a>
+</nav>
+
+</header>
+
+
+
+
+<section class="page-hero">
+
+<h1>
+Ecommerce Profit Calculator
+</h1>
+
+<p>
+Analyze your product profit with daily, monthly and yearly projections.
+</p>
+
+</section>
+
+
+
+
+
+<section class="calculator-container">
+
+
+<div class="calculator-box">
+
+
+<h2>Enter Product Data</h2>
+
+
+
+<label>Platform</label>
+
+<select id="platform">
+
+<option value="TikTok Shop">
+TikTok Shop
+</option>
+
+<option value="Amazon">
+Amazon
+</option>
+
+<option value="Shopify">
+Shopify
+</option>
+
+<option value="Etsy">
+Etsy
+</option>
+
+</select>
+
+
+
+
+
+<label>Analysis Type</label>
+
+<select id="mode">
+
+<option value="daily">
+Daily
+</option>
+
+<option value="monthly">
+Monthly
+</option>
+
+<option value="yearly">
+Yearly
+</option>
+
+</select>
+
+
+
+
+
+<label>Currency</label>
+
+<select id="currency">
+
+<option value="$">
+$ USD
+</option>
+
+<option value="€">
+€ EUR
+</option>
+
+<option value="£">
+£ GBP
+</option>
+
+<option value="PKR">
+PKR
+</option>
+
+</select>
+
+
+
+
+
+<label>Country</label>
+
+<select id="country">
+
+<option value="US">
+🇺🇸 United States
+</option>
+
+<option value="UK">
+🇬🇧 United Kingdom
+</option>
+
+<option value="CA">
+🇨🇦 Canada
+</option>
+
+<option value="AU">
+🇦🇺 Australia
+</option>
+
+<option value="PK">
+🇵🇰 Pakistan
+</option>
+
+<option value="OTHER">
+🌍 Other
+</option>
+
+</select>
+
+
+
+
+
+
+<label>Product Category</label>
+
+<select id="category">
+
+
+<option value="general">
+General
+</option>
+
+
+<option value="beauty">
+Beauty
+</option>
+
+
+<option value="fashion">
+Fashion
+</option>
+
+
+<option value="electronics">
+Electronics
+</option>
+
+
+<option value="home">
+Home & Kitchen
+</option>
+
+
+<option value="health">
+Health
+</option>
+
+
+<option value="toys">
+Toys
+</option>
+
+
+<option value="sports">
+Sports
+</option>
+
+
+</select>
+
+
+
+
+
+
+
+<label>
+Product Cost
+</label>
+
+<input 
+id="productCost"
+type="number"
+placeholder="10">
+
+
+
+
+
+
+<label>
+Selling Price
+</label>
+
+<input 
+id="sellingPrice"
+type="number"
+placeholder="30">
+
+
+
+
+
+
+<label>
+Shipping Cost
+</label>
+
+<input 
+id="shippingCost"
+type="number"
+placeholder="5">
+
+
+
+
+
+
+
+<label>
+Platform Fee (%)
+</label>
+
+<input
+id="fee"
+type="number"
+placeholder="Auto or Manual"
+step="0.1">
+
+
+
+<small class="field-note">
+
+Fee can be calculated automatically or entered manually.
+
+</small>
+
+
+
+
+
+
+
+<label>
+Advertising Cost
+</label>
+
+<input
+id="adCost"
+type="number"
+placeholder="5">
+
+
+
+
+
+
+
+<label id="ordersLabel">
+Orders Per Day
+</label>
+
+
+<input
+id="orders"
+type="number"
+placeholder="10">
+
+
+
+
+
+
+
+<button 
+onclick="calculateProfit()" 
+class="btn">
+
+Calculate Profit
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="results-box">
+
+
+<h2>
+Profit Dashboard
+</h2>
+
+
+
+
+<div class="result-card">
+
+<h3>
+Platform
+</h3>
+
+<strong id="showPlatform">
+-
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Analysis Type
+</h3>
+
+<strong id="showMode">
+-
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Profit Per Sale
+</h3>
+
+<strong id="profit">
+$0
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Profit Margin
+</h3>
+
+<strong id="margin">
+0%
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+ROI
+</h3>
+
+<strong id="roi">
+0%
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3 id="revenueTitle">
+Daily Revenue
+</h3>
+
+<strong id="monthlyRevenue">
+$0
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3 id="profitTitle">
+Daily Profit
+</h3>
+
+<strong id="monthlyProfit">
+$0
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Break Even Sales
+</h3>
+
+<strong id="breakEven">
+0
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Profit Status
+</h3>
+
+<strong id="profitStatus">
+-
+</strong>
+
+</div>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
 /* =========================
-   GET VALUES
-========================= */
-
-
-function getValue(id){
-
-    const el=document.getElementById(id);
-
-    return el ? el.value.trim() : "";
-
-}
-
-
-
-function getNumber(id){
-
-    const value=parseFloat(getValue(id));
-
-    return isNaN(value) ? 0 : value;
-
-}
-
-
-
-
-
-/* =========================
-   MONEY FORMAT
-========================= */
-
-
-function money(value,currency){
-
-
-    let code="USD";
-
-
-    if(currency==="€")
-        code="EUR";
-
-
-    if(currency==="£")
-        code="GBP";
-
-
-    if(currency==="PKR")
-        code="PKR";
-
-
-
-    return new Intl.NumberFormat(
-        "en-US",
-        {
-            style:"currency",
-            currency:code
-        }
-    ).format(value);
-
-
-}
-
-
-
-
-
-/* =========================
-   MAIN CALCULATOR
-========================= */
-
-
-function calculateProfit(){
-
-
-const data={
-
-
-platform:getValue("platform"),
-
-mode:getValue("mode"),
-
-currency:getValue("currency"),
-
-productCost:getNumber("productCost"),
-
-sellingPrice:getNumber("sellingPrice"),
-
-shipping:getNumber("shippingCost"),
-
-fee:getNumber("fee"),
-
-ads:getNumber("adCost"),
-
-orders:getNumber("orders")
-
-
-};
-
-
-
-if(
-data.productCost<=0 ||
-data.sellingPrice<=0
-){
-
-showMessage(
-"Please enter product cost and selling price"
-);
-
-return;
-
-}
-
-
-
-
-/* COST */
-
-
-const platformFee =
-data.sellingPrice *
-(data.fee/100);
-
-
-
-const totalCost =
-data.productCost +
-data.shipping +
-platformFee +
-data.ads;
-
-
-
-/* PROFIT PER SALE */
-
-
-const profit =
-data.sellingPrice -
-totalCost;
-
-
-
-const margin =
-(profit/data.sellingPrice)*100;
-
-
-
-const roi =
-(profit/totalCost)*100;
-
-
-
-/* PERIOD */
-
-
-let revenue=0;
-
-let periodProfit=0;
-
-
-if(data.mode==="daily"){
-
-
-revenue =
-data.sellingPrice *
-data.orders;
-
-
-periodProfit =
-profit *
-data.orders;
-
-
-}
-
-
-
-if(data.mode==="monthly"){
-
-
-revenue =
-data.sellingPrice *
-data.orders;
-
-
-periodProfit =
-profit *
-data.orders;
-
-
-}
-
-
-
-if(data.mode==="yearly"){
-
-
-revenue =
-data.sellingPrice *
-data.orders;
-
-
-periodProfit =
-profit *
-data.orders;
-
-
-}
-
-
-
-const result={
-
-platform:data.platform,
-
-mode:data.mode,
-
-currency:data.currency,
-
-profit,
-
-margin,
-
-roi,
-
-revenue,
-
-periodProfit
-
-};
-
-
-
-displayResults(result);
-
-
-
-saveData(result);
-
-
-}
-/* =========================
-   DISPLAY RESULTS
-========================= */
-
-
-function updateResult(id,value){
-
-    const el=document.getElementById(id);
-
-    if(el){
-
-        el.textContent=value;
-
-    }
-
-}
-
-
-
-
-
-function displayResults(result){
-
-
-
-    updateResult(
-        "showPlatform",
-        result.platform
-    );
-
-
-
-    updateResult(
-        "showMode",
-        result.mode.toUpperCase()
-    );
-
-
-
-    updateResult(
-        "profit",
-        money(
-            result.profit,
-            result.currency
-        )
-    );
-
-
-
-    updateResult(
-        "margin",
-        result.margin.toFixed(1)+"%"
-    );
-
-
-
-    updateResult(
-        "roi",
-        result.roi.toFixed(1)+"%"
-    );
-
-
-
-
-
-/*
-    Dynamic Period Result
-
-    Daily = Daily Revenue + Daily Profit
-
-    Monthly = Monthly Revenue + Monthly Profit
-
-    Yearly = Yearly Revenue + Yearly Profit
-
-*/
-
-
-
-const revenueTitle =
-document.getElementById(
-"revenueTitle"
-);
-
-
-
-const profitTitle =
-document.getElementById(
-"profitTitle"
-);
-
-
-
-if(result.mode==="daily"){
-
-
-    if(revenueTitle)
-    revenueTitle.textContent=
-    "Daily Revenue";
-
-
-    if(profitTitle)
-    profitTitle.textContent=
-    "Daily Profit";
-
-
-}
-
-
-
-
-
-if(result.mode==="monthly"){
-
-
-    if(revenueTitle)
-    revenueTitle.textContent=
-    "Monthly Revenue";
-
-
-    if(profitTitle)
-    profitTitle.textContent=
-    "Monthly Profit";
-
-
-}
-
-
-
-
-
-
-
-if(result.mode==="yearly"){
-
-
-    if(revenueTitle)
-    revenueTitle.textContent=
-    "Yearly Revenue";
-
-
-    if(profitTitle)
-    profitTitle.textContent=
-    "Yearly Profit";
-
-
-}
-
-
-
-
-
-
-updateResult(
-"revenue",
-money(
-result.revenue,
-result.currency
-)
-);
-
-
-
-
-updateResult(
-"periodProfit",
-money(
-result.periodProfit,
-result.currency
-)
-);
-
-
-
-
-
-/*
- Break Even
-
-*/
-
-let breakEven=0;
-
-
-if(result.profit>0){
-
-breakEven =
-Math.ceil(
-result.revenue /
-result.profit
-);
-
-}
-
-
-
-updateResult(
-"breakEven",
-breakEven+" sales"
-);
-
-
-
-
-
-updateResult(
-"profitStatus",
-getProfitStatus(
-result.margin
-)
-);
-
-
-
-}
-
-
-
-
-
-/* =========================
-   PROFIT STATUS
-========================= */
-
-
-function getProfitStatus(margin){
-
-
-if(margin>=40){
-
-return "🔥 Excellent Profit";
-
-}
-
-
-if(margin>=20){
-
-return "✅ Good Profit";
-
-}
-
-
-if(margin>=10){
-
-return "⚠️ Average Profit";
-
-}
-
-
-return "❌ Low Profit";
-
-
-}
-
-
-
-
-
-
-/* =========================
-   MODE CHANGE
-========================= */
-
-
-function updateMode(){
-
-
-const mode =
-getValue("mode");
-
-
-const input =
-document.getElementById(
-"orders"
-);
-
-
-
-if(!input)
-return;
-
-
-
-if(mode==="daily"){
-
-
-input.placeholder=
-"Orders Per Day";
-
-
-}
-
-
-
-if(mode==="monthly"){
-
-
-input.placeholder=
-"Orders Per Month";
-
-
-}
-
-
-
-if(mode==="yearly"){
-
-
-input.placeholder=
-"Orders Per Year";
-
-
-}
-
-
-
-}/* =========================
    AUTO PLATFORM FEE
 ========================= */
 
@@ -805,41 +1044,50 @@ input.placeholder=
 function autoFee(){
 
 
-const platform =
-getValue("platform");
+    const platform =
+    getValue("platform");
 
 
-const fee =
-document.getElementById("fee");
-
-
-
-if(!fee)
-return;
+    const feeInput =
+    document.getElementById("fee");
 
 
 
-const fees={
+    if(!feeInput){
 
+        return;
 
-"TikTok Shop":6,
-
-"Amazon":15,
-
-"Shopify":2.9,
-
-"Etsy":6.5
-
-
-};
+    }
 
 
 
-fee.value =
-fees[platform] || 0;
+
+    const fees={
+
+
+        "TikTok Shop":6,
+
+
+        "Amazon":15,
+
+
+        "Shopify":2.9,
+
+
+        "Etsy":6.5
+
+
+    };
+
+
+
+    feeInput.value =
+    fees[platform] || 0;
+
 
 
 }
+
 
 
 
@@ -847,39 +1095,41 @@ fees[platform] || 0;
 
 
 /* =========================
-   SAVE CALCULATION
+   SAVE DATA
 ========================= */
 
 
 function saveData(data){
 
 
-try{
+    try{
 
 
-localStorage.setItem(
+        localStorage.setItem(
 
-"eProfitFlowData",
+            "eProfitFlowData",
 
-JSON.stringify(data)
+            JSON.stringify(data)
 
-);
+        );
+
+
+    }
+
+
+    catch(error){
+
+
+        console.log(
+            "Storage not available"
+        );
+
+
+    }
 
 
 }
 
-catch(error){
-
-
-console.log(
-"Storage error"
-);
-
-
-}
-
-
-}
 
 
 
@@ -894,37 +1144,40 @@ console.log(
 function loadData(){
 
 
-try{
+    try{
 
 
-const data =
-localStorage.getItem(
-"eProfitFlowData"
-);
+        const saved =
 
-
-
-if(data){
-
-console.log(
-"Previous calculation found"
-);
-
-}
+        localStorage.getItem(
+            "eProfitFlowData"
+        );
 
 
 
-}
-
-catch(error){
+        if(saved){
 
 
-console.log(
-"No saved data"
-);
+            console.log(
+                "Previous calculation loaded"
+            );
 
 
-}
+        }
+
+
+
+    }
+
+    catch(error){
+
+
+        console.log(
+            "No previous data"
+        );
+
+
+    }
 
 
 }
@@ -941,6 +1194,7 @@ loadData
 
 
 
+
 /* =========================
    MESSAGE SYSTEM
 ========================= */
@@ -949,115 +1203,132 @@ loadData
 function showMessage(message){
 
 
-let box =
-document.getElementById(
-"jsMessage"
-);
+
+    let box =
+    document.getElementById(
+        "jsMessage"
+    );
 
 
 
-if(!box){
-
-
-box=document.createElement(
-"div"
-);
-
-
-box.id="jsMessage";
-
-
-document.body.appendChild(
-box
-);
+    if(!box){
 
 
 
-const style =
-document.createElement(
-"style"
-);
+        box =
+        document.createElement(
+            "div"
+        );
 
 
 
-style.innerHTML=`
-
-
-#jsMessage{
-
-position:fixed;
-
-bottom:30px;
-
-left:50%;
-
-transform:
-translateX(-50%)
-translateY(100px);
-
-background:#ff7a00;
-
-color:white;
-
-padding:15px 25px;
-
-border-radius:12px;
-
-font-weight:600;
-
-z-index:9999;
-
-transition:.3s;
-
-}
+        box.id =
+        "jsMessage";
 
 
 
-#jsMessage.active{
-
-transform:
-translateX(-50%)
-translateY(0);
-
-}
+        document.body.appendChild(
+            box
+        );
 
 
 
-`;
+        const style =
+        document.createElement(
+            "style"
+        );
 
 
 
-document.head.appendChild(
-style
-);
+        style.innerHTML=`
+
+
+        #jsMessage{
+
+
+        position:fixed;
+
+        bottom:30px;
+
+        left:50%;
+
+        transform:
+        translateX(-50%)
+        translateY(100px);
+
+
+        background:#ff7a00;
+
+
+        color:white;
+
+
+        padding:15px 25px;
+
+
+        border-radius:12px;
+
+
+        font-weight:600;
+
+
+        z-index:9999;
+
+
+        transition:.3s;
+
+
+        }
 
 
 
-}
+        #jsMessage.active{
+
+
+        transform:
+        translateX(-50%)
+        translateY(0);
+
+
+        }
+
+
+
+        `;
+
+
+
+        document.head.appendChild(
+            style
+        );
+
+
+    }
 
 
 
 
-box.textContent =
-message;
+    box.textContent =
+    message;
 
 
 
-box.classList.add(
-"active"
-);
+    box.classList.add(
+        "active"
+    );
 
 
 
-setTimeout(()=>{
+
+    setTimeout(()=>{
 
 
-box.classList.remove(
-"active"
-);
+        box.classList.remove(
+            "active"
+        );
 
 
-},3000);
+    },3000);
 
 
 
@@ -1079,6 +1350,7 @@ document.addEventListener(
 ()=>{
 
 
+
 const country =
 document.getElementById(
 "country"
@@ -1094,6 +1366,7 @@ document.getElementById(
 
 
 
+
 if(country && currency){
 
 
@@ -1103,28 +1376,36 @@ country.addEventListener(
 ()=>{
 
 
-const map={
+
+const currencyMap={
 
 
 "US":"$",
 
+
 "UK":"£",
+
 
 "CA":"$",
 
+
 "AU":"$",
+
 
 "PK":"PKR",
 
+
 "OTHER":"$"
+
 
 
 };
 
 
 
+
 currency.value =
-map[country.value];
+currencyMap[country.value];
 
 
 
@@ -1136,3 +1417,16 @@ map[country.value];
 
 
 });
+
+
+
+
+
+
+/* =========================
+   GLOBAL ACCESS
+========================= */
+
+
+window.calculateProfit =
+calculateProfit;
