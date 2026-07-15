@@ -931,3 +931,130 @@ calculateProfit;
 /* ==========================================================
    eProfitFlow Calculator v2.0 END
 ========================================================== */
+
+/* ==========================================================
+   COUNTRY & CATEGORY SMART SETTINGS
+========================================================== */
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+
+    const country =
+    getElement("country");
+
+
+    const currency =
+    getElement("currency");
+
+
+
+    if(country && currency){
+
+
+        country.addEventListener(
+        "change",
+        ()=>{
+
+
+            const countryCurrency = {
+
+
+                "US":"$",
+
+                "UK":"£",
+
+                "CA":"$",
+
+                "AU":"$",
+
+                "PK":"PKR"
+
+
+            };
+
+
+
+            currency.value =
+            countryCurrency[country.value] || "$";
+
+
+        });
+
+
+    }
+
+
+
+});
+
+
+
+
+
+/* ==========================================================
+   CATEGORY INFORMATION
+========================================================== */
+
+
+function getCategoryInfo(category){
+
+
+    const data = {
+
+
+        beauty:{
+            name:"Beauty Products",
+            averageMargin:"30-50%"
+        },
+
+
+        fashion:{
+            name:"Fashion Products",
+            averageMargin:"25-45%"
+        },
+
+
+        electronics:{
+            name:"Electronics",
+            averageMargin:"15-35%"
+        },
+
+
+        home:{
+            name:"Home & Kitchen",
+            averageMargin:"25-50%"
+        },
+
+
+        health:{
+            name:"Health Products",
+            averageMargin:"30-60%"
+        },
+
+
+        toys:{
+            name:"Toys",
+            averageMargin:"20-40%"
+        },
+
+
+        sports:{
+            name:"Sports Products",
+            averageMargin:"25-45%"
+        },
+
+
+        general:{
+            name:"General Product",
+            averageMargin:"20-40%"
+        }
+
+
+    };
+
+
+    return data[category] || data.general;
+
+
+}
