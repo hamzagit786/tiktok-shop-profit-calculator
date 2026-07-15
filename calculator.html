@@ -42,11 +42,10 @@ Ecommerce Profit Calculator
 </h1>
 
 <p>
-Analyze your product profit, monthly revenue and yearly growth.
+Analyze your product profit with daily, monthly and yearly projections.
 </p>
 
 </section>
-
 
 
 
@@ -66,13 +65,21 @@ Analyze your product profit, monthly revenue and yearly growth.
 
 <select id="platform">
 
-<option value="TikTok Shop">TikTok Shop</option>
+<option value="TikTok Shop">
+TikTok Shop
+</option>
 
-<option value="Amazon">Amazon</option>
+<option value="Amazon">
+Amazon
+</option>
 
-<option value="Shopify">Shopify</option>
+<option value="Shopify">
+Shopify
+</option>
 
-<option value="Etsy">Etsy</option>
+<option value="Etsy">
+Etsy
+</option>
 
 </select>
 
@@ -84,20 +91,17 @@ Analyze your product profit, monthly revenue and yearly growth.
 
 <select id="mode">
 
-<option value="single">
-Single Product
+<option value="daily">
+Daily
 </option>
-
 
 <option value="monthly">
 Monthly
 </option>
 
-
 <option value="yearly">
 Yearly
 </option>
-
 
 </select>
 
@@ -109,78 +113,154 @@ Yearly
 
 <select id="currency">
 
-<option value="$">$ USD</option>
+<option value="$">
+$ USD
+</option>
 
-<option value="€">€ EUR</option>
+<option value="€">
+€ EUR
+</option>
 
-<option value="£">£ GBP</option>
+<option value="£">
+£ GBP
+</option>
 
-<option value="PKR">PKR</option>
+<option value="PKR">
+PKR
+</option>
 
 </select>
+
+
+
+
 
 <label>Country</label>
 
 <select id="country">
 
-<option value="US" selected>🇺🇸 United States</option>
+<option value="US">
+🇺🇸 United States
+</option>
 
-<option value="UK">🇬🇧 United Kingdom</option>
+<option value="UK">
+🇬🇧 United Kingdom
+</option>
 
-<option value="CA">🇨🇦 Canada</option>
+<option value="CA">
+🇨🇦 Canada
+</option>
 
-<option value="AU">🇦🇺 Australia</option>
+<option value="AU">
+🇦🇺 Australia
+</option>
 
-<option value="PK">🇵🇰 Pakistan</option>
+<option value="PK">
+🇵🇰 Pakistan
+</option>
 
-<option value="OTHER">🌍 Other</option>
+<option value="OTHER">
+🌍 Other
+</option>
 
 </select>
-  <label>Product Category</label>
+
+
+
+
+
+
+<label>Product Category</label>
 
 <select id="category">
 
-<option value="general" selected>General</option>
 
-<option value="beauty">Beauty</option>
+<option value="general">
+General
+</option>
 
-<option value="fashion">Fashion</option>
 
-<option value="electronics">Electronics</option>
+<option value="beauty">
+Beauty
+</option>
 
-<option value="home">Home & Kitchen</option>
 
-<option value="health">Health</option>
+<option value="fashion">
+Fashion
+</option>
 
-<option value="toys">Toys</option>
 
-<option value="sports">Sports</option>
+<option value="electronics">
+Electronics
+</option>
 
-<option value="other">Other</option>
+
+<option value="home">
+Home & Kitchen
+</option>
+
+
+<option value="health">
+Health
+</option>
+
+
+<option value="toys">
+Toys
+</option>
+
+
+<option value="sports">
+Sports
+</option>
+
 
 </select>
 
 
 
-<label>Product Cost</label>
-
-<input id="productCost" type="number" placeholder="10">
 
 
 
 
+<label>
+Product Cost
+</label>
 
-<label>Selling Price</label>
-
-<input id="sellingPrice" type="number" placeholder="30">
-
-
-
+<input 
+id="productCost"
+type="number"
+placeholder="10">
 
 
-<label>Shipping Cost</label>
 
-<input id="shippingCost" type="number" placeholder="5">
+
+
+
+<label>
+Selling Price
+</label>
+
+<input 
+id="sellingPrice"
+type="number"
+placeholder="30">
+
+
+
+
+
+
+<label>
+Shipping Cost
+</label>
+
+<input 
+id="shippingCost"
+type="number"
+placeholder="5">
+
+
 
 
 
@@ -196,30 +276,54 @@ type="number"
 placeholder="Auto or Manual"
 step="0.1">
 
+
+
 <small class="field-note">
-Platform fee can be entered manually or automatically based on your selected platform and country.
+
+Fee can be calculated automatically or entered manually.
+
 </small>
 
 
 
 
-<label>Advertising Cost</label>
-
-<input id="adCost" type="number" placeholder="5">
 
 
 
+<label>
+Advertising Cost
+</label>
+
+<input
+id="adCost"
+type="number"
+placeholder="5">
 
 
-<label>Orders Per Month</label>
-
-<input id="monthlyOrders" type="number" placeholder="100">
 
 
 
 
 
-<button onclick="calculateProfit()" class="btn">
+<label id="ordersLabel">
+Orders Per Day
+</label>
+
+
+<input
+id="orders"
+type="number"
+placeholder="10">
+
+
+
+
+
+
+
+<button 
+onclick="calculateProfit()" 
+class="btn">
 
 Calculate Profit
 
@@ -228,7 +332,6 @@ Calculate Profit
 
 
 </div>
-
 
 
 
@@ -248,7 +351,9 @@ Profit Dashboard
 
 <div class="result-card">
 
-<h3>Platform</h3>
+<h3>
+Platform
+</h3>
 
 <strong id="showPlatform">
 -
@@ -260,9 +365,29 @@ Profit Dashboard
 
 
 
+
 <div class="result-card">
 
-<h3>Profit Per Sale</h3>
+<h3>
+Analysis Type
+</h3>
+
+<strong id="showMode">
+-
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="result-card">
+
+<h3>
+Profit Per Sale
+</h3>
 
 <strong id="profit">
 $0
@@ -274,9 +399,12 @@ $0
 
 
 
+
 <div class="result-card">
 
-<h3>Profit Margin</h3>
+<h3>
+Profit Margin
+</h3>
 
 <strong id="margin">
 0%
@@ -288,9 +416,12 @@ $0
 
 
 
+
 <div class="result-card">
 
-<h3>ROI</h3>
+<h3>
+ROI
+</h3>
 
 <strong id="roi">
 0%
@@ -302,11 +433,14 @@ $0
 
 
 
+
 <div class="result-card">
 
-<h3>Monthly Revenue</h3>
+<h3 id="revenueTitle">
+Daily Revenue
+</h3>
 
-<strong id="monthlyRevenue">
+<strong id="revenue">
 $0
 </strong>
 
@@ -316,11 +450,14 @@ $0
 
 
 
+
 <div class="result-card">
 
-<h3>Monthly Profit</h3>
+<h3 id="profitTitle">
+Daily Profit
+</h3>
 
-<strong id="monthlyProfit">
+<strong id="periodProfit">
 $0
 </strong>
 
@@ -330,23 +467,12 @@ $0
 
 
 
-<div class="result-card">
-
-<h3>Yearly Profit</h3>
-
-<strong id="yearlyProfit">
-$0
-</strong>
-
-</div>
-
-
-
-
 
 <div class="result-card">
 
-<h3>Break Even Sales</h3>
+<h3>
+Break Even Sales
+</h3>
 
 <strong id="breakEven">
 0
@@ -356,10 +482,30 @@ $0
 
 
 
+
+
+
+<div class="result-card">
+
+<h3>
+Profit Status
+</h3>
+
+<strong id="profitStatus">
+-
+</strong>
+
 </div>
 
 
+
+</div>
+
+
+
 </section>
+
+
 
 
 
