@@ -1,20 +1,27 @@
 /* ==========================================================
-   eProfitFlow Calculator Engine v3.0
+   eProfitFlow Calculator Engine v3.1
    HamzaDeals
 
-   Daily / Monthly / Yearly Profit System
+   Professional Ecommerce Profit Calculator
+   Daily / Monthly / Yearly Projection
 ========================================================== */
 
 "use strict";
 
 
+/* ===============================
+   INITIALIZE
+================================ */
+
+
 document.addEventListener(
 "DOMContentLoaded",
-()=>{
+function(){
 
     initializeCalculator();
 
 });
+
 
 
 
@@ -36,6 +43,7 @@ function initializeCalculator(){
 
 
 
+
     const mode =
     getElement("mode");
 
@@ -48,6 +56,7 @@ function initializeCalculator(){
         );
 
     }
+
 
 
 
@@ -65,6 +74,7 @@ function initializeCalculator(){
     }
 
 
+
 }
 
 
@@ -73,7 +83,7 @@ function initializeCalculator(){
 
 
 /* ===============================
-   HELPERS
+   DOM HELPERS
 ================================ */
 
 
@@ -92,7 +102,11 @@ function getValue(id){
     getElement(id);
 
 
-    if(!element) return "";
+    if(!element){
+
+        return "";
+
+    }
 
 
     return element.value.trim();
@@ -109,7 +123,11 @@ function getNumber(id){
     Number(getValue(id));
 
 
-    return isNaN(value) ? 0 : value;
+    return isNaN(value)
+    ?
+    0
+    :
+    value;
 
 }
 
@@ -117,15 +135,18 @@ function getNumber(id){
 
 
 
+
+
 /* ===============================
-   CURRENCY FORMAT
+   MONEY FORMAT
 ================================ */
 
 
 function formatMoney(amount,currency){
 
 
-    const map={
+    const currencyMap={
+
 
         "$":"USD",
 
@@ -135,399 +156,348 @@ function formatMoney(amount,currency){
 
         "PKR":"PKR"
 
+
     };
 
 
+
+    try{
+
+
+        return new Intl.NumberFormat(
+        "en-US",
+        {
+
+            style:"currency",
+
+            currency:
+            currencyMap[currency] || "USD",
+
+            maximumFractionDigits:2
+
+        }).format(amount);
+
+
+
+    }
+
+    catch(error){
+
+
+        return amount.toFixed(2);
+
+
+    }
+
+
+}
+/* ==========================================================
+   eProfitFlow Calculator Engine v4.0
+   Daily / Monthly / Yearly Accurate System
+========================================================== */
+
+"use strict";
+
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    const button=document.querySelector(".btn");
+
+    if(button){
+
+        button.addEventListener(
+            "click",
+            calculateProfit
+        );
+
+    }
+
+
+    const mode=document.getElementById("mode");
+
+    if(mode){
+
+        mode.addEventListener(
+            "change",
+            updateMode
+        );
+
+    }
+
+
+    const platform=document.getElementById("platform");
+
+    if(platform){
+
+        platform.addEventListener(
+            "change",
+            autoFee
+        );
+
+    }
+
+
+});
+
+
+
+/* =========================
+   GET VALUES
+========================= */
+
+
+function getValue(id){
+
+    const el=document.getElementById(id);
+
+    return el ? el.value.trim() : "";
+
+}
+
+
+
+function getNumber(id){
+
+    const value=parseFloat(getValue(id));
+
+    return isNaN(value) ? 0 : value;
+
+}
+
+
+
+
+
+/* =========================
+   MONEY FORMAT
+========================= */
+
+
+function money(value,currency){
+
+
+    let code="USD";
+
+
+    if(currency==="€")
+        code="EUR";
+
+
+    if(currency==="£")
+        code="GBP";
+
+
+    if(currency==="PKR")
+        code="PKR";
+
+
+
     return new Intl.NumberFormat(
-    "en-US",
-    {
-
-        style:"currency",
-
-        currency:map[currency] || "USD"
-
-    }).format(amount);
+        "en-US",
+        {
+            style:"currency",
+            currency:code
+        }
+    ).format(value);
 
 
 }
-/* ===============================
-   VALIDATION
-================================ */
-
-
-function validateInputs(data){
-
-
-    if(data.productCost <= 0){
-
-        showMessage(
-        "Please enter product cost"
-        );
-
-        return false;
-
-    }
-
-
-
-    if(data.sellingPrice <= 0){
-
-        showMessage(
-        "Please enter selling price"
-        );
-
-        return false;
-
-    }
-
-
-
-    if(data.sellingPrice <= data.productCost){
-
-        showMessage(
-        "Selling price must be higher than product cost"
-        );
-
-        return false;
-
-    }
-
-
-    return true;
-
-}
 
 
 
 
 
-/* ===============================
+/* =========================
    MAIN CALCULATOR
-================================ */
+========================= */
 
 
 function calculateProfit(){
 
 
+const data={
 
-    const data={
 
+platform:getValue("platform"),
 
-        platform:
-        getValue("platform"),
+mode:getValue("mode"),
 
+currency:getValue("currency"),
 
+productCost:getNumber("productCost"),
 
-        mode:
-        getValue("mode"),
+sellingPrice:getNumber("sellingPrice"),
 
+shipping:getNumber("shippingCost"),
 
+fee:getNumber("fee"),
 
-        currency:
-        getValue("currency") || "$",
+ads:getNumber("adCost"),
 
+orders:getNumber("orders")
 
 
-        productCost:
-        getNumber("productCost"),
+};
 
 
 
-        sellingPrice:
-        getNumber("sellingPrice"),
+if(
+data.productCost<=0 ||
+data.sellingPrice<=0
+){
 
+showMessage(
+"Please enter product cost and selling price"
+);
 
+return;
 
-        shippingCost:
-        getNumber("shippingCost"),
+}
 
 
 
-        fee:
-        getNumber("fee"),
 
+/* COST */
 
 
-        adCost:
-        getNumber("adCost"),
+const platformFee =
+data.sellingPrice *
+(data.fee/100);
 
 
 
-        orders:
-        getNumber("orders")
+const totalCost =
+data.productCost +
+data.shipping +
+platformFee +
+data.ads;
 
 
 
-    };
+/* PROFIT PER SALE */
 
 
+const profit =
+data.sellingPrice -
+totalCost;
 
 
 
-    if(!validateInputs(data)){
+const margin =
+(profit/data.sellingPrice)*100;
 
-        return;
 
-    }
 
+const roi =
+(profit/totalCost)*100;
 
 
 
+/* PERIOD */
 
 
+let revenue=0;
 
-    // Platform Fee
+let periodProfit=0;
 
-    const platformFee =
 
-    data.sellingPrice *
-    (data.fee / 100);
+if(data.mode==="daily"){
 
 
+revenue =
+data.sellingPrice *
+data.orders;
 
 
-
-
-
-    // Total Cost
-
-    const totalCost =
-
-    data.productCost +
-
-    data.shippingCost +
-
-    platformFee +
-
-    data.adCost;
-
-
-
-
-
-
-
-
-    // Profit per sale
-
-
-    const profit =
-
-    data.sellingPrice -
-
-    totalCost;
-
-
-
-
-
-
-
-    const margin =
-
-    (profit /
-    data.sellingPrice)
-    *100;
-
-
-
-
-
-
-
-    const roi =
-
-    totalCost > 0 ?
-
-    (profit /
-    totalCost)*100
-
-    :
-
-    0;
-
-
-
-
-
-
-
-    /*
-       MODE SYSTEM
-
-       Daily
-       Monthly
-       Yearly
-
-    */
-
-
-
-    let orders =
-    data.orders;
-
-
-
-    let revenue = 0;
-
-    let finalProfit = 0;
-
-
-
-
-
-
-    if(data.mode==="daily"){
-
-
-        revenue =
-        data.sellingPrice *
-        orders;
-
-
-        finalProfit =
-        profit *
-        orders;
-
-
-    }
-
-
-
-
-
-
-
-    if(data.mode==="monthly"){
-
-
-        revenue =
-        data.sellingPrice *
-        orders;
-
-
-        finalProfit =
-        profit *
-        orders;
-
-
-    }
-
-
-
-
-
-
-
-
-    if(data.mode==="yearly"){
-
-
-        revenue =
-        data.sellingPrice *
-        orders;
-
-
-        finalProfit =
-        profit *
-        orders;
-
-
-    }
-
-
-
-
-
-
-    const result={
-
-
-
-        platform:
-        data.platform,
-
-
-
-        mode:
-        data.mode,
-
-
-
-        currency:
-        data.currency,
-
-
-
-        profit:profit,
-
-
-
-        margin:margin,
-
-
-
-        roi:roi,
-
-
-
-        revenue:revenue,
-
-
-
-        finalProfit:finalProfit,
-
-
-
-        status:
-        getProfitStatus(margin)
-
-
-
-    };
-
-
-
-
-
-
-    displayResults(result);
-
-
-
-
-    saveCalculation({
-
-        input:data,
-
-        result:result
-
-    });
-
+periodProfit =
+profit *
+data.orders;
 
 
 }
-/* ===============================
+
+
+
+if(data.mode==="monthly"){
+
+
+revenue =
+data.sellingPrice *
+data.orders;
+
+
+periodProfit =
+profit *
+data.orders;
+
+
+}
+
+
+
+if(data.mode==="yearly"){
+
+
+revenue =
+data.sellingPrice *
+data.orders;
+
+
+periodProfit =
+profit *
+data.orders;
+
+
+}
+
+
+
+const result={
+
+platform:data.platform,
+
+mode:data.mode,
+
+currency:data.currency,
+
+profit,
+
+margin,
+
+roi,
+
+revenue,
+
+periodProfit
+
+};
+
+
+
+displayResults(result);
+
+
+
+saveData(result);
+
+
+}
+/* =========================
    DISPLAY RESULTS
-================================ */
+========================= */
 
 
 function updateResult(id,value){
 
+    const el=document.getElementById(id);
 
-    const element =
-    getElement(id);
+    if(el){
 
-
-    if(element){
-
-        element.textContent=value;
+        el.textContent=value;
 
     }
 
-
 }
-
 
 
 
@@ -538,188 +508,102 @@ function displayResults(result){
 
 
     updateResult(
-    "showPlatform",
-    result.platform
+        "showPlatform",
+        result.platform
     );
 
 
 
     updateResult(
-    "profit",
-    formatMoney(
-    result.profit,
-    result.currency
-    )
+        "showMode",
+        result.mode.toUpperCase()
     );
 
 
 
     updateResult(
-    "margin",
-    result.margin.toFixed(1)+"%"
-    );
-
-
-
-    updateResult(
-    "roi",
-    result.roi.toFixed(1)+"%"
-    );
-
-
-
-
-    /*
-       Dynamic Mode Result
-
-       Daily
-       Monthly
-       Yearly
-
-    */
-
-
-    const revenueTitle =
-    getElement("revenueTitle");
-
-
-    const profitTitle =
-    getElement("profitTitle");
-
-
-
-    const revenueBox =
-    getElement("monthlyRevenue");
-
-
-
-    const profitBox =
-    getElement("monthlyProfit");
-
-
-
-
-    if(result.mode==="daily"){
-
-
-
-        if(revenueTitle)
-        revenueTitle.textContent=
-        "Daily Revenue";
-
-
-
-        if(profitTitle)
-        profitTitle.textContent=
-        "Daily Profit";
-
-
-
-    }
-
-
-
-
-
-    else if(result.mode==="monthly"){
-
-
-
-        if(revenueTitle)
-        revenueTitle.textContent=
-        "Monthly Revenue";
-
-
-
-        if(profitTitle)
-        profitTitle.textContent=
-        "Monthly Profit";
-
-
-
-    }
-
-
-
-
-
-
-
-    else if(result.mode==="yearly"){
-
-
-
-        if(revenueTitle)
-        revenueTitle.textContent=
-        "Yearly Revenue";
-
-
-
-        if(profitTitle)
-        profitTitle.textContent=
-        "Yearly Profit";
-
-
-
-    }
-
-
-
-
-
-
-    if(revenueBox){
-
-        updateResult(
-        "monthlyRevenue",
-        formatMoney(
-        result.revenue,
-        result.currency
+        "profit",
+        money(
+            result.profit,
+            result.currency
         )
-        );
-
-    }
-
-
-
-
-
-    if(profitBox){
-
-        updateResult(
-        "monthlyProfit",
-        formatMoney(
-        result.finalProfit,
-        result.currency
-        )
-        );
-
-    }
-
-
-
-
-
-
-    updateResult(
-    "breakEven",
-    Math.ceil(
-    result.profit>0
-    ?
-    1
-    :
-    0
-    )
-    +" sales"
     );
 
 
 
     updateResult(
-    "profitStatus",
-    result.status
+        "margin",
+        result.margin.toFixed(1)+"%"
     );
 
+
+
+    updateResult(
+        "roi",
+        result.roi.toFixed(1)+"%"
+    );
+
+
+
+
+
+/*
+    Dynamic Period Result
+
+    Daily = Daily Revenue + Daily Profit
+
+    Monthly = Monthly Revenue + Monthly Profit
+
+    Yearly = Yearly Revenue + Yearly Profit
+
+*/
+
+
+
+const revenueTitle =
+document.getElementById(
+"revenueTitle"
+);
+
+
+
+const profitTitle =
+document.getElementById(
+"profitTitle"
+);
+
+
+
+if(result.mode==="daily"){
+
+
+    if(revenueTitle)
+    revenueTitle.textContent=
+    "Daily Revenue";
+
+
+    if(profitTitle)
+    profitTitle.textContent=
+    "Daily Profit";
+
+
+}
+
+
+
+
+
+if(result.mode==="monthly"){
+
+
+    if(revenueTitle)
+    revenueTitle.textContent=
+    "Monthly Revenue";
+
+
+    if(profitTitle)
+    profitTitle.textContent=
+    "Monthly Profit";
 
 
 }
@@ -730,103 +614,123 @@ function displayResults(result){
 
 
 
-/* ===============================
-   MODE LABEL UPDATE
-================================ */
+if(result.mode==="yearly"){
 
 
-
-function updateModeLabel(){
-
-
-
-    const mode =
-    getValue("mode");
+    if(revenueTitle)
+    revenueTitle.textContent=
+    "Yearly Revenue";
 
 
-
-    const orderLabel =
-    document.querySelector(
-    'label[for="orders"]'
-    );
+    if(profitTitle)
+    profitTitle.textContent=
+    "Yearly Profit";
 
 
-
-    const input =
-    getElement("orders");
-
-
-
-    if(!input)
-    return;
+}
 
 
 
 
-    if(mode==="daily"){
 
 
-        input.placeholder=
-        "Orders Per Day";
-
-
-    }
-
-
-
-    else if(mode==="monthly"){
-
-
-        input.placeholder=
-        "Orders Per Month";
-
-
-    }
+updateResult(
+"revenue",
+money(
+result.revenue,
+result.currency
+)
+);
 
 
 
-    else if(mode==="yearly"){
+
+updateResult(
+"periodProfit",
+money(
+result.periodProfit,
+result.currency
+)
+);
 
 
-        input.placeholder=
-        "Orders Per Year";
 
 
-    }
+
+/*
+ Break Even
+
+*/
+
+let breakEven=0;
+
+
+if(result.profit>0){
+
+breakEven =
+Math.ceil(
+result.revenue /
+result.profit
+);
+
+}
+
+
+
+updateResult(
+"breakEven",
+breakEven+" sales"
+);
+
+
+
+
+
+updateResult(
+"profitStatus",
+getProfitStatus(
+result.margin
+)
+);
 
 
 
 }
-/* ===============================
+
+
+
+
+
+/* =========================
    PROFIT STATUS
-================================ */
+========================= */
 
 
 function getProfitStatus(margin){
 
 
-    if(margin >= 40){
+if(margin>=40){
 
-        return "🔥 Excellent Profit";
+return "🔥 Excellent Profit";
 
-    }
-
-
-    if(margin >= 20){
-
-        return "✅ Good Profit";
-
-    }
+}
 
 
-    if(margin >= 10){
+if(margin>=20){
 
-        return "⚠️ Average Profit";
+return "✅ Good Profit";
 
-    }
+}
 
 
-    return "❌ Low Profit";
+if(margin>=10){
+
+return "⚠️ Average Profit";
+
+}
+
+
+return "❌ Low Profit";
 
 
 }
@@ -836,68 +740,103 @@ function getProfitStatus(margin){
 
 
 
-/* ===============================
+/* =========================
+   MODE CHANGE
+========================= */
+
+
+function updateMode(){
+
+
+const mode =
+getValue("mode");
+
+
+const input =
+document.getElementById(
+"orders"
+);
+
+
+
+if(!input)
+return;
+
+
+
+if(mode==="daily"){
+
+
+input.placeholder=
+"Orders Per Day";
+
+
+}
+
+
+
+if(mode==="monthly"){
+
+
+input.placeholder=
+"Orders Per Month";
+
+
+}
+
+
+
+if(mode==="yearly"){
+
+
+input.placeholder=
+"Orders Per Year";
+
+
+}
+
+
+
+}/* =========================
    AUTO PLATFORM FEE
-================================ */
+========================= */
+
+
+function autoFee(){
+
+
+const platform =
+getValue("platform");
+
+
+const fee =
+document.getElementById("fee");
 
 
 
-function getDefaultFee(platform){
+if(!fee)
+return;
 
 
 
-    const fees={
+const fees={
 
 
-        "TikTok Shop":6,
+"TikTok Shop":6,
+
+"Amazon":15,
+
+"Shopify":2.9,
+
+"Etsy":6.5
 
 
-        "Amazon":15,
-
-
-        "Shopify":2.9,
-
-
-        "Etsy":6.5
-
-
-    };
+};
 
 
 
-    return fees[platform] || 0;
-
-
-}
-
-
-
-
-
-
-
-function autoFillFee(){
-
-
-
-    const platform =
-    getValue("platform");
-
-
-
-    const fee =
-    getElement("fee");
-
-
-
-    if(fee){
-
-
-        fee.value =
-        getDefaultFee(platform);
-
-
-    }
+fee.value =
+fees[platform] || 0;
 
 
 }
@@ -907,38 +846,37 @@ function autoFillFee(){
 
 
 
+/* =========================
+   SAVE CALCULATION
+========================= */
 
 
-/* ===============================
-   LOCAL STORAGE
-================================ */
+function saveData(data){
 
 
-function saveCalculation(data){
+try{
 
 
-    try{
+localStorage.setItem(
+
+"eProfitFlowData",
+
+JSON.stringify(data)
+
+);
 
 
-        localStorage.setItem(
+}
 
-        "eProfitFlowCalculation",
-
-        JSON.stringify(data)
-
-        );
+catch(error){
 
 
-    }
+console.log(
+"Storage error"
+);
 
 
-    catch(error){
-
-        console.log(
-        "Storage unavailable"
-        );
-
-    }
+}
 
 
 }
@@ -948,167 +886,178 @@ function saveCalculation(data){
 
 
 
+/* =========================
+   LOAD DATA
+========================= */
 
 
-function loadPreviousCalculation(){
+function loadData(){
 
 
-    try{
+try{
 
 
-        const data =
-        localStorage.getItem(
-        "eProfitFlowCalculation"
-        );
+const data =
+localStorage.getItem(
+"eProfitFlowData"
+);
 
 
 
-        if(data){
+if(data){
+
+console.log(
+"Previous calculation found"
+);
+
+}
 
 
-            console.log(
-            "Previous calculation loaded"
-            );
+
+}
+
+catch(error){
 
 
-        }
+console.log(
+"No saved data"
+);
 
 
-    }
-
-
-    catch(error){
-
-
-        console.log(
-        "No saved data"
-        );
-
-
-    }
+}
 
 
 }
 
 
 
+document.addEventListener(
+"DOMContentLoaded",
+loadData
+);
 
 
 
 
-/* ===============================
+
+
+/* =========================
    MESSAGE SYSTEM
-================================ */
+========================= */
 
 
 function showMessage(message){
 
 
-
-    let box =
-    getElement("jsMessage");
-
-
-
-    if(!box){
+let box =
+document.getElementById(
+"jsMessage"
+);
 
 
 
-        box =
-        document.createElement("div");
+if(!box){
+
+
+box=document.createElement(
+"div"
+);
+
+
+box.id="jsMessage";
+
+
+document.body.appendChild(
+box
+);
 
 
 
-        box.id =
-        "jsMessage";
+const style =
+document.createElement(
+"style"
+);
 
 
 
-        document.body.appendChild(box);
+style.innerHTML=`
+
+
+#jsMessage{
+
+position:fixed;
+
+bottom:30px;
+
+left:50%;
+
+transform:
+translateX(-50%)
+translateY(100px);
+
+background:#ff7a00;
+
+color:white;
+
+padding:15px 25px;
+
+border-radius:12px;
+
+font-weight:600;
+
+z-index:9999;
+
+transition:.3s;
+
+}
 
 
 
-        const style =
-        document.createElement("style");
+#jsMessage.active{
+
+transform:
+translateX(-50%)
+translateY(0);
+
+}
 
 
 
-        style.innerHTML=`
-
-
-        #jsMessage{
-
-        position:fixed;
-
-        bottom:30px;
-
-        left:50%;
-
-        transform:
-        translateX(-50%)
-        translateY(100px);
-
-        background:#ff7a00;
-
-        color:white;
-
-        padding:15px 25px;
-
-        border-radius:12px;
-
-        font-weight:600;
-
-        z-index:9999;
-
-        transition:.3s;
-
-        }
+`;
 
 
 
-        #jsMessage.active{
-
-        transform:
-        translateX(-50%)
-        translateY(0);
-
-        }
+document.head.appendChild(
+style
+);
 
 
 
-        `;
-
-
-
-        document.head.appendChild(style);
-
-
-
-    }
+}
 
 
 
 
-    box.textContent =
-    message;
+box.textContent =
+message;
 
 
 
-    box.classList.add(
-    "active"
-    );
+box.classList.add(
+"active"
+);
 
 
 
-    setTimeout(()=>{
+setTimeout(()=>{
 
 
-        box.classList.remove(
-        "active"
-        );
+box.classList.remove(
+"active"
+);
 
 
-    },3000);
+},3000);
 
 
 
@@ -1120,11 +1069,9 @@ function showMessage(message){
 
 
 
-
-/* ===============================
-   COUNTRY CURRENCY
-================================ */
-
+/* =========================
+   COUNTRY CURRENCY SYSTEM
+========================= */
 
 
 document.addEventListener(
@@ -1133,16 +1080,22 @@ document.addEventListener(
 
 
 const country =
-getElement("country");
+document.getElementById(
+"country"
+);
+
 
 
 const currency =
-getElement("currency");
+document.getElementById(
+"currency"
+);
 
 
 
 
 if(country && currency){
+
 
 
 country.addEventListener(
@@ -1155,18 +1108,15 @@ const map={
 
 "US":"$",
 
-
 "UK":"£",
-
 
 "CA":"$",
 
-
 "AU":"$",
 
+"PK":"PKR",
 
-"PK":"PKR"
-
+"OTHER":"$"
 
 
 };
@@ -1174,12 +1124,11 @@ const map={
 
 
 currency.value =
-map[country.value] || "$";
+map[country.value];
 
 
 
 });
-
 
 
 }
