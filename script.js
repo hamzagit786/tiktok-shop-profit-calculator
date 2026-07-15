@@ -1,1193 +1,136 @@
-<!DOCTYPE html>
-<html lang="en">
+/* ==========================================================
+   eProfitFlow Calculator FINAL
+   Daily / Monthly / Yearly Profit Calculator
+========================================================== */
 
-<head>
+"use strict";
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>eProfitFlow Ecommerce Profit Calculator</title>
+document.addEventListener("DOMContentLoaded", function(){
 
-<link rel="stylesheet" href="style.css">
 
-</head>
+    const button = document.querySelector(".btn");
 
 
-<body>
+    if(button){
 
-
-<header class="navbar">
-
-<div class="logo">
-<span>e</span>ProfitFlow
-</div>
-
-
-<nav>
-<a href="index.html">Home</a>
-<a href="calculator.html">Calculator</a>
-<a href="services.html">Services</a>
-<a href="blog.html">Blog</a>
-</nav>
-
-</header>
-
-
-
-
-<section class="page-hero">
-
-<h1>
-Ecommerce Profit Calculator
-</h1>
-
-<p>
-Analyze your product profit with daily, monthly and yearly projections.
-</p>
-
-</section>
-
-
-
-
-
-<section class="calculator-container">
-
-
-<div class="calculator-box">
-
-
-<h2>Enter Product Data</h2>
-
-
-
-<label>Platform</label>
-
-<select id="platform">
-
-<option value="TikTok Shop">
-TikTok Shop
-</option>
-
-<option value="Amazon">
-Amazon
-</option>
-
-<option value="Shopify">
-Shopify
-</option>
-
-<option value="Etsy">
-Etsy
-</option>
-
-</select>
-
-
-
-
-
-<label>Analysis Type</label>
-
-<select id="mode">
-
-<option value="daily">
-Daily
-</option>
-
-<option value="monthly">
-Monthly
-</option>
-
-<option value="yearly">
-Yearly
-</option>
-
-</select>
-
-
-
-
-
-<label>Currency</label>
-
-<select id="currency">
-
-<option value="$">
-$ USD
-</option>
-
-<option value="€">
-€ EUR
-</option>
-
-<option value="£">
-£ GBP
-</option>
-
-<option value="PKR">
-PKR
-</option>
-
-</select>
-
-
-
-
-
-<label>Country</label>
-
-<select id="country">
-
-<option value="US">
-🇺🇸 United States
-</option>
-
-<option value="UK">
-🇬🇧 United Kingdom
-</option>
-
-<option value="CA">
-🇨🇦 Canada
-</option>
-
-<option value="AU">
-🇦🇺 Australia
-</option>
-
-<option value="PK">
-🇵🇰 Pakistan
-</option>
-
-<option value="OTHER">
-🌍 Other
-</option>
-
-</select>
-
-
-
-
-
-
-<label>Product Category</label>
-
-<select id="category">
-
-
-<option value="general">
-General
-</option>
-
-
-<option value="beauty">
-Beauty
-</option>
-
-
-<option value="fashion">
-Fashion
-</option>
-
-
-<option value="electronics">
-Electronics
-</option>
-
-
-<option value="home">
-Home & Kitchen
-</option>
-
-
-<option value="health">
-Health
-</option>
-
-
-<option value="toys">
-Toys
-</option>
-
-
-<option value="sports">
-Sports
-</option>
-
-
-</select>
-
-
-
-
-
-
-
-<label>
-Product Cost
-</label>
-
-<input 
-id="productCost"
-type="number"
-placeholder="10">
-
-
-
-
-
-
-<label>
-Selling Price
-</label>
-
-<input 
-id="sellingPrice"
-type="number"
-placeholder="30">
-
-
-
-
-
-
-<label>
-Shipping Cost
-</label>
-
-<input 
-id="shippingCost"
-type="number"
-placeholder="5">
-
-
-
-
-
-
-
-<label>
-Platform Fee (%)
-</label>
-
-<input
-id="fee"
-type="number"
-placeholder="Auto or Manual"
-step="0.1">
-
-
-
-<small class="field-note">
-
-Fee can be calculated automatically or entered manually.
-
-</small>
-
-
-
-
-
-
-
-<label>
-Advertising Cost
-</label>
-
-<input
-id="adCost"
-type="number"
-placeholder="5">
-
-
-
-
-
-
-
-<label id="ordersLabel">
-Orders Per Day
-</label>
-
-
-<input
-id="orders"
-type="number"
-placeholder="10">
-
-
-
-
-
-
-
-<button 
-onclick="calculateProfit()" 
-class="btn">
-
-Calculate Profit
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div class="results-box">
-
-
-<h2>
-Profit Dashboard
-</h2>
-
-
-
-
-<div class="result-card">
-
-<h3>
-Platform
-</h3>
-
-<strong id="showPlatform">
--
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3>
-Analysis Type
-</h3>
-
-<strong id="showMode">
--
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3>
-Profit Per Sale
-</h3>
-
-<strong id="profit">
-$0
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3>
-Profit Margin
-</h3>
-
-<strong id="margin">
-0%
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3>
-ROI
-</h3>
-
-<strong id="roi">
-0%
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3 id="revenueTitle">
-Daily Revenue
-</h3>
-
-<strong id="monthlyRevenue">
-$0
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3 id="profitTitle">
-Daily Profit
-</h3>
-
-<strong id="monthlyProfit">
-$0
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3>
-Break Even Sales
-</h3>
-
-<strong id="breakEven">
-0
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3>
-Profit Status
-</h3>
-
-<strong id="profitStatus">
--
-</strong>
-
-</div>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-<script src="script.js"></script>
-
-
-</body>
-
-</html>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>eProfitFlow Ecommerce Profit Calculator</title>
-
-<link rel="stylesheet" href="style.css">
-
-</head>
-
-
-<body>
-
-
-<header class="navbar">
-
-<div class="logo">
-<span>e</span>ProfitFlow
-</div>
-
-
-<nav>
-<a href="index.html">Home</a>
-<a href="calculator.html">Calculator</a>
-<a href="services.html">Services</a>
-<a href="blog.html">Blog</a>
-</nav>
-
-</header>
-
-
-
-
-<section class="page-hero">
-
-<h1>
-Ecommerce Profit Calculator
-</h1>
-
-<p>
-Analyze your product profit with daily, monthly and yearly projections.
-</p>
-
-</section>
-
-
-
-
-
-<section class="calculator-container">
-
-
-<div class="calculator-box">
-
-
-<h2>Enter Product Data</h2>
-
-
-
-<label>Platform</label>
-
-<select id="platform">
-
-<option value="TikTok Shop">
-TikTok Shop
-</option>
-
-<option value="Amazon">
-Amazon
-</option>
-
-<option value="Shopify">
-Shopify
-</option>
-
-<option value="Etsy">
-Etsy
-</option>
-
-</select>
-
-
-
-
-
-<label>Analysis Type</label>
-
-<select id="mode">
-
-<option value="daily">
-Daily
-</option>
-
-<option value="monthly">
-Monthly
-</option>
-
-<option value="yearly">
-Yearly
-</option>
-
-</select>
-
-
-
-
-
-<label>Currency</label>
-
-<select id="currency">
-
-<option value="$">
-$ USD
-</option>
-
-<option value="€">
-€ EUR
-</option>
-
-<option value="£">
-£ GBP
-</option>
-
-<option value="PKR">
-PKR
-</option>
-
-</select>
-
-
-
-
-
-<label>Country</label>
-
-<select id="country">
-
-<option value="US">
-🇺🇸 United States
-</option>
-
-<option value="UK">
-🇬🇧 United Kingdom
-</option>
-
-<option value="CA">
-🇨🇦 Canada
-</option>
-
-<option value="AU">
-🇦🇺 Australia
-</option>
-
-<option value="PK">
-🇵🇰 Pakistan
-</option>
-
-<option value="OTHER">
-🌍 Other
-</option>
-
-</select>
-
-
-
-
-
-
-<label>Product Category</label>
-
-<select id="category">
-
-
-<option value="general">
-General
-</option>
-
-
-<option value="beauty">
-Beauty
-</option>
-
-
-<option value="fashion">
-Fashion
-</option>
-
-
-<option value="electronics">
-Electronics
-</option>
-
-
-<option value="home">
-Home & Kitchen
-</option>
-
-
-<option value="health">
-Health
-</option>
-
-
-<option value="toys">
-Toys
-</option>
-
-
-<option value="sports">
-Sports
-</option>
-
-
-</select>
-
-
-
-
-
-
-
-<label>
-Product Cost
-</label>
-
-<input 
-id="productCost"
-type="number"
-placeholder="10">
-
-
-
-
-
-
-<label>
-Selling Price
-</label>
-
-<input 
-id="sellingPrice"
-type="number"
-placeholder="30">
-
-
-
-
-
-
-<label>
-Shipping Cost
-</label>
-
-<input 
-id="shippingCost"
-type="number"
-placeholder="5">
-
-
-
-
-
-
-
-<label>
-Platform Fee (%)
-</label>
-
-<input
-id="fee"
-type="number"
-placeholder="Auto or Manual"
-step="0.1">
-
-
-
-<small class="field-note">
-
-Fee can be calculated automatically or entered manually.
-
-</small>
-
-
-
-
-
-
-
-<label>
-Advertising Cost
-</label>
-
-<input
-id="adCost"
-type="number"
-placeholder="5">
-
-
-
-
-
-
-
-<label id="ordersLabel">
-Orders Per Day
-</label>
-
-
-<input
-id="orders"
-type="number"
-placeholder="10">
-
-
-
-
-
-
-
-<button 
-onclick="calculateProfit()" 
-class="btn">
-
-Calculate Profit
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div class="results-box">
-
-
-<h2>
-Profit Dashboard
-</h2>
-
-
-
-
-<div class="result-card">
-
-<h3>
-Platform
-</h3>
-
-<strong id="showPlatform">
--
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3>
-Analysis Type
-</h3>
-
-<strong id="showMode">
--
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3>
-Profit Per Sale
-</h3>
-
-<strong id="profit">
-$0
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3>
-Profit Margin
-</h3>
-
-<strong id="margin">
-0%
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3>
-ROI
-</h3>
-
-<strong id="roi">
-0%
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3 id="revenueTitle">
-Daily Revenue
-</h3>
-
-<strong id="monthlyRevenue">
-$0
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3 id="profitTitle">
-Daily Profit
-</h3>
-
-<strong id="monthlyProfit">
-$0
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3>
-Break Even Sales
-</h3>
-
-<strong id="breakEven">
-0
-</strong>
-
-</div>
-
-
-
-
-
-
-<div class="result-card">
-
-<h3>
-Profit Status
-</h3>
-
-<strong id="profitStatus">
--
-</strong>
-
-</div>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-<script src="script.js"></script>
-
-
-</body>
-
-</html>
-/* =========================
-   AUTO PLATFORM FEE
-========================= */
-
-
-function autoFee(){
-
-
-    const platform =
-    getValue("platform");
-
-
-    const feeInput =
-    document.getElementById("fee");
-
-
-
-    if(!feeInput){
-
-        return;
+        button.addEventListener(
+            "click",
+            calculateProfit
+        );
 
     }
 
 
 
-
-    const fees={
-
-
-        "TikTok Shop":6,
+    const platform = document.getElementById("platform");
 
 
-        "Amazon":15,
+    if(platform){
+
+        platform.addEventListener(
+            "change",
+            autoFee
+        );
+
+    }
 
 
-        "Shopify":2.9,
+
+    const mode = document.getElementById("mode");
 
 
-        "Etsy":6.5
+    if(mode){
 
+        mode.addEventListener(
+            "change",
+            updateModeLabel
+        );
+
+    }
+
+
+
+});
+
+
+
+
+
+/* =========================
+   GET VALUES
+========================= */
+
+
+function getValue(id){
+
+    const element =
+    document.getElementById(id);
+
+
+    return element
+    ?
+    element.value.trim()
+    :
+    "";
+
+}
+
+
+
+function getNumber(id){
+
+    const value =
+    parseFloat(getValue(id));
+
+
+    return isNaN(value)
+    ?
+    0
+    :
+    value;
+
+}
+
+
+
+
+
+
+
+/* =========================
+   MONEY FORMAT
+========================= */
+
+
+function formatMoney(amount,currency){
+
+
+    const map={
+
+        "$":"USD",
+
+        "€":"EUR",
+
+        "£":"GBP",
+
+        "PKR":"PKR"
 
     };
 
 
-
-    feeInput.value =
-    fees[platform] || 0;
-
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-   SAVE DATA
-========================= */
-
-
-function saveData(data){
-
-
-    try{
-
-
-        localStorage.setItem(
-
-            "eProfitFlowData",
-
-            JSON.stringify(data)
-
-        );
-
-
-    }
-
-
-    catch(error){
-
-
-        console.log(
-            "Storage not available"
-        );
-
-
-    }
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-   LOAD DATA
-========================= */
-
-
-function loadData(){
-
-
-    try{
-
-
-        const saved =
-
-        localStorage.getItem(
-            "eProfitFlowData"
-        );
-
-
-
-        if(saved){
-
-
-            console.log(
-                "Previous calculation loaded"
-            );
-
-
+    return new Intl.NumberFormat(
+        "en-US",
+        {
+            style:"currency",
+            currency:map[currency] || "USD",
+            maximumFractionDigits:2
         }
-
-
-
-    }
-
-    catch(error){
-
-
-        console.log(
-            "No previous data"
-        );
-
-
-    }
+    ).format(amount);
 
 
 }
 
-
-
-document.addEventListener(
-"DOMContentLoaded",
-loadData
-);
 
 
 
@@ -1196,207 +139,35 @@ loadData
 
 
 /* =========================
-   MESSAGE SYSTEM
+   MAIN CALCULATOR
 ========================= */
 
 
-function showMessage(message){
+function calculateProfit(){
 
 
 
-    let box =
-    document.getElementById(
-        "jsMessage"
-    );
+const data={
 
 
+platform:getValue("platform"),
 
-    if(!box){
+mode:getValue("mode"),
 
+currency:getValue("currency") || "$",
 
 
-        box =
-        document.createElement(
-            "div"
-        );
+productCost:getNumber("productCost"),
 
+sellingPrice:getNumber("sellingPrice"),
 
+shipping:getNumber("shippingCost"),
 
-        box.id =
-        "jsMessage";
+fee:getNumber("fee"),
 
+ads:getNumber("adCost"),
 
-
-        document.body.appendChild(
-            box
-        );
-
-
-
-        const style =
-        document.createElement(
-            "style"
-        );
-
-
-
-        style.innerHTML=`
-
-
-        #jsMessage{
-
-
-        position:fixed;
-
-        bottom:30px;
-
-        left:50%;
-
-        transform:
-        translateX(-50%)
-        translateY(100px);
-
-
-        background:#ff7a00;
-
-
-        color:white;
-
-
-        padding:15px 25px;
-
-
-        border-radius:12px;
-
-
-        font-weight:600;
-
-
-        z-index:9999;
-
-
-        transition:.3s;
-
-
-        }
-
-
-
-        #jsMessage.active{
-
-
-        transform:
-        translateX(-50%)
-        translateY(0);
-
-
-        }
-
-
-
-        `;
-
-
-
-        document.head.appendChild(
-            style
-        );
-
-
-    }
-
-
-
-
-    box.textContent =
-    message;
-
-
-
-    box.classList.add(
-        "active"
-    );
-
-
-
-
-    setTimeout(()=>{
-
-
-        box.classList.remove(
-            "active"
-        );
-
-
-    },3000);
-
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-   COUNTRY CURRENCY SYSTEM
-========================= */
-
-
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
-
-
-
-const country =
-document.getElementById(
-"country"
-);
-
-
-
-const currency =
-document.getElementById(
-"currency"
-);
-
-
-
-
-
-if(country && currency){
-
-
-
-country.addEventListener(
-"change",
-()=>{
-
-
-
-const currencyMap={
-
-
-"US":"$",
-
-
-"UK":"£",
-
-
-"CA":"$",
-
-
-"AU":"$",
-
-
-"PK":"PKR",
-
-
-"OTHER":"$"
-
+orders:getNumber("orders")
 
 
 };
@@ -1404,19 +175,177 @@ const currencyMap={
 
 
 
-currency.value =
-currencyMap[country.value];
+
+if(
+data.productCost<=0 ||
+data.sellingPrice<=0 ||
+data.orders<=0
+){
+
+showMessage(
+"Please enter all required values"
+);
+
+return;
+
+}
 
 
 
-});
+
+
+
+/* COST */
+
+
+const platformFee =
+
+data.sellingPrice *
+(data.fee / 100);
+
+
+
+const totalCost =
+
+data.productCost +
+data.shipping +
+platformFee +
+data.ads;
+
+
+
+
+
+
+/* PROFIT PER SALE */
+
+
+const profit =
+
+data.sellingPrice -
+totalCost;
+
+
+
+const margin =
+
+(profit / data.sellingPrice) * 100;
+
+
+
+const roi =
+
+(totalCost > 0)
+?
+(profit / totalCost) * 100
+:
+0;
+
+
+
+
+
+
+
+/* PERIOD CALCULATION */
+
+
+let revenue = 0;
+
+let periodProfit = 0;
+
+
+
+if(data.mode==="daily"){
+
+
+    revenue =
+    data.sellingPrice *
+    data.orders;
+
+
+    periodProfit =
+    profit *
+    data.orders;
 
 
 }
 
 
 
-});
+
+else if(data.mode==="monthly"){
+
+
+    revenue =
+    data.sellingPrice *
+    data.orders;
+
+
+    periodProfit =
+    profit *
+    data.orders;
+
+
+}
+
+
+
+
+else if(data.mode==="yearly"){
+
+
+    revenue =
+    data.sellingPrice *
+    data.orders;
+
+
+    periodProfit =
+    profit *
+    data.orders;
+
+
+}
+
+
+
+
+
+
+
+const result={
+
+
+platform:data.platform,
+
+mode:data.mode,
+
+currency:data.currency,
+
+profit,
+
+margin,
+
+roi,
+
+revenue,
+
+periodProfit
+
+
+};
+
+
+
+
+displayResults(result);
+
+
+
+}
+
+
+
 
 
 
@@ -1424,8 +353,310 @@ currencyMap[country.value];
 
 
 /* =========================
-   GLOBAL ACCESS
+   DISPLAY
 ========================= */
+
+
+function updateResult(id,value){
+
+
+    const element =
+    document.getElementById(id);
+
+
+    if(element){
+
+        element.textContent=value;
+
+    }
+
+
+}
+
+
+
+
+
+
+function displayResults(result){
+
+
+
+updateResult(
+"showPlatform",
+result.platform
+);
+
+
+
+updateResult(
+"showMode",
+result.mode.toUpperCase()
+);
+
+
+
+updateResult(
+"profit",
+formatMoney(
+result.profit,
+result.currency
+)
+);
+
+
+
+updateResult(
+"margin",
+result.margin.toFixed(1)+"%"
+);
+
+
+
+updateResult(
+"roi",
+result.roi.toFixed(1)+"%"
+);
+
+
+
+
+
+/* Revenue */
+
+
+if(result.mode==="daily"){
+
+document.getElementById("revenueTitle").textContent =
+"Daily Revenue";
+
+
+document.getElementById("profitTitle").textContent =
+"Daily Profit";
+
+}
+
+
+
+else if(result.mode==="monthly"){
+
+
+document.getElementById("revenueTitle").textContent =
+"Monthly Revenue";
+
+
+document.getElementById("profitTitle").textContent =
+"Monthly Profit";
+
+
+}
+
+
+
+
+else if(result.mode==="yearly"){
+
+
+document.getElementById("revenueTitle").textContent =
+"Yearly Revenue";
+
+
+document.getElementById("profitTitle").textContent =
+"Yearly Profit";
+
+
+}
+
+
+
+
+updateResult(
+"monthlyRevenue",
+formatMoney(
+result.revenue,
+result.currency
+)
+);
+
+
+
+updateResult(
+"monthlyProfit",
+formatMoney(
+result.periodProfit,
+result.currency
+)
+);
+
+
+
+
+let status="❌ Low Profit";
+
+
+if(result.margin>=40){
+
+status="🔥 Excellent Profit";
+
+}
+
+else if(result.margin>=20){
+
+status="✅ Good Profit";
+
+}
+
+else if(result.margin>=10){
+
+status="⚠️ Average Profit";
+
+}
+
+
+
+updateResult(
+"profitStatus",
+status
+);
+
+
+
+updateResult(
+"breakEven",
+"Calculated"
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+   AUTO FEE
+========================= */
+
+
+function autoFee(){
+
+
+const platform =
+getValue("platform");
+
+
+const fee =
+document.getElementById("fee");
+
+
+
+const fees={
+
+
+"TikTok Shop":6,
+
+"Amazon":15,
+
+"Shopify":2.9,
+
+"Etsy":6.5
+
+
+};
+
+
+
+if(fee){
+
+fee.value =
+fees[platform] || 0;
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+   MODE LABEL
+========================= */
+
+
+function updateModeLabel(){
+
+
+const mode =
+getValue("mode");
+
+
+const label =
+document.getElementById("ordersLabel");
+
+
+if(!label) return;
+
+
+
+if(mode==="daily"){
+
+label.textContent="Orders Per Day";
+
+}
+
+
+else if(mode==="monthly"){
+
+label.textContent="Orders Per Month";
+
+}
+
+
+else if(mode==="yearly"){
+
+label.textContent="Orders Per Year";
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+
+function showMessage(message){
+
+
+alert(message);
+
+
+}
+
+
+
+
 
 
 window.calculateProfit =
