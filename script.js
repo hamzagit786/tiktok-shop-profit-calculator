@@ -1,184 +1,490 @@
-alert("eProfitFlow JS Loaded");
+/* =====================================
+   eProfitFlow Professional JavaScript
+===================================== */
+
+
+document.addEventListener("DOMContentLoaded", function(){
+
+
+    const calculateBtn = document.getElementById("calculateBtn");
+
+
+    // Stop if calculator does not exist
+
+    if(!calculateBtn){
+
+        return;
+
+    }
+
+
+
+    calculateBtn.addEventListener("click", calculateProfit);
+
+
+
+});
+
+
+
+
+
+function getValue(id){
+
+    const element = document.getElementById(id);
+
+    if(!element){
+
+        return "";
+
+    }
+
+    return element.value.trim();
+
+}
+
+
+
+
+
+function numberValue(id){
+
+    const value = Number(getValue(id));
+
+    return isNaN(value) ? 0 : value;
+
+}
+
+
+
+
+
+function formatMoney(amount, currency="USD"){
+
+
+    return new Intl.NumberFormat(
+        "en-US",
+        {
+            style:"currency",
+            currency:currency
+        }
+    ).format(amount);
+
+
+}
+
+
+
+
+
 function calculateProfit(){
 
 
-    // Get Values
 
-    let platform = document.getElementById("platform").value;
-
-    let mode = document.getElementById("mode").value;
-
-    let currency = document.getElementById("currency").value;
+    // Inputs
 
 
-    let productCost = Number(document.getElementById("productCost").value) || 0;
+    const platform = getValue("platform");
 
-    let sellingPrice = Number(document.getElementById("sellingPrice").value) || 0;
+    const mode = getValue("mode");
 
-    let shippingCost = Number(document.getElementById("shippingCost").value) || 0;
 
-    let fee = Number(document.getElementById("fee").value) || 0;
-
-    let adCost = Number(document.getElementById("adCost").value) || 0;
-
-    let monthlyOrders = Number(document.getElementById("monthlyOrders").value) || 0;
+    const currency =
+    getValue("currency") || "USD";
 
 
 
-
-    // Platform Fee
-
-    let platformFee = sellingPrice * (fee / 100);
+    const productCost =
+    numberValue("productCost");
 
 
 
+    const sellingPrice =
+    numberValue("sellingPrice");
 
-    // Total Cost Per Product
 
-    let totalCost =
+
+    const shippingCost =
+    numberValue("shippingCost");
+
+
+
+    const fee =
+    numberValue("fee");
+
+
+
+    const adCost =
+    numberValue("adCost");
+
+
+
+    const monthlyOrders =
+    numberValue("monthlyOrders");
+
+
+
+
+
+    // Validation
+
+
+    if(productCost <= 0 || sellingPrice <= 0){
+
+
+        showMessage(
+        "Please enter product cost and selling price"
+        );
+
+
+        return;
+
+
+    }
+
+
+
+
+
+
+    // Calculations
+
+
+    const platformFee =
+    sellingPrice * (fee / 100);
+
+
+
+
+    const totalCost =
+
     productCost +
+
     shippingCost +
+
     platformFee +
+
     adCost;
 
 
 
 
-    // Profit Per Sale
 
-    let profit = sellingPrice - totalCost;
+    const profit =
+
+    sellingPrice -
+
+    totalCost;
 
 
 
 
-    // Margin
 
-    let margin = 0;
+    const margin =
 
-    if(sellingPrice > 0){
+    sellingPrice > 0 ?
 
-        margin = (profit / sellingPrice) * 100;
+    (profit / sellingPrice) * 100 :
+
+    0;
+
+
+
+
+
+    const roi =
+
+    totalCost > 0 ?
+
+    (profit / totalCost) * 100 :
+
+    0;
+
+
+
+
+
+    const monthlyRevenue =
+
+    sellingPrice *
+
+    monthlyOrders;
+
+
+
+
+
+    const monthlyProfit =
+
+    profit *
+
+    monthlyOrders;
+
+
+
+
+
+    const yearlyProfit =
+
+    monthlyProfit * 12;
+
+
+
+
+
+    const breakEven =
+
+    profit > 0 ?
+
+    Math.ceil(totalCost / profit)
+
+    :
+
+    0;
+    /* =========================
+   SHOW RESULTS
+========================= */
+
+
+function updateResult(id, value){
+
+
+    const element = document.getElementById(id);
+
+
+    if(element){
+
+        element.textContent = value;
+
+    }
+
+
+}
+
+
+
+
+function showMessage(message){
+
+
+    let box = document.getElementById("jsMessage");
+
+
+
+    if(!box){
+
+
+        box = document.createElement("div");
+
+        box.id = "jsMessage";
+
+
+        document.body.appendChild(box);
+
 
     }
 
 
 
+    box.textContent = message;
 
-    // ROI
 
-    let roi = 0;
 
-    if(totalCost > 0){
+    box.classList.add("active");
 
-        roi = (profit / totalCost) * 100;
 
-    }
 
+    setTimeout(()=>{
 
 
+        box.classList.remove("active");
 
 
-    // Monthly Calculations
-
-    let monthlyRevenue = sellingPrice * monthlyOrders;
-
-
-    let monthlyProfit = profit * monthlyOrders;
-
-
-    let yearlyProfit = monthlyProfit * 12;
-
-
-
-
-
-    // Break Even
-
-    let breakEven = 0;
-
-
-    if(profit > 0){
-
-        breakEven = Math.ceil(totalCost / profit);
-
-    }
-
-
-
-
-
-    // Show Results
-
-
-    document.getElementById("showPlatform").innerHTML =
-    platform;
-
-
-
-
-    document.getElementById("profit").innerHTML =
-    currency + profit.toFixed(2);
-
-
-
-
-    document.getElementById("margin").innerHTML =
-    margin.toFixed(1) + "%";
-
-
-
-
-    document.getElementById("roi").innerHTML =
-    roi.toFixed(1) + "%";
-
-
-
-
-    document.getElementById("monthlyRevenue").innerHTML =
-    currency + monthlyRevenue.toFixed(2);
-
-
-
-
-    document.getElementById("monthlyProfit").innerHTML =
-    currency + monthlyProfit.toFixed(2);
-
-
-
-
-    document.getElementById("yearlyProfit").innerHTML =
-    currency + yearlyProfit.toFixed(2);
-
-
-
-
-    document.getElementById("breakEven").innerHTML =
-    breakEven + " sales";
-
-
-
-    // Mode Based Message
-
-    if(mode === "single"){
-
-        console.log("Single Product Analysis");
-
-    }
-
-
-    if(mode === "monthly"){
-
-        console.log("Monthly Business Analysis");
-
-    }
-
-
-    if(mode === "yearly"){
-
-        console.log("Yearly Business Analysis");
-
-    }
+    },3000);
 
 
 
 }
+
+
+
+
+
+function saveCalculation(data){
+
+
+    localStorage.setItem(
+
+        "eProfitFlowCalculation",
+
+        JSON.stringify(data)
+
+    );
+
+
+}
+
+
+
+
+
+
+function loadCalculation(){
+
+
+    const data =
+
+    localStorage.getItem(
+        "eProfitFlowCalculation"
+    );
+
+
+
+    if(data){
+
+
+        console.log(
+            "Previous calculation loaded"
+        );
+
+
+    }
+
+
+}
+
+
+
+
+
+
+// Final result display
+
+function displayResults(result){
+
+
+
+    updateResult(
+        "showPlatform",
+        result.platform
+    );
+
+
+
+    updateResult(
+        "profit",
+        formatMoney(
+            result.profit,
+            result.currency
+        )
+    );
+
+
+
+    updateResult(
+        "margin",
+        result.margin.toFixed(1)+"%"
+    );
+
+
+
+    updateResult(
+        "roi",
+        result.roi.toFixed(1)+"%"
+    );
+
+
+
+    updateResult(
+        "monthlyRevenue",
+        formatMoney(
+            result.monthlyRevenue,
+            result.currency
+        )
+    );
+
+
+
+    updateResult(
+        "monthlyProfit",
+        formatMoney(
+            result.monthlyProfit,
+            result.currency
+        )
+    );
+
+
+
+    updateResult(
+        "yearlyProfit",
+        formatMoney(
+            result.yearlyProfit,
+            result.currency
+        )
+    );
+
+
+
+    updateResult(
+        "breakEven",
+        result.breakEven+" sales"
+    );
+
+
+
+}
+
+
+
+
+
+/* =========================
+   MESSAGE STYLE
+========================= */
+
+
+const style = document.createElement("style");
+
+
+style.innerHTML = `
+
+#jsMessage{
+
+position:fixed;
+
+bottom:30px;
+
+left:50%;
+
+transform:translateX(-50%) translateY(100px);
+
+background:#ff7a00;
+
+color:white;
+
+padding:15px 25px;
+
+border-radius:12px;
+
+font-weight:600;
+
+transition:.3s;
+
+z-index:9999;
+
+}
+
+
+#jsMessage.active{
+
+transform:translateX(-50%) translateY(0);
+
+}
+
+`;
+
+
+
+document.head.appendChild(style);
+    
+    
