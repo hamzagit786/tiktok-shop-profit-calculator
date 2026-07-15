@@ -1,204 +1,270 @@
 /* ==========================================================
-   eProfitFlow Calculator Engine v2.0
-   Developed for HamzaDeals
+   eProfitFlow Calculator Engine v3.0
+   HamzaDeals
 
-   ✔ Clean Architecture
-   ✔ Existing HTML Compatible
-   ✔ Future Country Support
-   ✔ Future Category Support
-   ✔ Better Validation
-   ✔ Local Storage
-   ✔ Professional Formatting
-
+   Daily / Monthly / Yearly Profit System
 ========================================================== */
 
 "use strict";
 
-/* ==========================================================
-   DOM READY
-========================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
 
     initializeCalculator();
 
 });
 
 
-/* ==========================================================
-   INITIALIZE
-========================================================== */
 
-function initializeCalculator() {
+function initializeCalculator(){
 
-    const button = document.querySelector(".btn");
 
-    if (!button) return;
+    const button =
+    document.querySelector(".btn");
 
-    button.addEventListener("click", calculateProfit);
 
-    loadPreviousCalculation();
+    if(button){
+
+        button.addEventListener(
+        "click",
+        calculateProfit
+        );
+
+    }
+
+
+
+    const mode =
+    getElement("mode");
+
+
+    if(mode){
+
+        mode.addEventListener(
+        "change",
+        updateModeLabel
+        );
+
+    }
+
+
+
+    const platform =
+    getElement("platform");
+
+
+    if(platform){
+
+        platform.addEventListener(
+        "change",
+        autoFillFee
+        );
+
+    }
+
 
 }
 
 
-/* ==========================================================
-   INPUT HELPERS
-========================================================== */
 
-function getElement(id) {
+
+
+
+/* ===============================
+   HELPERS
+================================ */
+
+
+function getElement(id){
 
     return document.getElementById(id);
 
 }
 
 
-function getValue(id) {
 
-    const element = getElement(id);
 
-    if (!element) return "";
+function getValue(id){
+
+    const element =
+    getElement(id);
+
+
+    if(!element) return "";
+
 
     return element.value.trim();
 
 }
 
 
-function getNumber(id) {
 
-    const value = parseFloat(getValue(id));
+
+
+function getNumber(id){
+
+    const value =
+    Number(getValue(id));
+
 
     return isNaN(value) ? 0 : value;
 
 }
 
 
-/* ==========================================================
-   CURRENCY
-========================================================== */
-
-const CurrencyMap = {
-
-    "$": "USD",
-    "USD": "USD",
-
-    "€": "EUR",
-    "EUR": "EUR",
-
-    "£": "GBP",
-    "GBP": "GBP",
-
-    "PKR": "PKR"
-
-};
 
 
-function formatMoney(amount, currency) {
 
-    const code = CurrencyMap[currency] || "USD";
+/* ===============================
+   CURRENCY FORMAT
+================================ */
 
-    try {
 
-        return new Intl.NumberFormat("en-US", {
+function formatMoney(amount,currency){
 
-            style: "currency",
 
-            currency: code,
+    const map={
 
-            maximumFractionDigits: 2
+        "$":"USD",
 
-        }).format(amount);
+        "€":"EUR",
 
-    }
+        "£":"GBP",
 
-    catch {
+        "PKR":"PKR"
 
-        return amount.toFixed(2);
+    };
 
-    }
+
+    return new Intl.NumberFormat(
+    "en-US",
+    {
+
+        style:"currency",
+
+        currency:map[currency] || "USD"
+
+    }).format(amount);
+
 
 }
-
-
-/* ==========================================================
+/* ===============================
    VALIDATION
-========================================================== */
+================================ */
 
-function validateInputs(data) {
 
-    if (data.productCost <= 0) {
+function validateInputs(data){
 
-        showMessage("Enter a valid product cost.");
 
-        return false;
+    if(data.productCost <= 0){
 
-    }
-
-    if (data.sellingPrice <= 0) {
-
-        showMessage("Enter a valid selling price.");
+        showMessage(
+        "Please enter product cost"
+        );
 
         return false;
 
     }
 
-    if (data.sellingPrice <= data.productCost) {
 
-        showMessage("Selling price should be higher than product cost.");
+
+    if(data.sellingPrice <= 0){
+
+        showMessage(
+        "Please enter selling price"
+        );
+
+        return false;
+
+    }
+
+
+
+    if(data.sellingPrice <= data.productCost){
+
+        showMessage(
+        "Selling price must be higher than product cost"
+        );
 
         return false;
 
     }
 
-    if (data.shippingCost < 0 ||
-        data.adCost < 0 ||
-        data.fee < 0) {
-
-        showMessage("Negative values are not allowed.");
-
-        return false;
-
-    }
 
     return true;
 
 }
-/* ==========================================================
-   CALCULATION ENGINE
-========================================================== */
 
 
-function calculateProfit() {
 
 
-    const data = {
 
-        platform: getValue("platform"),
-
-        mode: getValue("mode"),
-
-        currency: getValue("currency") || "USD",
+/* ===============================
+   MAIN CALCULATOR
+================================ */
 
 
-        productCost: getNumber("productCost"),
+function calculateProfit(){
 
-        sellingPrice: getNumber("sellingPrice"),
 
-        shippingCost: getNumber("shippingCost"),
 
-        fee: getNumber("fee"),
+    const data={
 
-        adCost: getNumber("adCost"),
 
-        monthlyOrders: getNumber("monthlyOrders")
+        platform:
+        getValue("platform"),
+
+
+
+        mode:
+        getValue("mode"),
+
+
+
+        currency:
+        getValue("currency") || "$",
+
+
+
+        productCost:
+        getNumber("productCost"),
+
+
+
+        sellingPrice:
+        getNumber("sellingPrice"),
+
+
+
+        shippingCost:
+        getNumber("shippingCost"),
+
+
+
+        fee:
+        getNumber("fee"),
+
+
+
+        adCost:
+        getNumber("adCost"),
+
+
+
+        orders:
+        getNumber("orders")
+
+
 
     };
 
 
 
-    // Validate
 
-    if(!validateInputs(data)) {
+
+    if(!validateInputs(data)){
 
         return;
 
@@ -206,145 +272,227 @@ function calculateProfit() {
 
 
 
-    /*
-       PLATFORM FEE CALCULATION
 
-       User entered fee will remain priority.
-       Future automatic fees can be added here.
-    */
 
+
+
+    // Platform Fee
 
     const platformFee =
 
-        data.sellingPrice *
-
-        (data.fee / 100);
-
+    data.sellingPrice *
+    (data.fee / 100);
 
 
+
+
+
+
+
+    // Total Cost
 
     const totalCost =
 
-        data.productCost +
+    data.productCost +
 
-        data.shippingCost +
+    data.shippingCost +
 
-        platformFee +
+    platformFee +
 
-        data.adCost;
+    data.adCost;
 
 
+
+
+
+
+
+
+    // Profit per sale
 
 
     const profit =
 
-        data.sellingPrice -
+    data.sellingPrice -
 
-        totalCost;
+    totalCost;
+
+
+
 
 
 
 
     const margin =
 
-        (profit / data.sellingPrice) * 100;
+    (profit /
+    data.sellingPrice)
+    *100;
+
+
+
 
 
 
 
     const roi =
 
-        totalCost > 0
+    totalCost > 0 ?
 
-        ?
+    (profit /
+    totalCost)*100
 
-        (profit / totalCost) * 100
+    :
 
-        :
-
-        0;
-
+    0;
 
 
 
-    const monthlyRevenue =
 
+
+
+
+    /*
+       MODE SYSTEM
+
+       Daily
+       Monthly
+       Yearly
+
+    */
+
+
+
+    let orders =
+    data.orders;
+
+
+
+    let revenue = 0;
+
+    let finalProfit = 0;
+
+
+
+
+
+
+    if(data.mode==="daily"){
+
+
+        revenue =
         data.sellingPrice *
-
-        data.monthlyOrders;
-
+        orders;
 
 
-
-    const monthlyProfit =
-
+        finalProfit =
         profit *
-
-        data.monthlyOrders;
-
+        orders;
 
 
-
-    const yearlyProfit =
-
-        monthlyProfit * 12;
+    }
 
 
 
 
-    const breakEven =
-
-        profit > 0
-
-        ?
-
-        Math.ceil(totalCost / profit)
-
-        :
-
-        0;
 
 
 
-
-    const result = {
-
-
-        platform: data.platform,
+    if(data.mode==="monthly"){
 
 
-        currency: data.currency,
+        revenue =
+        data.sellingPrice *
+        orders;
 
 
-        profit,
+        finalProfit =
+        profit *
+        orders;
 
 
-        margin,
+    }
 
 
-        roi,
 
 
-        monthlyRevenue,
 
 
-        monthlyProfit,
 
 
-        yearlyProfit,
+    if(data.mode==="yearly"){
 
 
-        breakEven,
+        revenue =
+        data.sellingPrice *
+        orders;
 
 
-        status: getProfitStatus(margin)
+        finalProfit =
+        profit *
+        orders;
+
+
+    }
+
+
+
+
+
+
+    const result={
+
+
+
+        platform:
+        data.platform,
+
+
+
+        mode:
+        data.mode,
+
+
+
+        currency:
+        data.currency,
+
+
+
+        profit:profit,
+
+
+
+        margin:margin,
+
+
+
+        roi:roi,
+
+
+
+        revenue:revenue,
+
+
+
+        finalProfit:finalProfit,
+
+
+
+        status:
+        getProfitStatus(margin)
+
 
 
     };
 
 
 
+
+
+
     displayResults(result);
+
 
 
 
@@ -357,62 +505,26 @@ function calculateProfit() {
     });
 
 
-}
-
-
-
-
-
-
-/* ==========================================================
-   PROFIT STATUS
-========================================================== */
-
-
-function getProfitStatus(margin) {
-
-
-    if(margin >= 40) {
-
-        return "Excellent Profit";
-
-    }
-
-
-    if(margin >= 20) {
-
-        return "Good Profit";
-
-    }
-
-
-    if(margin >= 10) {
-
-        return "Average Profit";
-
-    }
-
-
-    return "Low Profit";
-
 
 }
-/* ==========================================================
+/* ===============================
    DISPLAY RESULTS
-========================================================== */
+================================ */
 
 
-function updateResult(id, value) {
+function updateResult(id,value){
 
 
-    const element = getElement(id);
+    const element =
+    getElement(id);
 
 
-    if(element) {
+    if(element){
 
-        element.textContent = value;
+        element.textContent=value;
 
     }
+
 
 }
 
@@ -420,73 +532,192 @@ function updateResult(id, value) {
 
 
 
-function displayResults(result) {
+
+function displayResults(result){
+
 
 
     updateResult(
-        "showPlatform",
-        result.platform
+    "showPlatform",
+    result.platform
     );
 
 
 
     updateResult(
-        "profit",
-        formatMoney(
-            result.profit,
-            result.currency
-        )
+    "profit",
+    formatMoney(
+    result.profit,
+    result.currency
+    )
     );
 
 
 
     updateResult(
-        "margin",
-        result.margin.toFixed(1) + "%"
+    "margin",
+    result.margin.toFixed(1)+"%"
     );
 
 
 
     updateResult(
-        "roi",
-        result.roi.toFixed(1) + "%"
+    "roi",
+    result.roi.toFixed(1)+"%"
     );
 
 
 
-    updateResult(
+
+    /*
+       Dynamic Mode Result
+
+       Daily
+       Monthly
+       Yearly
+
+    */
+
+
+    const revenueTitle =
+    getElement("revenueTitle");
+
+
+    const profitTitle =
+    getElement("profitTitle");
+
+
+
+    const revenueBox =
+    getElement("monthlyRevenue");
+
+
+
+    const profitBox =
+    getElement("monthlyProfit");
+
+
+
+
+    if(result.mode==="daily"){
+
+
+
+        if(revenueTitle)
+        revenueTitle.textContent=
+        "Daily Revenue";
+
+
+
+        if(profitTitle)
+        profitTitle.textContent=
+        "Daily Profit";
+
+
+
+    }
+
+
+
+
+
+    else if(result.mode==="monthly"){
+
+
+
+        if(revenueTitle)
+        revenueTitle.textContent=
+        "Monthly Revenue";
+
+
+
+        if(profitTitle)
+        profitTitle.textContent=
+        "Monthly Profit";
+
+
+
+    }
+
+
+
+
+
+
+
+    else if(result.mode==="yearly"){
+
+
+
+        if(revenueTitle)
+        revenueTitle.textContent=
+        "Yearly Revenue";
+
+
+
+        if(profitTitle)
+        profitTitle.textContent=
+        "Yearly Profit";
+
+
+
+    }
+
+
+
+
+
+
+    if(revenueBox){
+
+        updateResult(
         "monthlyRevenue",
         formatMoney(
-            result.monthlyRevenue,
-            result.currency
+        result.revenue,
+        result.currency
         )
-    );
+        );
+
+    }
 
 
 
-    updateResult(
+
+
+    if(profitBox){
+
+        updateResult(
         "monthlyProfit",
         formatMoney(
-            result.monthlyProfit,
-            result.currency
+        result.finalProfit,
+        result.currency
         )
+        );
+
+    }
+
+
+
+
+
+
+    updateResult(
+    "breakEven",
+    Math.ceil(
+    result.profit>0
+    ?
+    1
+    :
+    0
+    )
+    +" sales"
     );
 
 
 
     updateResult(
-        "yearlyProfit",
-        formatMoney(
-            result.yearlyProfit,
-            result.currency
-        )
-    );
-
-
-
-    updateResult(
-        "breakEven",
-        result.breakEven + " sales"
+    "profitStatus",
+    result.status
     );
 
 
@@ -496,22 +727,204 @@ function displayResults(result) {
 
 
 
-/* ==========================================================
+
+
+
+/* ===============================
+   MODE LABEL UPDATE
+================================ */
+
+
+
+function updateModeLabel(){
+
+
+
+    const mode =
+    getValue("mode");
+
+
+
+    const orderLabel =
+    document.querySelector(
+    'label[for="orders"]'
+    );
+
+
+
+    const input =
+    getElement("orders");
+
+
+
+    if(!input)
+    return;
+
+
+
+
+    if(mode==="daily"){
+
+
+        input.placeholder=
+        "Orders Per Day";
+
+
+    }
+
+
+
+    else if(mode==="monthly"){
+
+
+        input.placeholder=
+        "Orders Per Month";
+
+
+    }
+
+
+
+    else if(mode==="yearly"){
+
+
+        input.placeholder=
+        "Orders Per Year";
+
+
+    }
+
+
+
+}
+/* ===============================
+   PROFIT STATUS
+================================ */
+
+
+function getProfitStatus(margin){
+
+
+    if(margin >= 40){
+
+        return "🔥 Excellent Profit";
+
+    }
+
+
+    if(margin >= 20){
+
+        return "✅ Good Profit";
+
+    }
+
+
+    if(margin >= 10){
+
+        return "⚠️ Average Profit";
+
+    }
+
+
+    return "❌ Low Profit";
+
+
+}
+
+
+
+
+
+
+/* ===============================
+   AUTO PLATFORM FEE
+================================ */
+
+
+
+function getDefaultFee(platform){
+
+
+
+    const fees={
+
+
+        "TikTok Shop":6,
+
+
+        "Amazon":15,
+
+
+        "Shopify":2.9,
+
+
+        "Etsy":6.5
+
+
+    };
+
+
+
+    return fees[platform] || 0;
+
+
+}
+
+
+
+
+
+
+
+function autoFillFee(){
+
+
+
+    const platform =
+    getValue("platform");
+
+
+
+    const fee =
+    getElement("fee");
+
+
+
+    if(fee){
+
+
+        fee.value =
+        getDefaultFee(platform);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
    LOCAL STORAGE
-========================================================== */
+================================ */
 
 
-function saveCalculation(data) {
+function saveCalculation(data){
 
 
-    try {
+    try{
 
 
         localStorage.setItem(
 
-            "eProfitFlowCalculation",
+        "eProfitFlowCalculation",
 
-            JSON.stringify(data)
+        JSON.stringify(data)
 
         );
 
@@ -519,13 +932,11 @@ function saveCalculation(data) {
     }
 
 
-    catch(error) {
-
+    catch(error){
 
         console.log(
-            "Storage unavailable"
+        "Storage unavailable"
         );
-
 
     }
 
@@ -536,48 +947,41 @@ function saveCalculation(data) {
 
 
 
-function loadPreviousCalculation() {
 
 
-    try {
+
+function loadPreviousCalculation(){
 
 
-        const saved =
+    try{
 
+
+        const data =
         localStorage.getItem(
-            "eProfitFlowCalculation"
+        "eProfitFlowCalculation"
         );
 
 
 
-        if(!saved) {
+        if(data){
 
-            return;
+
+            console.log(
+            "Previous calculation loaded"
+            );
+
 
         }
 
 
-
-        const data =
-
-        JSON.parse(saved);
-
-
-
-        console.log(
-            "Previous calculation found",
-            data
-        );
-
-
     }
 
 
-    catch(error) {
+    catch(error){
 
 
         console.log(
-            "No previous calculation"
+        "No saved data"
         );
 
 
@@ -589,78 +993,50 @@ function loadPreviousCalculation() {
 
 
 
-/* ==========================================================
+
+
+
+/* ===============================
    MESSAGE SYSTEM
-========================================================== */
+================================ */
 
 
-function showMessage(message) {
-
-
-    let box = getElement(
-        "jsMessage"
-    );
+function showMessage(message){
 
 
 
-    if(!box) {
+    let box =
+    getElement("jsMessage");
 
 
-        box = document.createElement(
-            "div"
-        );
+
+    if(!box){
 
 
-        box.id = "jsMessage";
+
+        box =
+        document.createElement("div");
+
+
+
+        box.id =
+        "jsMessage";
+
 
 
         document.body.appendChild(box);
 
 
-        addMessageStyle();
 
-    }
-
-
-
-    box.textContent = message;
-
-
-    box.classList.add(
-        "active"
-    );
+        const style =
+        document.createElement("style");
 
 
 
-    setTimeout(()=>{
+        style.innerHTML=`
 
 
-        box.classList.remove(
-            "active"
-        );
-
-
-    },3000);
-
-
-
-}
-
-
-
-
-function addMessageStyle() {
-
-
-    const style = document.createElement(
-        "style"
-    );
-
-
-
-    style.innerHTML = `
-
-    #jsMessage{
+        #jsMessage{
 
         position:fixed;
 
@@ -686,192 +1062,69 @@ function addMessageStyle() {
 
         transition:.3s;
 
-    }
+        }
 
 
-    #jsMessage.active{
+
+        #jsMessage.active{
 
         transform:
         translateX(-50%)
         translateY(0);
 
-    }
-
-    `;
-
-
-
-    document.head.appendChild(style);
-
-
-}
-/* ==========================================================
-   PLATFORM FEE ENGINE (Future Ready)
-========================================================== */
-
-
-function getDefaultFee(platform) {
-
-
-    const fees = {
-
-
-        "TikTok Shop": 6,
-
-        "Amazon": 15,
-
-        "Shopify": 2.9,
-
-        "Etsy": 6.5
-
-
-    };
-
-
-    return fees[platform] || 0;
-
-
-}
-
-
-
-
-function autoFillFee() {
-
-
-    const platform = getValue(
-        "platform"
-    );
-
-
-    const feeInput = getElement(
-        "fee"
-    );
-
-
-    if(!feeInput) return;
-
-
-
-    if(
-        feeInput.value === ""
-        ||
-        feeInput.dataset.auto === "true"
-    ) {
-
-
-        feeInput.value =
-        getDefaultFee(platform);
-
-
-        feeInput.dataset.auto =
-        "true";
-
-
-    }
-
-
-}
-
-
-
-
-/* ==========================================================
-   FUTURE COUNTRY SUPPORT
-========================================================== */
-
-
-function getCountryFee(country){
-
-
-    const countries = {
-
-
-        "US": {
-
-            currency:"USD"
-
-        },
-
-
-        "UK": {
-
-            currency:"GBP"
-
-        },
-
-
-        "CA": {
-
-            currency:"CAD"
-
-        },
-
-
-        "AU": {
-
-            currency:"AUD"
-
-        },
-
-
-        "PK": {
-
-            currency:"PKR"
-
         }
 
 
-    };
+
+        `;
 
 
-    return countries[country] || {};
+
+        document.head.appendChild(style);
+
+
+
+    }
+
+
+
+
+    box.textContent =
+    message;
+
+
+
+    box.classList.add(
+    "active"
+    );
+
+
+
+    setTimeout(()=>{
+
+
+        box.classList.remove(
+        "active"
+        );
+
+
+    },3000);
+
+
 
 }
 
 
 
 
-/* ==========================================================
-   FUTURE CATEGORY SUPPORT
-========================================================== */
-
-
-function getCategoryType(category){
-
-
-    const categories = {
-
-
-        beauty:"Beauty",
-
-        fashion:"Fashion",
-
-        electronics:"Electronics",
-
-        home:"Home & Kitchen",
-
-        health:"Health",
-
-        toys:"Toys",
-
-        sports:"Sports"
-
-
-    };
-
-
-    return categories[category] || "General";
-
-
-}
 
 
 
 
-/* ==========================================================
-   INPUT LISTENERS
-========================================================== */
+/* ===============================
+   COUNTRY CURRENCY
+================================ */
+
 
 
 document.addEventListener(
@@ -879,182 +1132,58 @@ document.addEventListener(
 ()=>{
 
 
-    const platform =
-    getElement("platform");
+const country =
+getElement("country");
 
 
-    if(platform){
-
-
-        platform.addEventListener(
-        "change",
-        ()=>{
-
-
-            const fee =
-            getElement("fee");
-
-
-            if(fee){
-
-
-                fee.value =
-                getDefaultFee(
-                platform.value
-                );
-
-
-            }
-
-
-        });
-
-
-    }
-
-
-
-});
+const currency =
+getElement("currency");
 
 
 
 
-/* ==========================================================
-   SECURITY CHECK
-========================================================== */
+if(country && currency){
 
 
-window.calculateProfit =
-calculateProfit;
+country.addEventListener(
+"change",
+()=>{
 
 
-/* ==========================================================
-   eProfitFlow Calculator v2.0 END
-========================================================== */
-
-/* ==========================================================
-   COUNTRY & CATEGORY SMART SETTINGS
-========================================================== */
+const map={
 
 
-document.addEventListener("DOMContentLoaded", () => {
+"US":"$",
 
 
-    const country =
-    getElement("country");
+"UK":"£",
 
 
-    const currency =
-    getElement("currency");
+"CA":"$",
+
+
+"AU":"$",
+
+
+"PK":"PKR"
 
 
 
-    if(country && currency){
-
-
-        country.addEventListener(
-        "change",
-        ()=>{
-
-
-            const countryCurrency = {
-
-
-                "US":"$",
-
-                "UK":"£",
-
-                "CA":"$",
-
-                "AU":"$",
-
-                "PK":"PKR"
-
-
-            };
+};
 
 
 
-            currency.value =
-            countryCurrency[country.value] || "$";
-
-
-        });
-
-
-    }
+currency.value =
+map[country.value] || "$";
 
 
 
 });
 
-
-
-
-
-/* ==========================================================
-   CATEGORY INFORMATION
-========================================================== */
-
-
-function getCategoryInfo(category){
-
-
-    const data = {
-
-
-        beauty:{
-            name:"Beauty Products",
-            averageMargin:"30-50%"
-        },
-
-
-        fashion:{
-            name:"Fashion Products",
-            averageMargin:"25-45%"
-        },
-
-
-        electronics:{
-            name:"Electronics",
-            averageMargin:"15-35%"
-        },
-
-
-        home:{
-            name:"Home & Kitchen",
-            averageMargin:"25-50%"
-        },
-
-
-        health:{
-            name:"Health Products",
-            averageMargin:"30-60%"
-        },
-
-
-        toys:{
-            name:"Toys",
-            averageMargin:"20-40%"
-        },
-
-
-        sports:{
-            name:"Sports Products",
-            averageMargin:"25-45%"
-        },
-
-
-        general:{
-            name:"General Product",
-            averageMargin:"20-40%"
-        }
-
-
-    };
-
-
-    return data[category] || data.general;
 
 
 }
+
+
+
+});
