@@ -119,7 +119,46 @@ Yearly
 
 </select>
 
+<label>Country</label>
 
+<select id="country">
+
+<option value="US" selected>🇺🇸 United States</option>
+
+<option value="UK">🇬🇧 United Kingdom</option>
+
+<option value="CA">🇨🇦 Canada</option>
+
+<option value="AU">🇦🇺 Australia</option>
+
+<option value="PK">🇵🇰 Pakistan</option>
+
+<option value="OTHER">🌍 Other</option>
+
+</select>
+  <label>Product Category</label>
+
+<select id="category">
+
+<option value="general" selected>General</option>
+
+<option value="beauty">Beauty</option>
+
+<option value="fashion">Fashion</option>
+
+<option value="electronics">Electronics</option>
+
+<option value="home">Home & Kitchen</option>
+
+<option value="health">Health</option>
+
+<option value="toys">Toys</option>
+
+<option value="sports">Sports</option>
+
+<option value="other">Other</option>
+
+</select>
 
 
 
@@ -147,10 +186,19 @@ Yearly
 
 
 
-<label>Platform Fee %</label>
+<label>
+Platform Fee (%)
+</label>
 
-<input id="fee" type="number" placeholder="6">
+<input
+id="fee"
+type="number"
+placeholder="Auto or Manual"
+step="0.1">
 
+<small class="field-note">
+Platform fee can be entered manually or automatically based on your selected platform and country.
+</small>
 
 
 
