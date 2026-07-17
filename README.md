@@ -1,2 +1,2 @@
-# tiktok-shop-profit-calculator
-Free TikTok Shop Seller Calculator to calculate profit margins, TikTok fees, ROI, and product earnings. Helps sellers make smarter product decisions.
+eProfitflow.com
+Free Product Rescue Tool + TikTok Shop Profit Calculator to find backup suppliers, calculate fees, margins, ROI, and make smarter selling decisions.
